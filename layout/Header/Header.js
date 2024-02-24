@@ -52,7 +52,7 @@ const Header = () => {
             return <NavItem title={item.title} link={item.link} key={index} />;
           })}
         </ul>
-        <button>
+        <button className="xl:hidden block">
           <IoMenu size={20} />
         </button>
       </nav>
