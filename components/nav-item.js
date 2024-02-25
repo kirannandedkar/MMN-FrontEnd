@@ -9,7 +9,7 @@ const NavItem = ({ title, link }) => {
   return (
     <li>
       {title === "About us" ? (
-        <a
+        <div
           className="py-[31px] px-[30px] font-poppins rounded-br-[6px] rounded-bl-[6px] text-[14px] font-[500] hover:bg-[#ECE9E9] transition-all block relative cursor-pointer"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
@@ -46,7 +46,7 @@ const NavItem = ({ title, link }) => {
               </li>
             </ul>
           )}
-        </a>
+        </div>
       ) : (
         <a
           href={link}
