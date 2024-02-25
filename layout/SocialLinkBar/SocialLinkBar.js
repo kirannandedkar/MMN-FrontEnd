@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import SocialLinkItem from '../../components/social-link-item'
 
