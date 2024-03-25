@@ -16,10 +16,10 @@ const NavbarList = [
   },
   {
     title: "Membership",
-    link: "#",
+    link: "/membership",
   },
   {
-    title: "Membership",
+    title: "Event",
     link: "#",
   },
   {

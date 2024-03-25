@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import Button from "../button";
+import { useRouter } from "next/navigation";
 
 const MemberCard = () => {
+  const router = useRouter();
   const handleClick = () => {
     console.log("ok");
   };
@@ -24,7 +26,7 @@ const MemberCard = () => {
       <Button
         title={"Become a volunteer"}
         style={"text-[#00205B] bg-white"}
-        onClick={() => handleClick()}
+        onClick={() => router.push('/membership')}
       />
     </div>
   );
