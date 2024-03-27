@@ -8,7 +8,7 @@ import { IoMenu } from "react-icons/io5";
 const NavbarList = [
   {
     title: "Home",
-    link: "#",
+    link: "/home",
   },
   {
     title: "About us",

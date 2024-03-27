@@ -20,3 +20,17 @@ export const heroCarouselItemList = [
     className: "bg-custom-radial-gradient-purple"
   },
 ];
+
+export const GoogleAccountInfo = {
+  email: 'supertest@gmail.com',
+
+  given_name: 'Alex',
+  family_name: 'Konan',
+
+  picture: 'https://lh3.googleusercontent.com/a/ACg8ocJHT_zJEptnB8PFyiB4FK748ThXQPbe_CXom_U-gvbk=s96-c',
+
+  mobile: '+4721953781',
+  country: 'CA',
+  gender: 'male',
+  birth: "07/07/1990"
+};

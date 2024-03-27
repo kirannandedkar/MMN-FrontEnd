@@ -24,7 +24,7 @@ const MemberCard = () => {
         membership benefits and join us.
       </p>
       <Button
-        title={"Become a volunteer"}
+        title={"Become a member"}
         style={"text-[#00205B] bg-white"}
         onClick={() => router.push('/membership')}
       />
