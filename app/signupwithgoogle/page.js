@@ -8,10 +8,27 @@ import Payment from "../membership/payment";
 import MemberDetail from "../membership/member-detail";
 import { useSession, signIn, signOut } from "next-auth/react"
 
-import { GoogleAccountInfo } from "../../data/dummy-data";
+// import { GoogleAccountInfo } from "../../data/dummy-data";
 
 const SignUpGooglePage = () => {
+  const {data: session} = useSession();
+
   //getting user info from back end;
+  let GoogleAccountInfo = {
+    email: '',
+    given_name: '',
+    family_name: '',
+    picture: '',
+    mobile: '',
+    country: '',
+    gender: '',
+    birth: ""
+  };
+
+  if(session != undefined && session != null){
+    GoogleAccountInfo.email = session.user.email;
+    GoogleAccountInfo.given_name = session.user.name; //full name
+  }
   
   return (
     <Container>

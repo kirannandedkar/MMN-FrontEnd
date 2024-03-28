@@ -1,19 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
-import Select, { AriaOnFocus } from 'react-select';
+import React, { useState, useEffect } from "react";
 
 const MemberDetail = ({userinfo, ...params}) => {
-  const [firstName, setFirstName] = useState(userinfo ? userinfo.given_name : "");
-  const [lastName, setLastName] = useState(userinfo ? userinfo.family_name : "");
-  const [birth, setBirth] = useState(userinfo ? userinfo.birth : "");
-  const [email, setEmail] = useState(userinfo ? userinfo.email : "");
-  const [country, setCountry] = useState(userinfo ? userinfo.country : "");
-  const [mobile, setMobile] = useState(userinfo ? userinfo.mobile : "");
-  const [gender, setGender] = useState(userinfo ? userinfo.gender : "");
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
+
+  const tmpUser = {
+    firstName: userinfo.given_name,
+    lastName: userinfo.family_name,
+    birth: userinfo.birth,
+    email: userinfo.email,
+    country: userinfo.country,
+    mobile: userinfo.mobile,
+    gender: userinfo.gender,
+    password: '',
+    confirm: '',
+  };
   
+  const [user, setUser] = useState(tmpUser);
+
+  useEffect(() => {
+    setUser(tmpUser);
+  }, [userinfo]);
+
   const countryList = [
     {value: "US", label : "United States"},
     {value: "CA", label : "Canada"},
@@ -28,6 +36,10 @@ const MemberDetail = ({userinfo, ...params}) => {
 
   const inputClassName = "rounded-[6px] py-4 px-[14px] font-poppins text-[14px] font-[500] leading-6 border-solid border-[1px] border-[#BCBCBC]";
   const labelClassName = "font-poppins text-[14px] font-[500] leading-7";
+
+  const handleOnChange = (key, value) => {
+    setUser(prev => ({...prev, [key]: value}));
+  }
 
   return (
     <>
@@ -45,8 +57,8 @@ const MemberDetail = ({userinfo, ...params}) => {
             <input
               placeholder="First name"
               className={inputClassName}
-              value={firstName}
-              onChange={e => setFirstName(e.target.value)}
+              value={user.firstName}
+              onChange={e => handleOnChange('firstName', e.target.value)}
             />
           </div>
           <div className="flex flex-col gap-[5px] basis-1/2">
@@ -56,8 +68,8 @@ const MemberDetail = ({userinfo, ...params}) => {
             <input
               placeholder="Last name"
               className={inputClassName}
-              value={lastName}
-              onChange={e => setLastName(e.target.value)}
+              value={user.lastName}
+              onChange={e => handleOnChange('lastName', e.target.value)}
             />
           </div>
         </div>
@@ -70,8 +82,8 @@ const MemberDetail = ({userinfo, ...params}) => {
             <input
               type="date"
               className={inputClassName}
-              value={birth}
-              onChange={e => setBirth(e.target.value)}
+              value={user.birth}
+              onChange={e => handleOnChange('birth', e.target.value)}
             />
           </div>
           <div className="flex flex-col gap-[5px] basis-1/2">
@@ -81,8 +93,8 @@ const MemberDetail = ({userinfo, ...params}) => {
             <input
               placeholder="email@email.no"
               className={inputClassName}
-              value={email}
-              onChange={e => setEmail(e.target.value)}
+              value={user.email}
+              onChange={e => handleOnChange('email', e.target.value)}
             />
           </div>
         </div>
@@ -95,8 +107,8 @@ const MemberDetail = ({userinfo, ...params}) => {
             <input
               placeholder="Text goes here"
               className={inputClassName}
-              value={mobile}
-              onChange={e => setBirth(e.target.value)}
+              value={user.mobile}
+              onChange={e => handleOnChange('mobile', e.target.value)}
             />
           </div>
           <div className="flex flex-col gap-[5px] basis-1/2">
@@ -105,7 +117,7 @@ const MemberDetail = ({userinfo, ...params}) => {
             </label>
             <select
               id="member-detail-countries"
-              class={inputClassName}
+              className={inputClassName}
             >
               <option value="US">United States</option>
               <option value="CA">Canada</option>
@@ -123,7 +135,7 @@ const MemberDetail = ({userinfo, ...params}) => {
 
             <select
               id="member-detail-gender"
-              class={inputClassName}
+              className={inputClassName}
             >
               <option value="male">Male</option>
               <option value="famale">Female</option>

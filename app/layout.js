@@ -2,12 +2,10 @@ import "./globals.css";
 import SocialLinkBar from "../layout/SocialLinkBar";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
-import SessionWrapper from "../components/SessionWrapper";
+import SessionWrapper from "../components/SessionWrapper.js";
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
 }) {
   return (
     <SessionWrapper>

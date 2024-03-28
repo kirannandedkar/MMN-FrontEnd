@@ -27,7 +27,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "app/membership/page.js", "app/membership/layout.js"  ],
+, "app/membership/page.js", "app/membership/layout.js", "app/api/auth/[...nextauth]/route.js", "app/layout.js", "components/SessionWrapper.js"  ],
   "exclude": [
     "node_modules"
   ]
