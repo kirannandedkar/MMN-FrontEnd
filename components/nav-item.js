@@ -39,7 +39,7 @@ const NavItem = ({ title, link }) => {
                 <a href="#">MMN History</a>
               </li>
               <li className="p-5 hover:bg-white hover:text-[#FF5733]">
-                <a href="#">Committee Members</a>
+                <a href="/committeemember">Committee Members</a>
               </li>
               <li className="p-5 hover:bg-white hover:text-[#FF5733] hover:rounded-b-lg">
                 <a href="#">Become a MMN member</a>

@@ -6,7 +6,8 @@ export const heroCarouselItemList = [
     address: "Oslo, Norway",
     content:
       'Ganeshotsav (Ganesh festival) is a key festival celebrated in Maharashtra. The festival begins on the "Ganesh Chaturthi" and ends after 10 days on "Anant Chaturdashi" during the month of "Bhadrapada" as per Hindu calendar. On the day 1,.',
-    leftImageUrl: '/image/home/hero1.png',
+      imgUrl: '/image/home/hero1.png',
+      imageClassName:"bg-custom-overlay-gradient-red",
     className: "bg-custom-radial-gradient-red",
   },
   {

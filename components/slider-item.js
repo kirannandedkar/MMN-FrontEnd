@@ -8,14 +8,17 @@ const SliderItem = ({ item }) => {
   return (
     <div className={`relative w-full ${item.className || ""}`}>
       <div className="xl:block hidden">
+        <div className={`absolute top-0 lef-0 z-[2] w-[878px] h-full ${item.imageClassName}`}>
+
+        </div>
         {item.imgUrl && (
           <Image
             src={item.imgUrl}
             alt="hero"
-            width={0}
-            height={0}
+            width={878}
+            height={512}
             sizes="100vw"
-            className="w-full h-full object-contain object-left absolute top-0 left-0 z-[1]"
+            className="absolute top-0 left-0 z-[1] h-full"
           />
         )}
       </div>
