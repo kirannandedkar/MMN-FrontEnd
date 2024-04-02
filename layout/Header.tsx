@@ -68,12 +68,12 @@ export default function HeaderBar() {
     return (
         <div className="w-full flex gap-[10px] px-[30px] z-[3]">
             <Image
-                src={"/image/logo/headerlogo.png"}
+                src={"/image/logo/HeaderLogo.png"}
                 alt="headerlogo"
                 width="0"
                 height="0"
                 sizes="100vw"
-                className="w-[135px] h-auto py-[15px]"
+                className="w-[135px] h-auto py-[15px] min-h-[83px]"
             />
             <div className="flex-grow px-[30px] xl:flex gap-[1px] justify-end hidden">
                 {RenderItems}
