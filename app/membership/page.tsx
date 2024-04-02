@@ -19,7 +19,6 @@ const NavData = [
 
 export default function MemberShipPage() {
     const router = useRouter();
-
     return (
         <>
             <TopNav itemList={NavData} />
@@ -27,7 +26,7 @@ export default function MemberShipPage() {
                 <div className="flex flex-col gap-[20px] grow-[2]">
                     <BlogPane />
                     <div className="flex flex-col gap-[20px] w-max pr-[30px]">
-                        <div onClick={() => signIn("google", { redirect: false, callbackUrl: process.env.SITE_ROOT + 'signup/google' } )}>
+                        <div onClick={() => signIn("google", { redirect: false, callbackUrl: process.env.NEXT_PUBLIC_SITE_ROOT + 'signup/google' } )}>
                             <GoogleButton title={"Signup with Google"} className="max-w-full" />
                         </div>
 

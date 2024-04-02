@@ -37,7 +37,6 @@ export default function Paypane(params: Props) {
             prev.splice(index, 1);
             return [...prev];
         });
-        console.log("removing ", index);
     }
 
     const handleAddMemberClick = () => {

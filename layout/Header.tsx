@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import SubMenuItem from "./SubMenuItem";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const menuItems = [
     { title: "Home", link: "/home" },
@@ -28,14 +28,15 @@ const menuItems = [
 ]
 
 export default function HeaderBar() {
+    const pathName = usePathname();
+    
     const [link, setLink] = useState<string>("");
-    
     useEffect(() => {
-        setLink(location.pathname);
-    }, []);
-    
-    const router = useRouter();
+        setLink(pathName);
+    }, [pathName]);
 
+    const router = useRouter();
+    
     const menuClicked = (menuTitle: string, link: string) => {
         if (link) {
             setLink(link);

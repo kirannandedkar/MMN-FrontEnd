@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 interface Item {
     title: string,
@@ -17,13 +17,18 @@ interface Props {
 
 export default function SubMenuItem({ item }: Props) {
     const router = useRouter();
-    
+    const pathName = usePathname();
+
     const [popupFlag, setPopupFlag] = useState(false);
 
     const items = item.subItems;
     const title = item.title;
     const parentPath = item.link;
+
     const [link, setLink] = useState<string>("");
+    useEffect(() => {
+        setLink(pathName);
+    }, [pathName]);
 
     const handleClick = (subItem:Item) => {
         if(subItem.link)

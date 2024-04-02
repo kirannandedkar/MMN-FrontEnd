@@ -12,7 +12,7 @@ const handler = async (req: any) =>{
         "referenceUserAccountId": null
       }
 
-      const result = await fetch(process.env.API_ENDPOIONT + 'UserAccount/create-user-with-google',{
+      const result = await fetch(process.env.NEXT_PUBLIC_API_ENDPOIONT + 'UserAccount/create-user-with-google',{
         method:'POST',
         headers: {
             'Content-Type': 'application/json',
