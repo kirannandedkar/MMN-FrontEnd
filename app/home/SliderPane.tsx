@@ -43,31 +43,50 @@ interface Item {
 
 const SliderItem = (item: Item, index: number) => {
 	return (
-		<div className={`relative overflow-hidden w-full ${item.className || ""}`} key={index}>
-			<div className="lg:block hidden">
-				<div className={`absolute top-0 left-0 z-[2] w-[786px] h-full lg:block hidden ${item.imageClassName}`}></div>
-				<Image
-					src={item.image}
-					alt="hero"
-					width={0}
-					height={0}
-					sizes="100vw"
-					className="absolute top-0 left-[-93px] z-[1] h-full w-[878px]"
-				/>
-			</div>
-			<MMNContainer className="flex-col z-[3] relative">
-				<div className="sm:pt-[40px] pt-[5px] pb-[20px] flex flex-col gap-[26px]">
-					<div className="w-full h-[36px]"></div>
-					<div className="grid lg:grid-cols-2 grid-cols-1 gap-[40px]">
-						<div className="lg:block hidden">
-							
-						</div>
-
-						<InfoCard event={item} />
-					</div>
-					<div className="w-full h-[10px]"></div>
+		<div key={index}>
+			<div className={`md:block hidden relative overflow-hidden w-full ${item.className || ""}`} >
+				<div>
+					<div className={`absolute top-0 left-0 z-[2] w-[786px] h-full ${item.imageClassName || ''}`}></div>
+					<Image
+						src={item.image}
+						alt="hero"
+						width={0}
+						height={0}
+						sizes="100vw"
+						className="absolute top-0 left-[-93px] z-[1] h-full w-[878px]"
+					/>
 				</div>
-			</MMNContainer>
+				<MMNContainer className="flex-col z-[3] relative">
+					<div className="sm:pt-[40px] pt-[5px] pb-[20px] flex flex-col gap-[26px]">
+						<div className="w-full h-[36px]"></div>
+						<div className="grid grid-cols-2 gap-[40px]">
+							<div></div>
+							<InfoCard event={item} />
+						</div>
+						<div className="w-full h-[10px]"></div>
+					</div>
+				</MMNContainer>
+			</div>
+
+			<div className={`md:hidden block relative overflow-hidden w-full ${item.className || ""}`}>
+				<div className="relative w-full h-[315px] overflow-hidden">
+					<div className={`absolute top-0 left-0 z-[2] w-full h-full ${item.imageClassName || ''}`}></div>
+					<Image
+						src={item.image}
+						alt="hero"
+						width={0}
+						height={0}
+						sizes="100vw"
+						className="z-[1] h-full w-auto"
+					/>
+				</div>
+				<MMNContainer className="flex-col z-[3] relative">
+					<div className="pt-[40px] pb-[20px] flex flex-col gap-[26px]">
+						<InfoCard event={item} />
+						<div className="w-full h-[24px]"></div>
+					</div>
+				</MMNContainer>
+			</div>
 		</div>
 	)
 }
@@ -77,7 +96,7 @@ const setting = {
 	speed: 500,
 	slidesToShow: 1,
 	slidesToScroll: 1,
-	arrows: false, 
+	arrows: false,
 	dotsClass: "slick-dots bottom-[20px]"
 }
 

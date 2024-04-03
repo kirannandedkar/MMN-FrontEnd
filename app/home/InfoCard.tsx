@@ -19,8 +19,8 @@ export default function InfoCard(params: Props) {
                 <MMNButton title="Upcoming event" size="small" color="white" />
             </div>
 
-            <div className="flex gap-[10px] text-[34px] leading-[51px] flex-wrap">
-                <h1 className="font-bold"> {params.event.title} </h1>
+            <div className="flex gap-[10px] text-[34px] leading-[51px] overflow-hidden justify-start">
+                <h1 className="font-bold min-w-max"> {params.event.title} </h1>
                 <h1 className="font-normal"> {params.event.year} </h1>
             </div>
 
