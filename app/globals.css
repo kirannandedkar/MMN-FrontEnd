@@ -45,7 +45,8 @@ body {
 }
 
 .bg-custom-radial-gradient-red {
-  background: radial-gradient(100% 726.51% at 100% 0%, #FF5733 0%, #A40714 91.84%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+  background: radial-gradient(100% 726.51% at 100% 0%, #FF5733 0%, #A40714 91.84%);
+  /* background: #FA5233; #A40714; */
 }
 
 .bg-custom-radial-gradient-purple {
@@ -54,15 +55,6 @@ body {
 
 .bg-custom-overlay-gradient-red{
   background: radial-gradient(100% 268.88% at 8.5% 0%, rgba(252, 84, 50, 0) 51%, #D73426 77%, #CE2C23 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
-}
-
-.slick-dots li button:before{
-  font-size: 15px;
-}
-
-.slick-dots li.slick-active button:before{
-  color: white;
-  opacity: 1;
 }
 
 .ReactModal__Overlay.ReactModal__Overlay--after-open {
@@ -145,4 +137,18 @@ body {
     width: 80% !important;
     margin-top: 20px !important;
   }  
+}
+
+.slick-slider li.slick-active{
+  opacity: 1;
+}
+
+.slick-slider li{
+  opacity: .2;
+}
+
+.slick-dots li{
+  width: inherit;
+  height: inherit;
+  margin: 0px;
 }

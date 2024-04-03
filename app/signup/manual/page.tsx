@@ -23,7 +23,7 @@ export default function SignUpManualPage() {
     const [member, setMember] = useState<AccountInfo | null>(null);
 
     return (
-        <>
+        <div className="max-w-[1440px] m-auto">
             <TopNav itemList={NavData} />
             <MMNContainer className="gap-[40px] pb-[40px] lg:flex-row flex-col">
                 <div className="flex flex-col gap-[20px] grow-[2]">
@@ -58,6 +58,6 @@ export default function SignUpManualPage() {
                 </div>
                 <PaymentCard />
             </MMNContainer>
-        </>
+        </div>
     );
 }

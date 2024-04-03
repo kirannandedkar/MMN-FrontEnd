@@ -22,7 +22,7 @@ export default function MemberShipPage() {
     return (
         <>
             <SliderPane />
-            <MMNContainer className="flex-col">
+            <MMNContainer className="flex-col max-w-[1440px] m-auto">
                 <AboutPane />
 
                 <div className="xl:grid xl:grid-cols-2 gap-[40px] pb-[40px] flex flex-col">

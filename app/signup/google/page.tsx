@@ -36,7 +36,7 @@ export default function SignUpGooglePage() {
     }, [session]);
 
     return (
-        <>
+        <div className="max-w-[1440px] m-auto">
             <TopNav itemList={NavData} />
             <MMNContainer className="gap-[40px] pb-[40px] flex-col lg:flex-row">
                 <div className="flex flex-col gap-[20px] grow-[2]">
@@ -54,6 +54,6 @@ export default function SignUpGooglePage() {
                 </div>
                 <PaymentCard />
             </MMNContainer>
-        </>
+        </div>
     );
 }

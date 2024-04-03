@@ -47,7 +47,7 @@ export default function FooterBar() {
 
     return (
         <div className="w-full py-[40px] border-t-[1px] border-color-mmn-lightgrey bg-[#F1F1F1] flex justify-center">
-            <div className="w-full xl:px-[90px] sm:px-[40px] px-[20px] flex flex-wrap justify-between sm:gap-[40px] gap-[10px] max-w-[1440px]">
+            <div className="w-full xl:px-[90px] sm:px-[40px] px-[20px] flex flex-wrap justify-between sm:gap-[40px] gap-[10px]">
                 {RenderItem}
             </div>
         </div>

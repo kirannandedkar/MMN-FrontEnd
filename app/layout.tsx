@@ -28,7 +28,7 @@ export default function RootLayout({
           <SocialLinkBar />
 
           <div className="flex justify-center">
-            <div className="w-full max-w-[1440px] flex flex-col min-h-screen">
+            <div className="w-full flex flex-col min-h-screen">
               <div className="xl:block hidden">
                 <DesktopHeader />
               </div>

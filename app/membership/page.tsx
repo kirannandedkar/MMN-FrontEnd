@@ -20,7 +20,7 @@ const NavData = [
 export default function MemberShipPage() {
     const router = useRouter();
     return (
-        <>
+        <div className="max-w-[1440px] m-auto">
             <TopNav itemList={NavData} />
             <MMNContainer className="gap-[40px] pb-[40px] flex-col sm:flex-row">
                 <div className="flex flex-col gap-[20px] grow-[2]">
@@ -38,6 +38,6 @@ export default function MemberShipPage() {
 
                 <RenewMemberCard className="w-full sm:max-w-[420px]" />
             </MMNContainer>
-        </>
+        </div>
     );
 }
