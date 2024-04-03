@@ -43,7 +43,7 @@ export default function MobileSubMenuItem({ item, callback }: Props) {
                         {
                             items?.map((item, index) => (
                                 <div className="flex cusor-pointer hover:text-[#FF5733] hover:bg-white py-[10px] px-[15px] sm:py-[20px] sm:px-[30px] animate-dissolve ease-out duration-300"
-                                    key={index} 
+                                    key={`mobilesubmenuitem-${index}`}
                                     onClick={() => handleClick(item)}>
                                     <div className="lead-[21px] self-center">{item.title}</div>
                                 </div>

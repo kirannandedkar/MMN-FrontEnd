@@ -20,7 +20,7 @@ export default function LoginCard(){
 
                 <div className="flex flex-col gap-[5px]">
                     <div className="line-height-mmn-large">Password</div>
-                    <input type="text" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full" placeholder="Enter password" />
+                    <input type="password" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full" placeholder="Enter password" />
                 </div>
 
                 <div className="flex justify-end">

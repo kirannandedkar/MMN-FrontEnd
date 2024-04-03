@@ -53,7 +53,7 @@ export default function DesktopHeader() {
                     ${ item.link && link.startsWith(item.link) ? "text-white bg-mmn-red border-[#FFC5B9]" : "bg-white border-white"}
                     hover:bg-[#EAEAEA] hover:border-[#FFC5B9]`}
                     onClick={() => menuClicked(item.title, item.link)}
-                    key={index}
+                    key={`desktopheader-${index}`}
                 >
                     <div className="line-height-mmn-normal self-center">
                         {item.title}
@@ -61,7 +61,7 @@ export default function DesktopHeader() {
                 </div>
             )
         } else {
-            return <SubMenuItem item={item} key={index} />
+            return <SubMenuItem item={item} key={`desktopheader-${index}`} />
         }
     });
 

@@ -24,11 +24,11 @@ export default function TopNav(params: Props) {
                 {
                     itemList.map((item: Item, index) => {
                         if (index == count - 1) {
-                            return <span key={index}>
+                            return <span key={`topnav-${index}`}>
                                 {item.title}
                             </span>
                         } else {
-                            return <span key={index}>
+                            return <span key={`topnav-${index}`}>
                                 <a className="text-color-mmn-yellow underline" href={item.link}>
                                     {item.title}
                                 </a>

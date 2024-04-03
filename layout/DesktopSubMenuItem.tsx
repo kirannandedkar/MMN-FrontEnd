@@ -32,15 +32,15 @@ export default function SubMenuItem({ item }: Props) {
         setLink(pathName);
     }, [pathName]);
 
-    const handleClick = (subItem:Item) => {
-        if(subItem.link)
+    const handleClick = (subItem: Item) => {
+        if (subItem.link)
             router.push(parentPath + subItem.link);
         setPopupFlag(false);
     }
-    
+
     return (
         <div className={`flex relative px-[30px] py-[15px] border-b-[2px] rounded-b-[6px] cursor-pointer z-[100]
-        ${ item.link && link.startsWith(item.link) ? "bg-mmn-red border-[#FFC5B9]" : "bg-white border-white" } 
+        ${item.link && link.startsWith(item.link) ? "bg-mmn-red border-[#FFC5B9]" : "bg-white border-white"} 
         hover:bg-[#EAEAEA] hover:border-[#FFC5B9]`}
 
             onMouseOver={e => setPopupFlag(true)}
@@ -57,7 +57,8 @@ export default function SubMenuItem({ item }: Props) {
                         {
                             items?.map((item, index) => (
                                 <div className="flex hover:text-[#FF5733] hover:bg-white p-[20px] animate-dissolve ease-out duration-300"
-                                    key={index} onClick={() => handleClick(item) }>
+                                    key={`desktopsubmenuitem-${index}`}
+                                    onClick={() => handleClick(item)}>
                                     <div className="lead-[21px] self-center">{item.title}</div>
                                 </div>
                             ))

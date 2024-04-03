@@ -11,7 +11,7 @@ export default function SocialLinkBar() {
             <div className="w-full flex justify-end gap-4 px-[30px] gap-[10px] max-w-[1440px]">
                 {
                     items.map((item, index) => (
-                        <div className="rounded-[5px] p-[10px] text-size-mmn-small line-height-mmn-small" key={index}>
+                        <div className="rounded-[5px] p-[10px] text-size-mmn-small line-height-mmn-small" key={`sociallinksbar-${index}`}>
                             <a href={item.link}>{item.title}</a>
                         </div>
                     ))

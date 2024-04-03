@@ -56,7 +56,7 @@ export default function Paypane(params: Props) {
 
                     {
                         familyAccounts.map((account, index) => {
-                            return <div key={index}>{GetMemberLine(account, index, RemoveClick)}</div>
+                            return <div key={`paypane-${index}`}>{GetMemberLine(account, index, RemoveClick)}</div>
                         })
                     }
 

@@ -62,13 +62,13 @@ export default function MobileHeader() {
                         {
                             menuItems?.map((item, index) => {
                                 if (item.subItems) {
-                                    return <div key={index}>
+                                    return <div key={`mobileheader-${index}`}>
                                         <MobileSubMenuItem item={item} callback={() => setShowMenuFlag(false)} />
                                     </div>
                                 } else {
                                     return (
                                         <div className="flex hover:text-color-mmn-yellow hover:bg-white py-[10px] px-[15px] sm:py-[20px] sm:px-[30px] animate-dissolve ease-out duration-300"
-                                            key={index}
+                                            key={`mobileheader-${index}`}
                                             onClick={() => { menuClicked(item.link) }}>
                                             <div className="lead-[21px] self-center">{item.title}</div>
                                         </div>)

@@ -28,12 +28,12 @@ const data = [
 
 const GetSubItem = (title: string, subItmes: any[], key: number | string) => {
     return (
-        <div className="flex flex-col gap-[10px] rounded-[5px]" key={key}>
+        <div className="flex flex-col gap-[10px] rounded-[5px]" key={`footer-first-${key}`}>
             <h3 className="font-semibold text-size-mmn-medium line-height-mmn-medium">{title}</h3>
             <div className="flex flex-col gap-[10px]">
                 {
                     subItmes.map((item, index) => (
-                        <span className="font-medium line-height-mmn-normal underline cursor-pointer" key={index}> {item.title} </span>
+                        <span className="font-medium line-height-mmn-normal underline cursor-pointer" key={`footer-second-${index}`}> {item.title} </span>
                     ))
                 }
             </div>
