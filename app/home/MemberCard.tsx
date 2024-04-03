@@ -1,8 +1,13 @@
+"use client";
+
 import MMNTitle from "@/components/MMNTItle";
 import MMNPanel from "@/components/MMNPanel";
 import MMNButton from "@/components/MMNButton";
+import { useRouter } from "next/navigation";
 
 export default function MemberCard(){
+    const router = useRouter();
+
     return (
         <MMNPanel className="bg-mmn-red">
             <MMNTitle title="Become a member" color="white" />
@@ -16,8 +21,8 @@ export default function MemberCard(){
             MMN Membership goes from January to December of each year. Do check our membership benefits and join us.
             </div>
 
-            <div className="flex justify-end">
-                <MMNButton title="Become a member" color="purple" />
+            <div className="flex justify-end" onClick={ () => router.push("/membership")}>
+                <MMNButton title="Become a member" color="white" />
             </div>
         </MMNPanel>
     )

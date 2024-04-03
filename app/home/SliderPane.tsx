@@ -43,23 +43,23 @@ interface Item {
 
 const SliderItem = (item: Item, index: number) => {
 	return (
-		<div className={`relative w-full ${item.className || ""}`} key={index}>
-			<div className="xl:block hidden">
-				<div className={`absolute top-0 left-0 z-[2] w-[878px] h-full xl:block hidden ${item.imageClassName}`}></div>
+		<div className={`relative overflow-hidden w-full ${item.className || ""}`} key={index}>
+			<div className="lg:block hidden">
+				<div className={`absolute top-0 left-0 z-[2] w-[786px] h-full lg:block hidden ${item.imageClassName}`}></div>
 				<Image
 					src={item.image}
 					alt="hero"
 					width={0}
 					height={0}
 					sizes="100vw"
-					className="absolute top-0 left-0 z-[1] h-full w-[878px]"
+					className="absolute top-0 left-[-93px] z-[1] h-full w-[878px]"
 				/>
 			</div>
 			<MMNContainer className="flex-col z-[3] relative">
 				<div className="sm:pt-[40px] pt-[5px] pb-[20px] flex flex-col gap-[26px]">
 					<div className="w-full h-[36px]"></div>
-					<div className="grid xl:grid-cols-2 grid-cols-1 gap-[40px]">
-						<div className="xl:block hidden">
+					<div className="grid lg:grid-cols-2 grid-cols-1 gap-[40px]">
+						<div className="lg:block hidden">
 							
 						</div>
 

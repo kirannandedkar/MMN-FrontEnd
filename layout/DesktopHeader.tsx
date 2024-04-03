@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import SubMenuItem from "./SubMenuItem";
+import SubMenuItem from "./DesktopSubMenuItem";
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
@@ -27,7 +27,7 @@ const menuItems = [
     { title: "Login", link: "" },
 ]
 
-export default function HeaderBar() {
+export default function DesktopHeader() {
     const pathName = usePathname();
     
     const [link, setLink] = useState<string>("");
@@ -75,7 +75,7 @@ export default function HeaderBar() {
                 sizes="100vw"
                 className="w-[135px] h-auto py-[15px] min-h-[83px]"
             />
-            <div className="flex-grow px-[30px] xl:flex gap-[1px] justify-end hidden">
+            <div className="flex flex-grow px-[30px] gap-[1px] justify-end">
                 {RenderItems}
             </div>
         </div>

@@ -3,7 +3,7 @@
 import MMNButton from "@/components/MMNButton";
 import { useState } from "react";
 import { FamilyAccountInfo } from "@/constants/types";
-import TrashButton from "@/components/icons/trash";
+import TrashButton from "@/components/icons/Trash";
 import FamilyMemberModal from "./FamilyMemberModal";
 
 
