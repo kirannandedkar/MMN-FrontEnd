@@ -40,15 +40,16 @@ export default function SubMenuItem({ item }: Props) {
 
     return (
         <div className={`flex relative px-[30px] py-[15px] border-b-[2px] rounded-b-[6px] cursor-pointer z-[100]
-        ${item.link && link.startsWith(item.link) ? "bg-mmn-red border-[#FFC5B9]" : "bg-white border-white"} 
-        hover:bg-[#EAEAEA] hover:border-[#FFC5B9]`}
+        ${item.link && link.startsWith(item.link) ? "text-white bg-mmn-red border-[#FFC5B9]" : "bg-white border-white"} 
+        hover:bg-[#EAEAEA] hover:border-[#FFC5B9] hover:text-black`}
 
             onMouseOver={e => setPopupFlag(true)}
             onMouseLeave={e => setPopupFlag(false)}
         >
             <div className="line-height-mmn-normal self-center flex gap-[6px] items-center">
                 <span> {title} </span>
-                {popupFlag ? <ArrowUp /> : <ArrowDown />}
+                {/* {popupFlag ? <ArrowUp /> : <ArrowDown />} */}
+                {popupFlag ? '⮝' : '⮟' }
             </div>
 
             {

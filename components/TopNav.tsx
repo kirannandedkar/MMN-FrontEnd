@@ -20,7 +20,7 @@ export default function TopNav(params: Props) {
 
     return (
         <MMNContainer>
-            <div className="py-[40px] flex gap-[10px]">
+            <div className="py-[40px] flex gap-[10px] flex-wrap">
                 {
                     itemList.map((item: Item, index) => {
                         if (index == count - 1) {
@@ -30,7 +30,7 @@ export default function TopNav(params: Props) {
                         } else {
                             return <span key={`topnav-${index}`}>
                                 <a className="text-color-mmn-yellow underline" href={item.link}>
-                                    {item.title}
+                                    {`${item.title}`}
                                 </a>
                                 <span>{" > "}</span>
                             </span>

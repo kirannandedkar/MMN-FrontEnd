@@ -33,4 +33,7 @@ export const CountryList = [
 export interface CommitteeMember{
     name: string, 
     imageurl: string,
+    period?: {
+        begin: number, end: number
+    }
 }
