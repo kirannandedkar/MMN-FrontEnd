@@ -6,6 +6,7 @@ import MMNContainer from '@/components/MMNContainer';
 import MMNTitle from '@/components/MMNTItle';
 import TopNav from '@/components/TopNav';
 import LinesEllipsis from 'react-lines-ellipsis'
+import Image from "next/image";
 
 const NavData = [
   { title: "Home", link: "/home" },
@@ -20,8 +21,8 @@ const yearList = [
 
 const data = {
   executive: [
-    { name: "Member name , Member name, Member name, Member name,Member name, Member name, Member name", imageurl: "" },
-    { name: "Member name", imageurl: "" },
+    { name: "Member name , Member name, Member name, Member name,Member name, Member name, Member name", imageurl: "/image/members/executive/member1.jpg" },
+    { name: "Member name", imageurl: "/image/members/executive/member2.jpg" },
     { name: "Member name", imageurl: "" },
     { name: "Member name", imageurl: "" },
     { name: "Member name", imageurl: "" },
@@ -43,15 +44,23 @@ const data = {
 
 const memberCard = (member: CommitteeMember) => {
   let title = member.name;
-  
-  if(member.period){
+
+  if (member.period) {
     // title += `\n(${member.period.begin} - ${member.period.end <= 0 ? 'Now' : member.period.end})`
   }
 
   return (
     <div className='flex flex-col gap-[10px] cursor-pointer'>
-      <div className='w-[211px] h-[211px] bg-[#F0F0F0] rounded-[10px]'>
-
+      <div className='w-[211px] h-[211px] bg-[#F0F0F0] rounded-[10px] flex justify-center items-center'>
+        <Image
+          src={member.imageurl}
+          alt={title}
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="z-[1] h-full w-auto p-[5px]"
+          priority={true}
+        />
       </div>
 
       <div className='text-center line-height-mmn-large font-poppins font-medium max-w-[211px] whitespace-break-spaces'>
