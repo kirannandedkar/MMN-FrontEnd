@@ -20,15 +20,14 @@ export default function MobileSubMenuItem({ item, callback }: {
     const subMenuClicked = (subItem: MenuItem) => {
         if (subItem.link)
             router.push(parentPath + subItem.link);
+        if (subItem.href)
+            window.open(subItem.href, "_blank");
         setPopupFlag(false);
         if (callback) callback();
     }
 
     return (
-        <div className="hover:text-color-mmn-yellow hover:bg-white py-[10px] px-[15px] sm:py-[20px] sm:px-[30px]  animate-dissolve ease-out duration-300 relative"
-            onMouseOver={() => setPopupFlag(true)}
-            onMouseOut={() => setPopupFlag(false)}
-        >
+        <div className="hover:text-color-mmn-yellow hover:bg-white py-[10px] px-[15px] sm:py-[20px] sm:px-[30px]  animate-dissolve ease-out duration-300 relative">
             {
                 popupFlag ?
                     <div className="absolute right-[123px] sm:right-[153px] top-[0px] w-max border-b-[2px] rounded-[6px] border-[#808080] border-b-[2px] bg-[#ECE9E9] flex flex-col p-[2px]">
