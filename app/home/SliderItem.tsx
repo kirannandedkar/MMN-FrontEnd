@@ -57,7 +57,7 @@ const SliderItem = ({ item}: { item: Item}) => {
                         priority={ true }
                     />
                 </div>
-                <MMNContainer className="flex-col z-[3] relative">
+                <MMNContainer className="flex-col z-[2] relative">
                     <div className="pt-[40px] pb-[20px] flex flex-col gap-[26px]">
                         <InfoCard event={item} />
                         <div className="w-full h-[24px]"></div>

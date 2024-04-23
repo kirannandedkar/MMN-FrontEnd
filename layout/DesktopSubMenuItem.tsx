@@ -31,7 +31,7 @@ export default function SubMenuItem({ item }: {item: MenuItem}) {
     }
 
     return (
-        <div className={`flex relative px-[30px] py-[15px] border-b-[2px] rounded-b-[6px] cursor-pointer z-[100]
+        <div className={`flex relative px-[30px] py-[15px] border-b-[2px] rounded-b-[6px] cursor-pointer z-[3]
         ${item.link && link.startsWith(item.link) ? "text-white bg-mmn-red border-[#FFC5B9]" : "bg-white border-white"} 
         hover:bg-[#EAEAEA] hover:border-[#FFC5B9] hover:text-black`}
 

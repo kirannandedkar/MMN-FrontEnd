@@ -21,8 +21,8 @@ export default function MobileHeader() {
     }
 
     return (
-        <div className="relative z-[100] text-[12px]">
-            <div className="w-full flex gap-[10px] px-[30px] z-[100] items-center justify-between">
+        <div className="relative z-[4] text-[12px]">
+            <div className="w-full flex gap-[10px] px-[30px] items-center justify-between">
                 <Image
                     src={"/image/logo/HeaderLogo.png"}
                     alt="headerlogo"
