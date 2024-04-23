@@ -22,7 +22,7 @@ export default function MobileHeader() {
 
     return (
         <div className="relative z-[4] text-[12px]">
-            <div className="w-full flex gap-[10px] px-[30px] items-center justify-between">
+            <div className="w-full flex gap-[10px] px-[30px] items-center justify-between" onMouseLeave={() => setShowMenuFlag(false)} >
                 <Image
                     src={"/image/logo/HeaderLogo.png"}
                     alt="headerlogo"
