@@ -21,7 +21,7 @@ export default function MobileHeader() {
     }
 
     return (
-        <div className="relative z-[100] text-[12px]" onMouseLeave={() => setShowMenuFlag(false)}>
+        <div className="relative z-[100] text-[12px]" onMouseLeave={() => setShowMenuFlag(false)} onPointerOut={() => setShowMenuFlag(false)}>
             <div className="w-full flex gap-[10px] px-[30px] z-[100] items-center justify-between">
                 <Image
                     src={"/image/logo/HeaderLogo.png"}
@@ -31,7 +31,10 @@ export default function MobileHeader() {
                     sizes="100vw"
                     className="w-[60px] md:w-[90px] h-auto py-[10px]"
                 />
-                <div className="py-[10px] px-[5px] hover:opacity-20 rounded-[5px] cursor-pointer" onClick={() => setShowMenuFlag(!showMenuFlag)}>
+                <div className="py-[10px] px-[5px] hover:opacity-20 rounded-[5px] cursor-pointer" 
+                    onClick={() => setShowMenuFlag(!showMenuFlag)}
+                    onPointerUp={() => setShowMenuFlag(!showMenuFlag)}
+                    >
                     <Line3horizontal />
                 </div>
             </div>
