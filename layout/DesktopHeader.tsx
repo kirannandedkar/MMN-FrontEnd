@@ -5,27 +5,7 @@ import Image from "next/image";
 import SubMenuItem from "./DesktopSubMenuItem";
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-
-const menuItems = [
-    { title: "Home", link: "/home" },
-    {
-        title: "About us",
-        link: "/aboutus",
-        subItems: [
-            { title: "Mission and Vision", link: "" },
-            { title: "MMN History", link: "" },
-            { title: "MMN Constitution", link: "" },
-            { title: "Committee Members", link: "/committeemember" },
-            { title: "Become a MMN member", link: "" },
-        ]
-    },
-    { title: "MemberShip", link: "/membership" },
-    { title: "Event", link: "" },
-    { title: "Gallery", link: "" },
-    { title: "MMN Initiatives", link: "" },
-    { title: "Contact us", link: "" },
-    { title: "Login", link: "" },
-]
+import { menuItemData, MenuItem } from "./Share";
 
 export default function DesktopHeader() {
     const pathName = usePathname();
@@ -37,14 +17,14 @@ export default function DesktopHeader() {
 
     const router = useRouter();
     
-    const menuClicked = (menuTitle: string, link: string) => {
-        if (link) {
+    const topMenuClicked = (item: MenuItem) => {
+        if (item.link) {
             setLink(link);
             router.push(link);
         }
     }
 
-    const RenderItems = menuItems.map((item, index) => {
+    const RenderItems = menuItemData.map((item, index) => {
         const subItemList = item.subItems;
 
         if (subItemList == undefined) {
@@ -52,7 +32,7 @@ export default function DesktopHeader() {
                 <div className={`flex border-b-[2px] rounded-b-[6px] px-[30px] py-[15px] cursor-pointer 
                     ${ item.link && link.startsWith(item.link) ? "text-white bg-mmn-red border-[#FFC5B9]" : "bg-white border-white"}
                     hover:bg-[#EAEAEA] hover:border-[#FFC5B9]`}
-                    onClick={() => menuClicked(item.title, item.link)}
+                    onClick={() => topMenuClicked(item)}
                     key={`desktopheader-${index}`}
                 >
                     <div className="line-height-mmn-normal self-center">

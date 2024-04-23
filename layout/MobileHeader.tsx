@@ -6,27 +6,7 @@ import Line3horizontal from "@/components/icons/Line3horizontal";
 import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import MobileSubMenuItem from "./MobileSubMenuItem";
-
-const menuItems = [
-    { title: "Home", link: "/home" },
-    {
-        title: "About us",
-        link: "/aboutus",
-        subItems: [
-            { title: "Mission and Vision", link: "" },
-            { title: "MMN History", link: "" },
-            { title: "MMN Constitution", link: "" },
-            { title: "Committee Members", link: "/committeemember" },
-            { title: "Become a MMN member", link: "" },
-        ]
-    },
-    { title: "MemberShip", link: "/membership" },
-    { title: "Event", link: "" },
-    { title: "Gallery", link: "" },
-    { title: "MMN Initiatives", link: "" },
-    { title: "Contact us", link: "" },
-    { title: "Login", link: "" },
-]
+import { menuItemData } from "./Share";
 
 export default function MobileHeader() {
 
@@ -34,7 +14,7 @@ export default function MobileHeader() {
 
     const router = useRouter();
 
-    const menuClicked = (link: string) => {
+    const topMenuClicked = (link: string) => {
         setShowMenuFlag(false);
         if (link)
             router.push(link);
@@ -60,7 +40,7 @@ export default function MobileHeader() {
                 showMenuFlag ?
                     <div className="absolute md:top-[55px] top-[44px] right-[0px] w-max border-b-[2px] rounded-b-[6px] border-[#808080] border-b-[2px] bg-[#ECE9E9] flex flex-col p-[2px] cursor-pointer">
                         {
-                            menuItems?.map((item, index) => {
+                            menuItemData?.map((item, index) => {
                                 if (item.subItems) {
                                     return <div key={`mobileheader-${index}`}>
                                         <MobileSubMenuItem item={item} callback={() => setShowMenuFlag(false)} />
@@ -69,7 +49,7 @@ export default function MobileHeader() {
                                     return (
                                         <div className="flex hover:text-color-mmn-yellow hover:bg-white py-[10px] px-[15px] sm:py-[20px] sm:px-[30px] animate-dissolve ease-out duration-300"
                                             key={`mobileheader-${index}`}
-                                            onClick={() => { menuClicked(item.link) }}>
+                                            onClick={() => { topMenuClicked(item.link) }}>
                                             <div className="lead-[21px] self-center">{item.title}</div>
                                         </div>)
                                 }

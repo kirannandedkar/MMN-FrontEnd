@@ -4,20 +4,9 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import ArrowDown from "@/components/icons/ArrowDown"
 import ArrowUp from "@/components/icons/ArrowUp"
+import { MenuItem } from "./Share";
 
-interface Item {
-    title: string,
-    link: string,
-}
-
-interface Props {
-    item: {
-        title: string, link: string, subItems: Item[]
-    },
-    callback?: Function
-}
-
-export default function SubMenuItem({ item }: Props) {
+export default function SubMenuItem({ item }: {item: MenuItem}) {
     const router = useRouter();
     const pathName = usePathname();
 
@@ -32,9 +21,12 @@ export default function SubMenuItem({ item }: Props) {
         setLink(pathName);
     }, [pathName]);
 
-    const handleClick = (subItem: Item) => {
+    const subMenuClicked = (subItem: MenuItem) => {
         if (subItem.link)
             router.push(parentPath + subItem.link);
+        if (subItem.href){
+            window.open(subItem.href, "_blank");
+        }
         setPopupFlag(false);
     }
 
@@ -59,7 +51,7 @@ export default function SubMenuItem({ item }: Props) {
                             items?.map((item, index) => (
                                 <div className="flex hover:text-[#FF5733] hover:bg-white p-[20px] animate-dissolve ease-out duration-300"
                                     key={`desktopsubmenuitem-${index}`}
-                                    onClick={() => handleClick(item)}>
+                                    onClick={() => subMenuClicked(item)}>
                                     <div className="lead-[21px] self-center">{item.title}</div>
                                 </div>
                             ))

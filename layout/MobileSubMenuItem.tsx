@@ -4,20 +4,12 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import ArrowDown from "@/components/icons/ArrowDown"
 import ArrowUp from "@/components/icons/ArrowUp"
+import { MenuItem } from "./Share";
 
-interface Item {
-    title: string,
-    link: string,
-}
-
-interface Props {
-    item: {
-        title: string, link: string, subItems: Item[]
-    },
+export default function MobileSubMenuItem({ item, callback }: {
+    item: MenuItem,
     callback?: () => void
-}
-
-export default function MobileSubMenuItem({ item, callback }: Props) {
+}) {
     const router = useRouter();
 
     const [popupFlag, setPopupFlag] = useState(false);
@@ -25,7 +17,7 @@ export default function MobileSubMenuItem({ item, callback }: Props) {
     const items = item.subItems;
     const parentPath = item.link;
 
-    const handleClick = (subItem: Item) => {
+    const subMenuClicked = (subItem: MenuItem) => {
         if (subItem.link)
             router.push(parentPath + subItem.link);
         setPopupFlag(false);
@@ -44,7 +36,7 @@ export default function MobileSubMenuItem({ item, callback }: Props) {
                             items?.map((item, index) => (
                                 <div className="flex cusor-pointer hover:text-[#FF5733] hover:bg-white py-[10px] px-[15px] sm:py-[20px] sm:px-[30px] animate-dissolve ease-out duration-300"
                                     key={`mobilesubmenuitem-${index}`}
-                                    onClick={() => handleClick(item)}>
+                                    onClick={() => subMenuClicked(item)}>
                                     <div className="lead-[21px] self-center">{item.title}</div>
                                 </div>
                             ))
