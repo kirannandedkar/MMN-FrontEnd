@@ -27,7 +27,7 @@ export default function MemberShipPage() {
 
     return (
         <>
-            <Curtain onClicked={() => { setClicked(true) }} />
+            {/* <Curtain onClicked={() => { setClicked(true) }} /> */}
             <div>
                 <SliderPane />
                 <MMNContainer className="flex-col max-w-[1440px] m-auto">
