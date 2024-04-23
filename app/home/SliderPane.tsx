@@ -35,7 +35,7 @@ const data: Item[] = [
 
 const setting = {
 	autoplaySpeed: 1500,
-    autoplay: true,
+    autoplay: false,
 
 	dots: true,
 	speed: 500,
