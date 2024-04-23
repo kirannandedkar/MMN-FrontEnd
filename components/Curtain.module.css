@@ -1,6 +1,6 @@
 .animated {
     animation: fadeOut ease-in forwards;
-    animation-duration: 2s;
+    animation-delay: 2s;
 }
 
 .animated img:nth-child(1) {
@@ -22,6 +22,8 @@
 
     to {
         display: none;
+        z-index: -1;
+        visibility: hidden;
     }
 }
 
