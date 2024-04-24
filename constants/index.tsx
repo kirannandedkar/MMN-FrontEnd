@@ -7,3 +7,7 @@ export const GetPageTitle = (subTitle: string) => {
 export const FavIcon = [
     { rel: 'icon', url: '/favicon.png' },
 ];
+
+export const Urls = {
+    DefaultMemberImage : "/image/members/default.svg"
+}

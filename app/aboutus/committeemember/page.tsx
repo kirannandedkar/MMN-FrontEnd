@@ -7,6 +7,7 @@ import MMNTitle from '@/components/MMNTItle';
 import TopNav from '@/components/TopNav';
 import LinesEllipsis from 'react-lines-ellipsis'
 import Image from "next/image";
+import { Urls } from '@/constants';
 
 const NavData = [
   { title: "Home", link: "/home" },
@@ -51,15 +52,14 @@ const memberCard = (member: CommitteeMember) => {
 
   return (
     <div className='flex flex-col gap-[10px] cursor-pointer'>
-      <div className='w-[211px] h-[211px] bg-[#F0F0F0] rounded-[10px] flex justify-center items-center'>
+      <div className='w-[211px] h-[211px] bg-[#F0F0F0] rounded-[10px] flex justify-center items-center p-[25px]'>
         <Image
-          src={member.imageurl}
+          src={member.imageurl || Urls.DefaultMemberImage}
           alt={title}
           width={0}
           height={0}
           sizes="100vw"
           className="z-[1] h-full w-auto p-[5px]"
-          priority={true}
         />
       </div>
 

@@ -19,8 +19,8 @@ export default function DesktopHeader() {
     
     const topMenuClicked = (item: MenuItem) => {
         if (item.link) {
-            setLink(link);
-            router.push(link);
+            setLink(item.link);
+            router.push(item.link);
         }
     }
 
