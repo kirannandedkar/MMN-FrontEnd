@@ -6,6 +6,7 @@ import SocialLinkBar from "@/layout/SocialLinkBar";
 import DesktopHeader from "@/layout/DesktopHeader";
 import MobileHeader from "@/layout/MobileHeader";
 import FooterBar from "@/layout/Footer";
+import Providers from "./providers";
 
 
 //default font-14px, weight 500, family-poppin
@@ -21,6 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <SessionWrapper>
+
       <html lang="en">
         <body className={`text-size-mmn-normal border-white line-height-mmn-normal font-medium ${inter.className}`}>
 
@@ -36,7 +38,9 @@ export default function RootLayout({
                 <MobileHeader />
               </div>
               <div className="flex-grow">
-                {children}
+                <Providers>
+                  {children}
+                </Providers>
               </div>
             </div>
           </div>

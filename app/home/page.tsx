@@ -11,7 +11,8 @@ import SliderPane from "./SliderPane";
 import MMNTitle from "@/components/MMNTItle";
 import Image from "next/image";
 import Curtain from "@/components/Curtain";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { PublicContext } from "@/context/public-context";
 
 const title = GetPageTitle("Home");
 
@@ -22,12 +23,12 @@ const sponsorimages = [
     "/image/sponsors/sponsor-4.png",
 ];
 
-export default function MemberShipPage() {
-    const [clicked, setClicked] = useState(false);
+export default function HomePage() {
+    const { isCurtainClicked } = useContext(PublicContext)
 
     return (
         <>
-            <Curtain onClicked={() => { setClicked(true) }} />
+            {!isCurtainClicked && <Curtain />}
             <div>
                 <SliderPane />
                 <MMNContainer className="flex-col max-w-[1440px] m-auto">

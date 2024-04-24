@@ -1,10 +1,12 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./Curtain.module.css"
+import { PublicContext } from "@/context/public-context";
 
-const Curtain = ({ onClicked }: { onClicked: () => void }) => {
-  const [clicked, setClicked] = useState<boolean>(false);
+const Curtain = () => {
+  const { setIsCurtainClicked } = useContext(PublicContext)
+  const [isClicked, setIsClicked] = useState<boolean>(false)
 
   useEffect(() => {
     window.scrollTo({ top: 0 })
@@ -13,7 +15,7 @@ const Curtain = ({ onClicked }: { onClicked: () => void }) => {
   useEffect(() => {
     const body = document.querySelector("body")
     if (!body) return
-    if (clicked) {
+    if (isClicked) {
       const timer = setTimeout(() => {
         body.style.overflow = ""
       }, 2000);
@@ -22,19 +24,21 @@ const Curtain = ({ onClicked }: { onClicked: () => void }) => {
       body.style.overflow = "hidden"
 
     }
-  }, [clicked])
+  }, [isClicked])
 
+  const handleClick = () => {
+    setIsClicked(true);
 
+    const timer = setTimeout(() => {
+      setIsCurtainClicked(true);
+    }, 2000);
+    return () => clearTimeout(timer)
+  }
   return (
     <>
       <div
-        className={`h-full w-full overflow-hidden sm:grid sm:grid-cols-2 absolute top-0 h-[100vh] z-[100] ${clicked ? styles["animated"] : ''}`}
-        onClick={
-          () => {
-            setClicked(true);
-            onClicked();
-          }
-        }
+        className={`h-full w-full overflow-hidden sm:grid sm:grid-cols-2 absolute top-0 h-[100vh] z-[100] ${isClicked ? styles["animated"] : ''}`}
+        onClick={handleClick}
       >
         <Image
           src={"/image/home/curtain-left.png"}
@@ -65,7 +69,7 @@ const Curtain = ({ onClicked }: { onClicked: () => void }) => {
           className="z-[1] h-full w-auto p-[0px] sm:hidden"
           priority={true}
         />
-      </div>
+      </div >
     </>
   );
 };
