@@ -110,7 +110,7 @@ const CommitteeMemberPage = () => {
   const workingMemberList = memberList(currentWorkingMembers);
 
   return (
-    <>
+    <div className='max-w-[1440px] m-auto'>
       <TopNav itemList={NavData} />
 
       <div className="flex flex-col sm:px-[90px] px-5 gap-[30px] pb-[40px] text-size-mmn-medium">
@@ -133,7 +133,7 @@ const CommitteeMemberPage = () => {
 
         {workingMemberList}
       </div>
-    </>
+    </div>
   )
 }
 

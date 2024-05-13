@@ -1,10 +1,14 @@
+"use client"
+
+import { useRouter } from "next/navigation"
+
 const data = [
     {
         title: "Quick links", items: [
             { title: "Become a member", link: "" },
             { title: "Become a volunteer", link: "" },
             { title: "FAQ", link: "" },
-            { title: "Terms & Conditions", link: "" },
+            { title: "Terms & Conditions", link: "/terms" },
         ]
     },
     {
@@ -27,13 +31,21 @@ const data = [
 ]
 
 const GetSubItem = (title: string, subItmes: any[], key: number | string) => {
+    const router = useRouter();
+
+    const onLinkClicked = (item: any) => {
+        if (item.link) {
+            router.push(item.link);
+        }
+    }
+
     return (
         <div className="flex flex-col gap-[10px] rounded-[5px]" key={`footer-first-${key}`}>
             <h3 className="font-semibold text-size-mmn-medium line-height-mmn-medium">{title}</h3>
             <div className="flex flex-col gap-[10px]">
                 {
                     subItmes.map((item, index) => (
-                        <span className="font-medium line-height-mmn-normal underline cursor-pointer" key={`footer-second-${index}`}> {item.title} </span>
+                        <span className="font-medium line-height-mmn-normal underline cursor-pointer" key={`footer-second-${index}`} onClick={(e) => onLinkClicked(item)}> {item.title} </span>
                     ))
                 }
             </div>
