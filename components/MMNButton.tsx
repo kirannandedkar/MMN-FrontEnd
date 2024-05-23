@@ -1,4 +1,4 @@
-
+"use client"
 interface Props {
     title: string,
     size?: "big" | "normal" | "small",

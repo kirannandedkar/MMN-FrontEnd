@@ -1,3 +1,4 @@
+"use client"
 
 interface Props{
   className: string | null | undefined,

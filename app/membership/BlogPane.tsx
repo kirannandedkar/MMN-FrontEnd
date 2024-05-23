@@ -1,4 +1,4 @@
-
+"use client"
 
 import MMNContainer from "@/components/MMNContainer";
 

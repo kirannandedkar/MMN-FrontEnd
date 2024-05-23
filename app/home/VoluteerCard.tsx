@@ -1,3 +1,5 @@
+"use client"
+
 import MMNTitle from "@/components/MMNTItle";
 import MMNPanel from "@/components/MMNPanel";
 import MMNButton from "@/components/MMNButton";

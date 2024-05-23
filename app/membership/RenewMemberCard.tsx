@@ -1,3 +1,4 @@
+"use client"
 
 import MMNButton from "@/components/MMNButton";
 import MMNContainer from "@/components/MMNContainer";
