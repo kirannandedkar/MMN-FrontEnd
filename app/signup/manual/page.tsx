@@ -21,6 +21,14 @@ export default function SignUpManualPage() {
     const router = useRouter();
 
     const [member, setMember] = useState<AccountInfo | null>(null);
+    // add two password properteis
+    const [password, setPassword] = useState<{
+        password: string,
+        rePassword: string
+    }>({
+        password: '',
+        rePassword: ''
+    });
 
     return (
         <div className="max-w-[1440px] m-auto">
@@ -34,19 +42,19 @@ export default function SignUpManualPage() {
                         <div>
                             <div className="pb-[5px]">Type password*</div>
                             <input type="password" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
-                                placeholder="Enter Password"
+                                placeholder="Enter Password" value={password.password} onChange={e => setPassword({ ...password, password: e.target.value })}
                             />
                         </div>
 
                         <div>
                             <div className="pb-[5px]">Re-Type password*</div>
                             <input type="password" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
-                                placeholder="Re-Enter Password"
+                                placeholder="Re-Enter Password" value={password.rePassword} onChange={e => setPassword({ ...password, rePassword: e.target.value })}
                             />
                         </div>
                     </div>
                     
-                    <div onClick={() => handleSignup(member)} className="flex justify-end">
+                    <div onClick={() => handleSignup(member, password)} className="flex justify-end">
                         <MMNButton title={"Complete Profile"} color="white" className={"border border-color-mmn-purple"} />
                     </div>
 
