@@ -28,7 +28,7 @@ export default function HomePage() {
 
     return (
         <>
-            {!isCurtainClicked && <Curtain />}
+            {/* {!isCurtainClicked && <Curtain />} */}
             <div>
                 <SliderPane />
                 <MMNContainer className="flex-col max-w-[1440px] m-auto">
