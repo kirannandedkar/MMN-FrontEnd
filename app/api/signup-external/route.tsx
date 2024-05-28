@@ -20,7 +20,7 @@ const handler = async (req: any) =>{
         },
         body: JSON.stringify(signupRequest)
       })
-      if(result.status === 204){
+      if(result.status === 200){
         return NextResponse.json({success:true,status: 200, message: "Sign up successful"})
       }
       else{
