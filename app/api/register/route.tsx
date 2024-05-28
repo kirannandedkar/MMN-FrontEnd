@@ -24,21 +24,11 @@ const handler = async (req: any) => {
   });
 
   // console result to see what is returned
-    console.log(result.status);
+    console.log(request);
 
   if (result.status === 200) {
-    
-
-    if (result.status === 200) {
-        const res_body = (await result.json()) as AuthResult;
-        return handleSuccess(res_body);
-    } else {
-        return NextResponse.json({
-            success: false,
-            status: 400,
-            message: "Sign up failed",
-        });
-    }
+    const res_body = await result.json() as AuthResult;
+    return handleSuccess(res_body);
   } else {
     return NextResponse.json({
       success: false,
