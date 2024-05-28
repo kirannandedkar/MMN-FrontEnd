@@ -30,6 +30,9 @@ export default function SignUpManualPage() {
         rePassword: ''
     });
 
+    const signup = () => {
+        handleSignup(member, password);
+    }
     return (
         <div className="max-w-[1440px] m-auto">
             <TopNav itemList={NavData} />
@@ -53,8 +56,8 @@ export default function SignUpManualPage() {
                             />
                         </div>
                     </div>
-                    
-                    <div onClick={() => handleSignup(member, password)} className="flex justify-end">
+
+                    <div onClick={signup} className="flex justify-end">
                         <MMNButton title={"Complete Profile"} color="white" className={"border border-color-mmn-purple"} />
                     </div>
 
