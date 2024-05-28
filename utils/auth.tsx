@@ -8,29 +8,56 @@ const handleSignup = async (
     rePassword: string;
   }
 ) => {
-   
+
   const session = await getSession();
-
-  if (session) {
-    const result = await POST("/api/signup-external/", member);
-
-    if (result.status == 200) {
-      alert("signup successful");
-    }
-  } else {
-    if (password) {
+  try {
+    let status = 404;
+    if (session) {
+      const result = await POST("/api/signup-external/", member);
+      status = result.status;
+    } else {
+      if (password) {
         if (password.password !== password.rePassword) {
-        alert("passwords do not match");
-        return;
+          alert("passwords do not match");
+          return;
         }
         member.password = password.password;
+      }
+      const result = await POST("/api/register/", member);
+      status = result.status;
     }
-    const result = await POST("/api/register/", member);
+
+    if (status == 200) {
+      alert("signup successful");
+    } else {
+      alert("signup failed");
+    }
+  } catch {
+    alert("Error occured while signup.");
+  }
+};
+const handleSignin = async (
+  email: string,
+  password: string
+) => {
+
+  const session = await getSession();
+
+  try {
+    const result = await POST("/api/login/", {
+      email, password
+    });
 
     if (result.status == 200) {
       alert("signup successful");
+    } else {
+      console.log(result)
     }
+  } catch {
+    console.log("error while signin fetch")
   }
+
 };
 
-export { handleSignup };
+
+export { handleSignup, handleSignin };
