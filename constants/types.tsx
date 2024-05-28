@@ -1,9 +1,14 @@
 export interface FamilyAccountInfo {
-    firstName: string,
+    firstName?: string | null,
     lastName?: string | null,
-    birth?: string | null,
     email: string,
+    password?: string,
     gender?: 'male' | 'female' | null,
+    muncipality?: string,
+    phoneNumber?: string,
+    referenceUserAccountId?: number,
+
+    birth?: string | null,
     relation?: string | null,
     memberid?: string | null,
 }

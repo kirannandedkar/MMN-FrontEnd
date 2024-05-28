@@ -67,8 +67,8 @@ export default function AccountInfoPane(props: Props) {
                     <div className="pb-[5px]">Mobile no *</div>
                     <input type="text" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
                         placeholder="+123456789"
-                        value={member?.mobile || ''}
-                        onChange={e => handleOnChange("mobile", e.target.value)}
+                        value={member?.phoneNumber || ''}
+                        onChange={e => handleOnChange("phoneNumber", e.target.value)}
                     />
                 </div>
 
@@ -77,8 +77,8 @@ export default function AccountInfoPane(props: Props) {
                     <DropDown options={CountryList}
                         controlClassName="!rounded-[6px] !pl-[14px] !py-[16px] !line-height-mmn-medium"
                         arrowClassName={"!right-[27px] !top-[27px]"}
-                        value={member?.country || ""}
-                        onChange={(e) => { handleOnChange("country", e.value) }}
+                        value={member?.muncipality || ""}
+                        onChange={(e) => { handleOnChange("muncipality", e.value) }}
                         placeholder={"Select Kommune"} />
                 </div>
 
