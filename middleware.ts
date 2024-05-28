@@ -10,13 +10,9 @@ export async function middleware(request: NextRequest) {
   const url = new NextURL(request.url);
   const path = url.pathname.replace("/proxy/", "");
   const api_url = `${BASE_API_ROOT}${path}`;
-  // read cookies
   const cookies = request.cookies;
-
   // read access_token from cookies
   const access_token = cookies.get("access_token")?.value;
-  console.log(access_token);
-  console.log(api_url);
   const result = await fetch(api_url, {
     method: request.method,
     headers: {
