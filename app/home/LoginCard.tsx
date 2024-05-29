@@ -4,7 +4,7 @@ import MMNTitle from "@/components/MMNTItle";
 import MMNPanel from "@/components/MMNPanel";
 import MMNButton from "@/components/MMNButton";
 import GoogleButton from "@/components/GoogleButton";
-import { handleSignin } from "@/utils/auth";
+import { handleSigninManual } from "@/utils/auth";
 import { useState } from "react";
 
 export default function LoginCard() {
@@ -12,7 +12,7 @@ export default function LoginCard() {
     const [password, setPassword] = useState('');
 
     const signin = () => {
-        handleSignin(email, password);
+        handleSigninManual(email, password);
     }
 
     return (

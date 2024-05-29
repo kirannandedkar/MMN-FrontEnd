@@ -31,7 +31,7 @@ export default function SignUpManualPage() {
     });
 
     const signup = () => {
-        handleSignup(member, password);
+        handleSignup(member, password.password);
     }
     return (
         <div className="max-w-[1440px] m-auto">

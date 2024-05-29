@@ -11,7 +11,7 @@ import { AccountInfo } from "@/constants/types";
 
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useEffect, useState } from "react";
-import { handleSignup } from "@/utils/auth";
+import { handleSignupByGoogle } from "@/utils/auth";
 
 const NavData = [
     { title: "Home", link: "/home" },
@@ -43,7 +43,7 @@ export default function SignUpGooglePage() {
                     <BlogPane />
                     <AccountInfoPane account={member} setMember={setMember} />
                     
-                    <div onClick={() => handleSignup(member)} className="flex justify-end">
+                    <div onClick={() => handleSignupByGoogle(member)} className="flex justify-end">
                         <MMNButton title={"Complete Profile"} color="white" className={"border border-color-mmn-purple"} />
                     </div>
 
