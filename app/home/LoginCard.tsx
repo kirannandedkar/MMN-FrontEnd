@@ -6,13 +6,14 @@ import MMNButton from "@/components/MMNButton";
 import GoogleButton from "@/components/GoogleButton";
 import { handleSignin } from "@/utils/auth";
 import { useState } from "react";
+import { useLoginMutation } from "@/utils/api-calls";
 
 export default function LoginCard() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const loginMutation = useLoginMutation();
     const signin = () => {
-        handleSignin(email, password);
+        loginMutation.mutate({ username: email, password: password });
     }
 
     return (

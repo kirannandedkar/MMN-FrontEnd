@@ -23,5 +23,4 @@ export const menuItemData = [
     { title: "Gallery", link: "" },
     { title: "MMN Initiatives", link: "" },
     { title: "Contact us", link: "" },
-    { title: "Login", link: "" },
 ]

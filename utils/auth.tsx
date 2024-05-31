@@ -1,4 +1,4 @@
-import { POST } from "./fetch-factory";
+import { post } from "./fetch-factory";
 import { getSession } from "next-auth/react";
 
 const handleSignup = async (
@@ -13,7 +13,7 @@ const handleSignup = async (
   try {
     let status = 404;
     if (session) {
-      const result = await POST("/api/signup-external/", member);
+      const result = await post("/api/signup-external/", member);
       status = result.status;
     } else {
       if (password) {
@@ -23,7 +23,7 @@ const handleSignup = async (
         }
         member.password = password.password;
       }
-      const result = await POST("/api/register/", member);
+      const result = await post("/api/register/", member);
       status = result.status;
     }
 
@@ -44,7 +44,7 @@ const handleSignin = async (
   const session = await getSession();
 
   try {
-    const result = await POST("/api/login/", {
+    const result = await post("/api/login/", {
       email, password
     });
 
