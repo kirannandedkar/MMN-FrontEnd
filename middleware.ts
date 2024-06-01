@@ -6,7 +6,6 @@ const BASE_API_ROOT =
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-  console.log(request.url);
   const url = new NextURL(request.url);
   const path = url.pathname.replace("/proxy/", "");
   const api_url = `${BASE_API_ROOT}${path}`;

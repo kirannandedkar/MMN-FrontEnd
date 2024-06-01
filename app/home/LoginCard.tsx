@@ -4,21 +4,24 @@ import MMNTitle from "@/components/MMNTItle";
 import MMNPanel from "@/components/MMNPanel";
 import MMNButton from "@/components/MMNButton";
 import GoogleButton from "@/components/GoogleButton";
-import { handleSigninManual } from "@/utils/auth";
+import { handleSigninGoogle, handleSigninManual } from "@/utils/auth";
 import { useState } from "react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function LoginCard() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const signin = () => {
+    const signinManually = () => {
         handleSigninManual(email, password);
     }
 
     return (
         <MMNPanel className="">
             <MMNTitle title="Already member?" color="purple" />
-            <GoogleButton title="Log in with Google" className="max-w-full" />
+            <div onClick={handleSigninGoogle}>
+                <GoogleButton title="Log in with Google" className="max-w-full" />
+            </div>
             <div className="font-bold line-height-mmn-large text-center">
                 OR
             </div>
@@ -45,7 +48,7 @@ export default function LoginCard() {
                 </div>
 
                 <div className="flex justify-end">
-                    <div onClick={signin}>
+                    <div onClick={signinManually}>
                         <MMNButton title="Login" color="purple" size="normal" />
                     </div>
                 </div>

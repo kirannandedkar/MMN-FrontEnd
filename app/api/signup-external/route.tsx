@@ -16,10 +16,11 @@ const handler = async (req: any) =>{
         method:'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'bearer '+ req_body.id_token
+            'Authorization': 'Bearer '+ req_body.id_token
         },
         body: JSON.stringify(signupRequest)
       })
+      
       if(result.status === 200){
         return NextResponse.json({success:true,status: 200, message: "Sign up successful"})
       }

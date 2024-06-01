@@ -1,11 +1,20 @@
 import { POST } from "./fetch-factory";
-import { getSession } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 
 const handleSignupByGoogle = async (member: any) => {
-  const session = await getSession();
+  const session: any = await getSession();
 
   try {
-    const result = await POST("/api/signup-external/", member);
+    const result = await POST(
+      "/api/signup-external/",
+      {
+        firstName: session.user.name?.split(' ')[0] || '',
+        lastName: session.user.name?.split(' ')[1] || '',
+        email: session.user.email || '',
+        id_token: session?.id_token || '',
+      }
+    );
+
     let status = result.status;
 
     if (status == 200) {
@@ -44,19 +53,24 @@ const handleSigninManual = async (email: string, password: string) => {
   const session = await getSession();
   const result = await POST("/api/signin/manual", { email, password });
   if (result.status === 200) {
-    alert("signin successful");
+    alert("signin successful manually");
   } else {
     alert("signin failed");
   }
 };
 
 const handleSigninGoogle = async () => {
-  const session = await getSession();
-  const result = await POST("/api/signin/google", {});
-  if (result.status === 200) {
-    alert("signin successful");
+  const session: any = await getSession();
+
+  if (session) {
+    const result = await POST("/api/signin/google", { id_token: session?.id_token });
+    if (result.status === 200) {
+      alert("signin successful with google");
+    } else {
+      alert("signin failed");
+    }
   } else {
-    alert("signin failed");
+    signIn('google');
   }
 };
 
