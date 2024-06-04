@@ -5,6 +5,8 @@ import { useState } from "react";
 import { FamilyAccountInfo } from "@/constants/types";
 import FamilyMemberModal from "./FamilyMemberModal";
 import TrashButton from "@/components/icons/trash";
+import { APIPOST } from "@/utils/fetch-api";
+import { useRouter } from "next/navigation";
 
 interface Props {
     account?: FamilyAccountInfo,
@@ -16,16 +18,16 @@ const GetMemberLine = (member: FamilyAccountInfo, index: number, RemoveClick?: (
         <div className="py-[10px] flex justify-between items-center">
             <div> {`${member.firstName} ${member.lastName}`} </div>
             {
-                member.relation == 'me' ? 
-                    <div className="px-[10px] py-[6px] text-size-mmn-small line-height-mmn-small rounded-[6px] bg-[#F1F6FF]"> Primary member </div> : 
-                    <div onClick={() => RemoveClick?.(index)}><TrashButton /></div> 
+                member.relation == 'me' ?
+                    <div className="px-[10px] py-[6px] text-size-mmn-small line-height-mmn-small rounded-[6px] bg-[#F1F6FF]"> Primary member </div> :
+                    <div onClick={() => RemoveClick?.(index)}><TrashButton /></div>
             }
         </div>
     )
 }
 
 export default function Paypane(params: Props) {
-
+    const router = useRouter();
     const mainAccount = params.account as FamilyAccountInfo;
     const [familyAccounts, setFamilyAccounts] = useState<FamilyAccountInfo[]>([])
     const [price, setPrice] = useState<number>(0);
@@ -42,10 +44,10 @@ export default function Paypane(params: Props) {
 
     }
 
-    const PayClicked = () => {
-
+    const onPayClicked = async () => {
+        router.push('payment/checkout');
     }
-    
+
     return (
         <>
             <div className="flex flex-col gap-[14px]">
@@ -73,7 +75,9 @@ export default function Paypane(params: Props) {
                 </div>
 
                 <div className="flex justify-end">
-                    <MMNButton title="Proceed to pay" color="purple" />
+                    <div onClick={onPayClicked}>
+                        <MMNButton title="Proceed to pay" color="purple" />
+                    </div>
                 </div>
             </div>
             <FamilyMemberModal open={isOpenModal} onClose={() => setIsOpenModal(false)} onSave={(member) => setFamilyAccounts((prev) => ([...prev, member]))} />

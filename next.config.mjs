@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   output: 'standalone',
   // This is required to support PostHog trailing slash API requests
   skipTrailingSlashRedirect: true, 

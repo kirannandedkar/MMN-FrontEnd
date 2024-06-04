@@ -13,6 +13,7 @@
     "@types/react-datepicker": "^6.2.0",
     "@types/react-modal": "^3.16.3",
     "https": "^1.0.0",
+    "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "next": "14.1.4",
     "next-auth": "^4.24.7",
@@ -28,6 +29,7 @@
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
