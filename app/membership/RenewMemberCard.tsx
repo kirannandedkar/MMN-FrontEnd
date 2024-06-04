@@ -7,6 +7,7 @@ import MMNTitle from "@/components/MMNTItle";
 import { useState } from "react";
 import Paypane from "./Paypane";
 import { FamilyAccountInfo } from "@/constants/types";
+import { DefaultMemberFee } from "@/constants";
 
 interface Props {
     className?: string,
@@ -38,7 +39,7 @@ export default function RenewMemberCard(params: Props) {
             <MMNTitle title="Renew membership?" color="purple" />
             <div className="flex flex-wrap gap-[10px]">
                 <span>Price:</span>
-                <span className="font-semibold">{" kr 160 "}</span>
+                <span className="font-semibold">{` kr ${DefaultMemberFee}`}</span>
                 <span>per member</span>
             </div>
 

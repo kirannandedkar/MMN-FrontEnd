@@ -25,8 +25,9 @@ export const Genders = [
 ];
 
 export const Relationships = [
-    { value: "child", label: "Child" },
-    { value: "friend", label: "Friend" },
+    { value: "wife", label: "Wife" },
+    { value: "son", label: "Son" },
+    { value: "daughter", label: "Daughter" },
 ]
 
 export const CountryList = [

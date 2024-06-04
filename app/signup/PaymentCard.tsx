@@ -1,19 +1,27 @@
 import MMNButton from "@/components/MMNButton";
 import MMNTitle from "@/components/MMNTItle";
+import { DefaultMemberFee } from "@/constants";
+import { useRouter } from "next/navigation";
 
-export default function PaymentCard() {
+export default function PaymentCard({ memberCount = 1 }: { memberCount?: number }) {
+    const router = useRouter();
+    const processPayment = () => {
+        router.push('/payment/checkout');
+    }
     return (
         <div className="rounded-[10px] p-[24px] border border-color-mmn-lightgrey bg-mmn-red flex flex-col gap-[14px] text-white sm:w-1/2 w-full h-max min-w-max">
             <MMNTitle title="Total Payment" color="white" />
-            
+
             <div className="grid grid-cols-2 line-height-mmn-large">
                 <div>Total</div>
-                <div className="font-bold text-[18px]">kr 160</div>
+                <div className="font-bold text-[18px]">{`kr ${DefaultMemberFee * memberCount}`}</div>
             </div>
 
             <div className="grid md:grid-cols-2 grid-cols-1">
                 <div></div>
-                <MMNButton title="Proceed payment" color="white" className={"min-w-max"} />
+                <div onClick={processPayment}>
+                    <MMNButton title="Proceed payment" color="white" className={"min-w-max"} />
+                </div>
             </div>
         </div>
     )

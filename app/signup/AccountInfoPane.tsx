@@ -2,25 +2,20 @@ import { useCallback, useEffect, useState } from "react"
 import DropDown from 'react-dropdown';
 import { AccountInfo, Genders, CountryList } from "@/constants/types";
 import _ from "lodash"
+import { PhoneCode } from "@/constants";
 
 interface Props {
-    account: AccountInfo | null,
+    disabled?: boolean,
     setMember: (member: AccountInfo | null) => void
 }
 
-export default function AccountInfoPane(props: Props) {
-    const [member, setMember] = useState<AccountInfo | null>(props.account);
-
-    useEffect(() => {
-        setMember(props.account)
-    }, [props])
-
-    const debounceFn = useCallback(_.debounce(props.setMember, 1000), []);
+export default function AccountInfoPane({ disabled = false, setMember: setParentMember }: Props) {
+    const [member, setMember] = useState<AccountInfo | null>(null);
 
     const handleOnChange = (key: keyof AccountInfo, value: any) => {
         const newMember = { ...member, [key]: value || '' } as AccountInfo
         setMember(newMember)
-        debounceFn(newMember);
+        setParentMember(newMember);
     }
 
     return (
@@ -33,6 +28,7 @@ export default function AccountInfoPane(props: Props) {
                         placeholder="Enter First Name"
                         value={member?.firstName || ''}
                         onChange={e => handleOnChange("firstName", e.target.value)}
+                        disabled={disabled}
                     />
                 </div>
 
@@ -42,15 +38,17 @@ export default function AccountInfoPane(props: Props) {
                         placeholder="Enter Last Name"
                         value={member?.lastName || ''}
                         onChange={e => handleOnChange("lastName", e.target.value)}
+                        disabled={disabled}
                     />
                 </div>
 
                 <div>
-                    <div className="pb-[5px]">Birth*</div>
-                    <input type="date" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
+                    <div className="pb-[5px]">Date of Birth*</div>
+                    <input type="date" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium flex-grow w-full"
                         placeholder="Enter Birth"
                         value={member?.birth || ''}
                         onChange={e => handleOnChange("birth", e.target.value)}
+                        disabled={disabled}
                     />
                 </div>
 
@@ -60,16 +58,22 @@ export default function AccountInfoPane(props: Props) {
                         placeholder="email@email.no"
                         value={member?.email || ''}
                         onChange={e => handleOnChange("email", e.target.value)}
+                        disabled={disabled}
                     />
                 </div>
 
                 <div>
-                    <div className="pb-[5px]">Mobile no *</div>
-                    <input type="text" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
-                        placeholder="+123456789"
-                        value={member?.phoneNumber || ''}
-                        onChange={e => handleOnChange("phoneNumber", e.target.value)}
-                    />
+                    <div className="pb-[5px]">Mobile no (Norway only)*</div>
+                    <div className="relative">
+                        <div className="absolute flex items-center justify-center h-full pl-[14px]">
+                            <span className=" text-gray-400">{PhoneCode}</span>
+                        </div>
+                        <input type="text" step="any" className="py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium flex-grow focus:border-0 focus-visible:border-0 pl-[44px] pr-[14px] w-full"
+                            value={member?.phoneNumber || ''}
+                            onChange={e => handleOnChange("phoneNumber", e.target.value)}
+                            disabled={disabled}
+                        />
+                    </div>
                 </div>
 
                 <div>
@@ -79,6 +83,7 @@ export default function AccountInfoPane(props: Props) {
                         arrowClassName={"!right-[27px] !top-[27px]"}
                         value={member?.muncipality || ""}
                         onChange={(e) => { handleOnChange("muncipality", e.value) }}
+                        disabled={disabled}
                         placeholder={"Select Kommune"} />
                 </div>
 
@@ -89,6 +94,7 @@ export default function AccountInfoPane(props: Props) {
                         arrowClassName={"!right-[27px] !top-[27px]"}
                         value={member?.gender || ""}
                         onChange={(e) => { handleOnChange("gender", e.value) }}
+                        disabled={disabled}
                         placeholder={"Select your Gender"} />
                 </div>
             </div>

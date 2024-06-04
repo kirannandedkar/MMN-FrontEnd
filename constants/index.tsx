@@ -11,3 +11,6 @@ export const FavIcon = [
 export const Urls = {
     DefaultMemberImage : "/image/members/default.svg"
 }
+
+export const PhoneCode = '+47';
+export const DefaultMemberFee = 160;

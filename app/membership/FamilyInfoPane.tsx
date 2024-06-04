@@ -1,24 +1,23 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 import DropDown from 'react-dropdown';
 import { FamilyAccountInfo, Genders, Relationships } from "@/constants/types";
+import _ from "lodash";
 
 interface Props {
-    account: FamilyAccountInfo | null, 
     setMember: (member: FamilyAccountInfo | null) => void
 }
 
-export default function FamilyInfoPane(params: Props) {
-    const [member, setMember] = useState<FamilyAccountInfo|null>(null);
-    const defAccountInfo: FamilyAccountInfo| null = params.account;
-
-    useEffect(() => { setMember(params.account) }, [defAccountInfo]);
+export default function FamilyInfoPane(props: Props) {
+    const [member, setMember] = useState<FamilyAccountInfo | null>(null);
 
     const handleOnChange = (key: keyof FamilyAccountInfo, value: any) => {
-        setMember(prev => ({ ...prev!, [key]: value }));
-        params.setMember(member);
+        const _value: any = member ? {...member} : {}
+        _value[key] = value
+        setMember(_value);
+        props.setMember(_value);
     }
 
     return (
@@ -75,7 +74,7 @@ export default function FamilyInfoPane(params: Props) {
                         controlClassName="!rounded-[6px] !pl-[14px] !py-[16px] !line-height-mmn-medium"
                         arrowClassName={"!right-[27px] !top-[27px]"}
                         onChange={(e) => { handleOnChange("relation", e.value) }}
-                        value={member?.gender || ""}
+                        value={member?.relation || ""}
                         placeholder={"Select Relation"} />
                 </div>
             </div>

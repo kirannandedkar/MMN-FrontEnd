@@ -2,11 +2,12 @@
 
 import MMNButton from "@/components/MMNButton";
 import { useState } from "react";
-import { FamilyAccountInfo } from "@/constants/types";
+import { AccountInfo, FamilyAccountInfo } from "@/constants/types";
 import FamilyMemberModal from "./FamilyMemberModal";
 import TrashButton from "@/components/icons/trash";
 import { APIPOST } from "@/utils/fetch-api";
 import { useRouter } from "next/navigation";
+import { DefaultMemberFee } from "@/constants";
 
 interface Props {
     account?: FamilyAccountInfo,
@@ -20,7 +21,7 @@ const GetMemberLine = (member: FamilyAccountInfo, index: number, RemoveClick?: (
             {
                 member.relation == 'me' ?
                     <div className="px-[10px] py-[6px] text-size-mmn-small line-height-mmn-small rounded-[6px] bg-[#F1F6FF]"> Primary member </div> :
-                    <div onClick={() => RemoveClick?.(index)}><TrashButton /></div>
+                    <div onClick={() => RemoveClick?.(index)}><TrashButton fill="black" /></div>
             }
         </div>
     )
@@ -30,7 +31,6 @@ export default function Paypane(params: Props) {
     const router = useRouter();
     const mainAccount = params.account as FamilyAccountInfo;
     const [familyAccounts, setFamilyAccounts] = useState<FamilyAccountInfo[]>([])
-    const [price, setPrice] = useState<number>(0);
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
 
     const RemoveClick = (index: number) => {
@@ -39,10 +39,7 @@ export default function Paypane(params: Props) {
             return [...prev];
         });
     }
-
-    const handleAddMemberClick = () => {
-
-    }
+    const AddClicked = (member: FamilyAccountInfo) => setFamilyAccounts((prev) => ([...prev, member]));
 
     const onPayClicked = async () => {
         router.push('payment/checkout');
@@ -71,7 +68,7 @@ export default function Paypane(params: Props) {
                         Total payment
                     </div>
 
-                    <div className="text-size-mmn-extra line-height-mmn-extra">kr {price}</div>
+                    <div className="text-size-mmn-extra line-height-mmn-extra">kr {(familyAccounts.length + 1) * DefaultMemberFee}</div>
                 </div>
 
                 <div className="flex justify-end">
@@ -80,7 +77,7 @@ export default function Paypane(params: Props) {
                     </div>
                 </div>
             </div>
-            <FamilyMemberModal open={isOpenModal} onClose={() => setIsOpenModal(false)} onSave={(member) => setFamilyAccounts((prev) => ([...prev, member]))} />
+            <FamilyMemberModal open={isOpenModal} onClose={() => setIsOpenModal(false)} onSave={AddClicked} />
         </>
     )
 }
