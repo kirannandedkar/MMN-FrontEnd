@@ -3,6 +3,7 @@ import { getSession, signIn } from "next-auth/react";
 import Cookies from "js-cookie";
 import { AuthResult } from "@/app/types/auth.types";
 import { AccountInfo, FamilyAccountInfo } from "@/constants/types";
+import { PhoneCode } from "@/constants";
 
 const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: (FamilyAccountInfo | null)[] = []) => {
   const session: any = await getSession();
@@ -16,7 +17,7 @@ const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: 
     gender: member.gender,
     referenceUserAccountId: 0,
     muncipality: member.muncipality,
-    phoneNumber: member.mobile
+    phoneNumber: `${PhoneCode}${member.mobile}`
   }, {
     Authorization: `Bearer ${session?.id_token}`,
   });
@@ -57,7 +58,6 @@ const handleSigninManual = async (email: string, password: string) => {
 
 const handleSigninGoogle = async () => {
   const session: any = await getSession();
-  console.log("session is ", session);
   if (session) {
     const result = await AUTHPOST("UserAccount/login-with-google", null, {
       Authorization: `Bearer ${session?.id_token}`,

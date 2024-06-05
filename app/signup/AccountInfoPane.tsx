@@ -31,7 +31,6 @@ const AccountInfoPane = forwardRef(({ account, disabled = false, byGoogle = fals
     const { register, handleSubmit, control, watch, formState, reset } = useForm<IData>({
         resolver: yupResolver<IData>(schema)
     });
-    console.log("account is ", account)
     //retrieve pre defined data - google login
     useEffect(() => {
         reset({

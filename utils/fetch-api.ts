@@ -1,11 +1,10 @@
 'use client'
-import { ErrorResult } from '@/app/types';
 import Cookies from 'js-cookie';
 
 const fetchData = async (url: string, method: string, req_body: any, customHeaders: any, auth: boolean = true) => {
     const access_token = Cookies.get('access_token');
     const authHeader = auth ? { Authorization: `Bearer ${access_token}`, } : {};
-    
+
     const options = {
         method: method,
         headers: {
@@ -19,9 +18,8 @@ const fetchData = async (url: string, method: string, req_body: any, customHeade
     try {
         const response = await fetch(url, options);
         const responseData = await response.json();
-        const error = responseData as ErrorResult;
-        
-        if (error?.IsSuccess === false) {
+
+        if ((responseData?.IsSuccess != undefined && responseData?.IsSuccess === false) || (responseData?.status != undefined && responseData?.status !== 200)) {
             console.error(`Failed: ${url}`, responseData.Message);
             return null;
         }

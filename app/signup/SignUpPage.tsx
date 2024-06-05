@@ -138,7 +138,8 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                         ref={primaryAcocuntInfoPaneRef}
                         onSubmit={onPrimaryAccountCallback}
                         disabled={signed}
-                        account={primaryAccount} byGoogle={byGoogle} />
+                        account={primaryAccount} 
+                        byGoogle={byGoogle} />
                     {
                         !signed && (
                             <>

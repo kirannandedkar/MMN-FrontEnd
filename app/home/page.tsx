@@ -13,6 +13,7 @@ import Image from "next/image";
 import Curtain from "@/components/Curtain";
 import { useContext, useEffect, useState } from "react";
 import { PublicContext } from "@/context/public-context";
+import { useSelector } from "react-redux";
 
 const title = GetPageTitle("Home");
 
@@ -24,7 +25,7 @@ const sponsorimages = [
 ];
 
 export default function HomePage() {
-    const { isCurtainClicked } = useContext(PublicContext)
+    const { authresult } = useSelector((state: any) => state.auth);
 
     return (
         <>
@@ -36,7 +37,7 @@ export default function HomePage() {
 
                     <div className="xl:grid xl:grid-cols-2 gap-[40px] pb-[40px] flex flex-col">
                         {/* <VolunteerCard /> */}
-                        <LoginCard />
+                        {authresult ? <div></div> : <LoginCard />}
                         <MemberCard />
                     </div>
 

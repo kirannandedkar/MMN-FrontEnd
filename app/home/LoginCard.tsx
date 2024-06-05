@@ -4,22 +4,27 @@ import MMNTitle from "@/components/MMNTItle";
 import MMNPanel from "@/components/MMNPanel";
 import MMNButton from "@/components/MMNButton";
 import GoogleButton from "@/components/GoogleButton";
-import { handleSigninGoogle, handleSigninManual } from "@/utils/auth";
 import { useState } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { useDispatch, useSelector, useStore } from 'react-redux'
+import { AppDispatch } from "@/redux/store";
+import { SignInGoogle, SignInManualy } from "@/redux/user/auth.action";
 
 export default function LoginCard() {
+    const dispatch = useDispatch<AppDispatch>();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const signinManually = () => {
-        handleSigninManual(email, password);
+        dispatch(SignInManualy({ email, password }));
     }
 
+    const signinGoogle = () => {
+        dispatch(SignInGoogle());
+    }
     return (
         <MMNPanel className="">
             <MMNTitle title="Already member?" color="purple" />
-            <div onClick={handleSigninGoogle}>
+            <div onClick={signinGoogle}>
                 <GoogleButton title="Log in with Google" className="max-w-full" />
             </div>
             <div className="font-bold line-height-mmn-large text-center">
