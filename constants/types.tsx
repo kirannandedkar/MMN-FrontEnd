@@ -1,20 +1,20 @@
 export interface FamilyAccountInfo {
-    firstName?: string | null,
-    lastName?: string | null,
+    firstName: string,
+    lastName: string,
     email: string,
     password?: string,
-    gender?: 'male' | 'female' | null,
+    gender: 'male' | 'female' | string,
     muncipality?: string,
     phoneNumber?: string,
     referenceUserAccountId?: number,
 
-    birth?: string | null,
+    birth: string,
     relation?: string | null,
     memberid?: string | null,
 }
 
 export interface AccountInfo extends FamilyAccountInfo {
-    mobile?: string | null,
+    mobile: string,
     country?: string | null,
     id_token?: string | null
 }

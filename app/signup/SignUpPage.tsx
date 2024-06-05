@@ -8,22 +8,49 @@ import AccountInfoPane from './AccountInfoPane';
 import { AccountInfo, FamilyAccountInfo } from "@/constants/types";
 
 import MMNButton from "@/components/MMNButton";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FamilyInfoPane from "@/app/membership/FamilyInfoPane";
-import TrashButton from "@/components/icons/trash";
 import { useSession } from "next-auth/react";
 import { handleSignupByGoogle, handleSignupManually } from "@/utils/auth";
+
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { ErrorMessage } from "./ErrorMessage";
+import { useRouter } from "next/navigation";
+import { isOlder18 } from "@/utils/funcs";
 
 const NavData = [
     { title: "Home", link: "/home" },
     { title: "Membership", link: "#" },
 ];
 
-export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
-    const [signed, setSigned] = useState(false);
+const schema = yup.object({
+    password: yup.string().required(),
+    repassword: yup.string().required(),
+});
 
-    const [member, setMember] = useState<AccountInfo | null>(null);
+type CredentialData = {
+    password: string,
+    repassword: string
+}
+
+export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
+    const { register, handleSubmit, control, watch, formState, reset } = useForm<CredentialData>({
+        resolver: yupResolver<CredentialData>(schema)
+    });
+
+    const router = useRouter();
+
+    const [signed, setSigned] = useState(false);
+    const [primaryAccount, setPrimaryAccount] = useState<AccountInfo | null>(null);
     const [familyAccounts, setFamilyAccounts] = useState<(FamilyAccountInfo | null)[]>([]);
+    // add two password properties
+    const [password, setPassword] = useState<CredentialData>({ password: '', repassword: '' });
+    const [memberCount, setMemberCount] = useState(1); //primary account
+
+    const primaryAcocuntInfoPaneRef = useRef<any>(null);
+    const submitButtonForCredentialRef = useRef<any>(null);
 
     if (byGoogle) {
         const { data: session } = useSession();
@@ -32,87 +59,124 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
 
             const descriptor = Object.getOwnPropertyDescriptor(session, 'id_token');
             const id_token = descriptor?.value || "";
-            setMember({
+            setPrimaryAccount({
                 firstName: session.user.name?.split(' ')[0] || '',
                 lastName: session.user.name?.split(' ')[1] || '',
                 email: session.user.email || '',
                 id_token: id_token,
+                mobile: '',
+                gender: '',
+                birth: '',
+                muncipality: '',
             })
         }, [session]);
     }
 
-    const AddClicked = () => {
-        if (familyAccounts.includes(null))
-            return;
+    useEffect(() => {
+        let count = 1; //primary account
+        familyAccounts.map(acc => {
+            if (isOlder18(acc?.birth)) count++;
+        });
+        setMemberCount(count);
+    }, [familyAccounts]);
+    const onAddEmptyFamilyAccountClicked = () => {
         setFamilyAccounts((prev) => ([...prev, null]));
     }
 
-    const RemoveClick = (index: number) => {
+    const onAddCompletedFamilyAccountCallback = (_familymember: any) => {
+        let newFamilyAccounts = [...familyAccounts];
+        newFamilyAccounts.pop();
+        newFamilyAccounts.push(_familymember);
+        newFamilyAccounts.push(null);
+
+        setFamilyAccounts(newFamilyAccounts);
+    }
+
+    const onRemoveFamilyAccountClicked = (index: number) => {
         setFamilyAccounts(prev => {
             prev.splice(index, 1);
             return [...prev];
         });
     }
 
-    const onFamilyInfoChange = (member: FamilyAccountInfo | null, index: number) => {
-        if (!member)
-            return;
-
-        let newList = [...familyAccounts];
-        newList.splice(index, 1);
-        newList.push(member);
-
-        setFamilyAccounts(newList);
-    }
-
-    // add two password properteis
-    const [password, setPassword] = useState<{
-        password: string,
-        rePassword: string
-    }>({
-        password: '',
-        rePassword: ''
-    });
-
-    const signup = async () => {
-        if (byGoogle) {
-            await handleSignupByGoogle(member, familyAccounts)
-        } else {
-            const result = await handleSignupManually(member, password.password, familyAccounts);
-            setSigned(result);
+    const onCompletePrimaryAccountClicked = async () => {
+        if (primaryAcocuntInfoPaneRef.current) {
+            primaryAcocuntInfoPaneRef.current.submit()
         }
     }
 
+    const signUpManually: SubmitHandler<CredentialData> = async (data) => {
+        setPassword(data);
+        if (data.password != data.repassword) return;
+        setSigned(await handleSignupManually(primaryAccount, data.password, familyAccounts));
+    }
+    const onPrimaryAccountCallback = async (_member: any) => {
+        setPrimaryAccount(_member);
+        if (byGoogle) {
+            setSigned(await handleSignupByGoogle(_member, familyAccounts));
+        }
+        else {
+            submitButtonForCredentialRef.current?.click();
+        }
+    }
+
+    const processPayment = () => {
+        if (!signed)
+            return;
+        const finalFamilyAccounts = familyAccounts.filter(acc => acc != null);
+        setFamilyAccounts(finalFamilyAccounts);
+
+        router.push('/payment/checkout');
+    }
     return (
         <div className="max-w-[1440px] m-auto">
             <TopNav itemList={NavData} />
             <MMNContainer className="gap-[40px] pb-[40px] lg:flex-row flex-col">
                 <div className="flex flex-col gap-[20px] grow-[2]">
-                    <BlogPane member={member} signed={signed} />
-                    <AccountInfoPane setMember={setMember} disabled={signed} />
+                    <BlogPane member={primaryAccount} signed={signed} />
+                    <AccountInfoPane
+                        ref={primaryAcocuntInfoPaneRef}
+                        onSubmit={onPrimaryAccountCallback}
+                        disabled={signed}
+                        account={primaryAccount} byGoogle={byGoogle} />
                     {
                         !signed && (
                             <>
-                                {
-                                    !byGoogle &&
-                                    <div className="grid sm:grid-cols-2 grid-cols-1 gap-[26px]">
-                                        <div>
-                                            <div className="pb-[5px]">Type password*</div>
-                                            <input type="password" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
-                                                placeholder="Enter Password" value={password.password} onChange={e => setPassword({ ...password, password: e.target.value })}
-                                            />
-                                        </div>
+                                <form onSubmit={handleSubmit(signUpManually)}>
+                                    {
+                                        !byGoogle &&
+                                        <div className="grid sm:grid-cols-2 grid-cols-1 gap-[10px]">
+                                            <button ref={submitButtonForCredentialRef} className="hidden" type="submit" />
+                                            <div>
+                                                <div className="pb-[5px]">Type password*</div>
+                                                <input type="password" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
+                                                    placeholder="Enter Password"
+                                                    {...register('password')}
+                                                />
+                                                {
+                                                    formState.errors.password && <ErrorMessage msg={`Input password`} />
+                                                }
+                                            </div>
 
-                                        <div>
-                                            <div className="pb-[5px]">Re-Type password*</div>
-                                            <input type="password" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
-                                                placeholder="Re-Enter Password" value={password.rePassword} onChange={e => setPassword({ ...password, rePassword: e.target.value })}
-                                            />
+                                            <div>
+                                                <div className="pb-[5px]">Re-Type password*</div>
+                                                <input type="password" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
+                                                    placeholder="Re-Enter Password"
+                                                    {...register('repassword')}
+                                                />
+                                                {
+                                                    formState.errors.repassword && <ErrorMessage msg={`Confirm password`} />
+                                                }
+                                                {
+                                                    !formState.errors.password && !formState.errors.repassword && password.password != password.repassword && (
+                                                        <ErrorMessage msg={`Password does not match`} />
+                                                    )
+                                                }
+                                            </div>
                                         </div>
-                                    </div>
-                                }
-
-                                <div onClick={signup} className="flex justify-end">
+                                    }
+                                </form>
+                                <div onClick={onCompletePrimaryAccountClicked} className="flex justify-end">
                                     <MMNButton title={"Complete Profile"} color="white" className={"border border-color-mmn-purple"} />
                                 </div>
                             </>
@@ -125,30 +189,33 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                     {
                         familyAccounts.map((account, index) => {
                             return (
-                                <>
-                                    <FamilyInfoPane setMember={(member) => onFamilyInfoChange(member, index)} key={index} />
-                                    <div className="flex justify-end">
-                                        <div onClick={() => RemoveClick(index)} className="flex gap-[10x] rounded-[5px] bg-red-500 items-center px-[20px] py-[10px] text-white cursor-pointer">
-                                            <TrashButton fill="white" />
-                                            <span>{'Remove'}</span>
-                                        </div>
-                                    </div>
-                                </>
+                                <FamilyInfoPane
+                                    onSubmit={onAddCompletedFamilyAccountCallback}
+                                    key={index}
+                                    showAddButton={(index === familyAccounts.length - 1)}
+                                    disabled={(index !== familyAccounts.length - 1)}
+                                    account={account}
+                                    onRemove={() => onRemoveFamilyAccountClicked(index)}
+                                />
                             )
                         })
                     }
 
                     {
-                        signed && (
+                        signed && familyAccounts.length == 0 && (
                             <div className="flex">
-                                <div onClick={AddClicked}>
+                                <div onClick={onAddEmptyFamilyAccountClicked}>
                                     <MMNButton title={"+ Add family member"} color="white" className={"border border-color-mmn-purple"} />
                                 </div>
                             </div>
                         )
                     }
                 </div>
-                <PaymentCard memberCount={familyAccounts.length + 1} />
+                <div>
+                    <div className="sticky top-[20px]">
+                        <PaymentCard memberCount={memberCount} processClicked={processPayment} />
+                    </div>
+                </div>
             </MMNContainer >
         </div >
     );

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FamilyAccountInfo, Genders, Relationships } from "@/constants/types";
 import FamilyInfoPane from './FamilyInfoPane'
 
@@ -20,20 +20,20 @@ interface FamilyMemberModalProps {
 }
 
 export default function FamilyMemberModal({ open, onClose, onSave }: FamilyMemberModalProps) {
-    Modal.setAppElement('#modal-container');  
-    
-    let member: FamilyAccountInfo | null = null;
+    Modal.setAppElement('#modal-container');
 
-    const setMember = (_member: FamilyAccountInfo | null) => {
-        member = _member;
+    const acocuntInfoPaneRef = useRef<any>(null);
+    //invoked by calling handleDone function 
+    const acoountReceived = (_member: FamilyAccountInfo | null) => {
+        if(!_member) return;
+
+        onSave(_member);
+        onClose();
     }
 
     const handleDone = () => {
-        if (!member) return;
-
-        onSave(member);
-        onClose();
-        setMember(null);
+        if(acocuntInfoPaneRef.current) 
+            acocuntInfoPaneRef.current.submit();
     }
 
     return (
@@ -45,7 +45,7 @@ export default function FamilyMemberModal({ open, onClose, onSave }: FamilyMembe
                         <img src="/xmark.circle.fill.svg" />
                     </div>
                 </div>
-                <FamilyInfoPane setMember={setMember}/>
+                <FamilyInfoPane onSubmit={acoountReceived} ref={acocuntInfoPaneRef} />
                 <div className="flex justify-end gap-[20px]">
                     <div onClick={onClose}>
                         <MMNButton title="Close" color="white" className={"border-[1px] border-color-mmn-purple"} />

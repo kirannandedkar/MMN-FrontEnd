@@ -1,104 +1,176 @@
-import { useCallback, useEffect, useState } from "react"
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react"
 import DropDown from 'react-dropdown';
 import { AccountInfo, Genders, CountryList } from "@/constants/types";
 import _ from "lodash"
 import { PhoneCode } from "@/constants";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ErrorMessage } from "./ErrorMessage";
 
 interface Props {
+    account: AccountInfo | null,
     disabled?: boolean,
-    setMember: (member: AccountInfo | null) => void
+    byGoogle?: boolean,
+    onSubmit: (data: IData) => void
 }
 
-export default function AccountInfoPane({ disabled = false, setMember: setParentMember }: Props) {
-    const [member, setMember] = useState<AccountInfo | null>(null);
+type IData = Pick<AccountInfo, "firstName" | "lastName" | "email" | "gender" | "birth" | "muncipality" | "mobile">
+const schema = yup.object({
+    firstName: yup.string().required(),
+    lastName: yup.string().required(),
+    email: yup.string().email().required(),
+    gender: yup.string().required(),
+    birth: yup.string().required(),
+    muncipality: yup.string().required(),
+    mobile: yup.number().required(),
+}).required();
 
-    const handleOnChange = (key: keyof AccountInfo, value: any) => {
-        const newMember = { ...member, [key]: value || '' } as AccountInfo
-        setMember(newMember)
-        setParentMember(newMember);
+const AccountInfoPane = forwardRef(({ account, disabled = false, byGoogle = false, onSubmit }: Props, ref) => {
+    const submitButtonRef = useRef<HTMLButtonElement>(null)
+    const { register, handleSubmit, control, watch, formState, reset } = useForm<IData>({
+        resolver: yupResolver<IData>(schema)
+    });
+    console.log("account is ", account)
+    //retrieve pre defined data - google login
+    useEffect(() => {
+        reset({
+            firstName: account?.firstName || '',
+            lastName: account?.lastName || '',
+            email: account?.email || '',
+            gender: account?.gender || '',
+            birth: account?.birth || '',
+            muncipality: account?.muncipality || '',
+            mobile: account?.mobile || '',
+        }); // Reset the form values when account changes
+    }, [account, reset]);
+
+    //call callback func in parent
+    const submit: SubmitHandler<IData> = (data) => {
+        onSubmit(data)
     }
 
+    //extract some function
+    useImperativeHandle(ref, () => {
+        return {
+            submit() {
+                submitButtonRef.current?.click()
+            }
+        };
+    }, []);
+
     return (
-        <div className="flex flex-col gap-[10px] line-height-mmn-large">
-            <div className="font-bold">{"Primary member information"}</div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[26px] ">
-                <div>
-                    <div className="pb-[5px]">First name*</div>
-                    <input type="text" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
-                        placeholder="Enter First Name"
-                        value={member?.firstName || ''}
-                        onChange={e => handleOnChange("firstName", e.target.value)}
-                        disabled={disabled}
-                    />
-                </div>
+        <form onSubmit={handleSubmit(submit)}>
+            <button ref={submitButtonRef} className="hidden" type="submit" />
+            <div className="flex flex-col gap-[10px] line-height-mmn-large">
+                <div className="font-bold">{"Primary member information"}</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px] ">
+                    <div>
+                        <div className="pb-[5px]">First name*</div>
+                        <input type="text" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
+                            placeholder="Enter First Name"
+                            {...register("firstName")}
+                            disabled={disabled || byGoogle}
+                        />
+                        {
+                            formState.errors.firstName && <ErrorMessage msg={`Input First Name`} />
+                        }
+                    </div>
 
-                <div>
-                    <div className="pb-[5px]">Last name*</div>
-                    <input type="text" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
-                        placeholder="Enter Last Name"
-                        value={member?.lastName || ''}
-                        onChange={e => handleOnChange("lastName", e.target.value)}
-                        disabled={disabled}
-                    />
-                </div>
+                    <div>
+                        <div className="pb-[5px]">Last name*</div>
+                        <input type="text" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
+                            placeholder="Enter Last Name"
+                            {...register("lastName")}
+                            disabled={disabled || byGoogle}
+                        />
+                        {
+                            formState.errors.lastName && <ErrorMessage msg={`Input Last Name`} />
+                        }
+                    </div>
 
-                <div>
-                    <div className="pb-[5px]">Date of Birth*</div>
-                    <input type="date" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium flex-grow w-full"
-                        placeholder="Enter Birth"
-                        value={member?.birth || ''}
-                        onChange={e => handleOnChange("birth", e.target.value)}
-                        disabled={disabled}
-                    />
-                </div>
-
-                <div>
-                    <div className="pb-[5px]">Email id*</div>
-                    <input type="text" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
-                        placeholder="email@email.no"
-                        value={member?.email || ''}
-                        onChange={e => handleOnChange("email", e.target.value)}
-                        disabled={disabled}
-                    />
-                </div>
-
-                <div>
-                    <div className="pb-[5px]">Mobile no (Norway only)*</div>
-                    <div className="relative">
-                        <div className="absolute flex items-center justify-center h-full pl-[14px]">
-                            <span className=" text-gray-400">{PhoneCode}</span>
-                        </div>
-                        <input type="text" step="any" className="py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium flex-grow focus:border-0 focus-visible:border-0 pl-[44px] pr-[14px] w-full"
-                            value={member?.phoneNumber || ''}
-                            onChange={e => handleOnChange("phoneNumber", e.target.value)}
+                    <div>
+                        <div className="pb-[5px]">Date of Birth*</div>
+                        <input type="date" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium flex-grow w-full"
+                            placeholder="Enter Birth"
+                            {...register("birth")}
                             disabled={disabled}
                         />
+                        {
+                            formState.errors.birth && <ErrorMessage msg={`Choose your birth`} />
+                        }
+                    </div>
+
+                    <div>
+                        <div className="pb-[5px]">Email id*</div>
+                        <input type="text" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
+                            placeholder="email@email.no"
+                            {...register("email")}
+                            disabled={disabled || byGoogle}
+                        />
+                        {
+                            formState.errors.email && <ErrorMessage msg={`Input valid email`} />
+                        }
+                    </div>
+
+                    <div>
+                        <div className="pb-[5px]">Mobile no (Norway only)*</div>
+                        <div className="relative">
+                            <div className="absolute flex items-center justify-center h-full pl-[14px]">
+                                <span className=" text-gray-400">{PhoneCode}</span>
+                            </div>
+                            <input type="text" step="any" className="py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium flex-grow focus:border-0 focus-visible:border-0 pl-[44px] pr-[14px] w-full"
+                                {...register("mobile")}
+                                disabled={disabled}
+                            />
+                        </div>
+                        {
+                            formState.errors.mobile && <ErrorMessage msg={`Input valid mobile number`} />
+                        }
+                    </div>
+
+                    <div>
+                        <div className="pb-[5px]">Kommune*</div>
+                        <Controller name="muncipality" control={control} rules={{ required: true }} render={({ field: { value, onChange } }) => (
+                            <>
+                                <DropDown
+                                    options={CountryList}
+                                    controlClassName="!rounded-[6px] !pl-[14px] !py-[16px] !line-height-mmn-medium"
+                                    arrowClassName={"!right-[27px] !top-[27px]"}
+                                    value={value}
+                                    onChange={(e) => onChange(e.value)}
+                                    disabled={disabled}
+                                    placeholder={"Select Kommune"} />
+                                {
+                                    formState.errors.muncipality && <ErrorMessage msg={`Choose muncipality`} />
+                                }
+                            </>
+                        )} />
+                    </div>
+
+                    <div>
+                        <div className="pb-[5px]">Gender*</div>
+                        <Controller name="gender" control={control} render={({ field: { value, onChange } }) => (
+                            <>
+                                <DropDown options={Genders}
+                                    controlClassName="!rounded-[6px] !pl-[14px] !py-[16px] !line-height-mmn-medium"
+                                    arrowClassName={"!right-[27px] !top-[27px]"}
+                                    value={value}
+                                    onChange={(e) => onChange(e.value)}
+                                    disabled={disabled}
+                                    placeholder={"Select your Gender"} />
+                                {
+                                    formState.errors.gender && <ErrorMessage msg={`Choose gender`} />
+                                }
+                            </>
+                        )} />
                     </div>
                 </div>
-
-                <div>
-                    <div className="pb-[5px]">Kommune*</div>
-                    <DropDown options={CountryList}
-                        controlClassName="!rounded-[6px] !pl-[14px] !py-[16px] !line-height-mmn-medium"
-                        arrowClassName={"!right-[27px] !top-[27px]"}
-                        value={member?.muncipality || ""}
-                        onChange={(e) => { handleOnChange("muncipality", e.value) }}
-                        disabled={disabled}
-                        placeholder={"Select Kommune"} />
-                </div>
-
-                <div>
-                    <div className="pb-[5px]">Gender*</div>
-                    <DropDown options={Genders}
-                        controlClassName="!rounded-[6px] !pl-[14px] !py-[16px] !line-height-mmn-medium"
-                        arrowClassName={"!right-[27px] !top-[27px]"}
-                        value={member?.gender || ""}
-                        onChange={(e) => { handleOnChange("gender", e.value) }}
-                        disabled={disabled}
-                        placeholder={"Select your Gender"} />
-                </div>
             </div>
-        </div>
+        </form>
 
     )
-}
+})
+
+AccountInfoPane.displayName = "AccountInfoPane"
+export default AccountInfoPane

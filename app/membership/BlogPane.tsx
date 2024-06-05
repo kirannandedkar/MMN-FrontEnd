@@ -20,7 +20,7 @@ export default function BlogPane({ member, signed }: BlogPaneProps) {
                     signed ? (
                         <div className="flex flex-col gap-[10px]">
                             <div className="text-[24px] leeading-[36px] font-semibold text-red-500">
-                                {`🎉 Congratulations! ${member?.firstName} ${member?.lastName}`}
+                                {`🎉 Congratulations! ${member?.firstName || ''} ${member?.lastName || ''}`}
                             </div>
 
                             <div className="rounded-[8px] p-[10px] bg-[#FFEFEC] text-[14px] leading-[28px]">

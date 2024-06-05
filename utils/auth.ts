@@ -23,8 +23,10 @@ const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: 
 
   if (result !== null) {
     alert("signup successful google");
+    return true;
   } else {
     alert("signup failed");
+    return false
   }
 }
 
