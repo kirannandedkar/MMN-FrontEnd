@@ -36,6 +36,7 @@ export const SignInGoogle = createAsyncThunk(
                 return rejectWithValue('Error Occured.');
             } else {
                 if (result.msg?.accessToken) {
+                    handleCookie(result.msg);
                     return result.msg;
                 } else {
                     if (result.msg?.Message)
