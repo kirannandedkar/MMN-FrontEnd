@@ -1,3 +1,5 @@
+'use client'
+
 const defaultPageTitle = "Marathi Mandal Norway";
 
 export const GetPageTitle = (subTitle: string) => {

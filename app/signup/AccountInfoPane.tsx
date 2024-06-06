@@ -1,3 +1,5 @@
+'use client'
+
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react"
 import DropDown from 'react-dropdown';
 import { AccountInfo, Genders, CountryList } from "@/constants/types";

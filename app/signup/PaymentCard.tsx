@@ -1,3 +1,5 @@
+'use client'
+
 import MMNButton from "@/components/MMNButton";
 import MMNTitle from "@/components/MMNTItle";
 import { DefaultMemberFee } from "@/constants";

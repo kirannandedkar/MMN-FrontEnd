@@ -1,18 +1,13 @@
 "use client";
 
-import { Metadata } from "next";
 import { GetPageTitle, FavIcon } from "../../constants";
 import MMNContainer from "@/components/MMNContainer";
 import AboutPane from "./AboutPane";
-import VolunteerCard from "./VoluteerCard";
 import LoginCard from "./LoginCard";
 import MemberCard from "./MemberCard";
 import SliderPane from "./SliderPane";
 import MMNTitle from "@/components/MMNTItle";
 import Image from "next/image";
-import Curtain from "@/components/Curtain";
-import { useContext, useEffect, useState } from "react";
-import { PublicContext } from "@/context/public-context";
 import { useSelector } from "react-redux";
 
 const title = GetPageTitle("Home");

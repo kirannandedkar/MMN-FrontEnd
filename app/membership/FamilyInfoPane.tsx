@@ -12,7 +12,6 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { ErrorMessage } from "../signup/ErrorMessage";
 import MMNButton from "@/components/MMNButton";
 import TrashButton from "@/components/icons/trash";
-import { isOlder18 } from "@/utils/funcs";
 
 type IData = Pick<FamilyAccountInfo, "firstName" | "lastName" | "email" | "gender" | "birth" | "relation">
 const schema = yup.object({
@@ -145,7 +144,7 @@ const FamilyInfoPane = forwardRef(({ showAddButton = false, onSubmit, account = 
                                         controlClassName="!rounded-[6px] !pl-[14px] !py-[16px] !line-height-mmn-medium"
                                         arrowClassName={"!right-[27px] !top-[27px]"}
                                         placeholder={"Select Relation"}
-                                        value={value}
+                                        value={value as string}
                                         onChange={(e) => onChange(e.value)}
                                         disabled={disabled}
                                     />

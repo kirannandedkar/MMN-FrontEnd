@@ -44,6 +44,7 @@ export const SignInGoogle = createAsyncThunk(
             }
         } else {
             signIn('google');
+            return rejectWithValue('Please sign in your Google Account.')
         }
     }
 );
