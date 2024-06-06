@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   useEffect(() => {
-    // initCookie();
+    initCookie();
   }, []);
 
   return (

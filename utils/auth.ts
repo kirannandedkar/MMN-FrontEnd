@@ -18,7 +18,7 @@ const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: 
     lastName: member.lastName,
     email: member.email,
     gender: member.gender,
-    referenceUserAccountId: 0,
+    referenceUserAccountId: null,
     muncipality: member.muncipality,
     phoneNumber: `${PhoneCode}${member.mobile}`
   }, {
