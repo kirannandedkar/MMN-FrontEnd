@@ -19,6 +19,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ErrorMessage } from "./ErrorMessage";
 import { useRouter } from "next/navigation";
 import { isOlder18 } from "@/utils/funcs";
+import { toast } from "react-toastify";
 
 const NavData = [
     { title: "Home", link: "/home" },
@@ -108,8 +109,10 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     const signUpManually: SubmitHandler<CredentialData> = async (data) => {
         setPassword(data);
         if (data.password != data.repassword) return;
-        setSigned(await handleSignupManually(primaryAccount, data.password, familyAccounts));
+        const flag = await handleSignupManually(primaryAccount, data.password, familyAccounts);
+        setSigned(flag);
     }
+
     const onPrimaryAccountCallback = async (_member: any) => {
         setPrimaryAccount(_member);
         if (byGoogle) {
@@ -121,8 +124,11 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     }
 
     const processPayment = () => {
-        if (!signed)
+        if (!signed) {
+            toast.info('You need to sign up first.');
             return;
+        }
+
         const finalFamilyAccounts = familyAccounts.filter(acc => acc != null);
         setFamilyAccounts(finalFamilyAccounts);
 
@@ -138,10 +144,11 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                         ref={primaryAcocuntInfoPaneRef}
                         onSubmit={onPrimaryAccountCallback}
                         disabled={signed}
-                        account={primaryAccount} 
+                        account={primaryAccount}
                         byGoogle={byGoogle} />
                     {
-                        !signed && (
+                        !signed && 
+                        (
                             <>
                                 <form onSubmit={handleSubmit(signUpManually)}>
                                     {

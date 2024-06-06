@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import { AppDispatch } from "@/redux/store";
 import { SignInGoogle, SignInManualy } from "@/redux/user/auth.action";
+import { toast } from "react-toastify";
 
 export default function LoginCard() {
     const dispatch = useDispatch<AppDispatch>();
@@ -15,6 +16,10 @@ export default function LoginCard() {
     const [password, setPassword] = useState('');
 
     const signinManually = () => {
+        if(!email || !password) {
+            toast.info('Input Email or Password');
+            return;
+        }
         dispatch(SignInManualy({ email, password }));
     }
 

@@ -1,9 +1,12 @@
+'use client'
+
 import { AUTHPOST } from "./fetch-api";
 import { getSession, signIn } from "next-auth/react";
 import Cookies from "js-cookie";
 import { AuthResult } from "@/app/types/auth.types";
 import { AccountInfo, FamilyAccountInfo } from "@/constants/types";
 import { PhoneCode } from "@/constants";
+import { toast } from "react-toastify";
 
 const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: (FamilyAccountInfo | null)[] = []) => {
   const session: any = await getSession();
@@ -22,13 +25,17 @@ const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: 
     Authorization: `Bearer ${session?.id_token}`,
   });
 
-  if (result !== null) {
-    alert("signup successful google");
-    return true;
+  if (!result.isSuccess) {
+    toast.error('Error Occured.');
   } else {
-    alert("signup failed");
-    return false
+    if (result.msg?.accessToken) {
+      toast.error('Successfully signup.');
+      return true;
+    } else {
+      if (result.msg?.Message) toast.error(result.msg?.Message);
+    }
   }
+  return false;
 }
 
 const handleSignupManually = async (member: AccountInfo | null, password: string, familyAccounts: (FamilyAccountInfo | null)[] = []) => {
@@ -36,14 +43,18 @@ const handleSignupManually = async (member: AccountInfo | null, password: string
     return false;
 
   const result = await AUTHPOST("UserAccount/create-user", { ...member, password: password });
-  if (result !== null) {
-    handleCookie(result as AuthResult);
-    alert("signup successful manually");
-    return true;
+
+  if (!result.isSuccess) {
+    toast.error('Error Occured.');
   } else {
-    alert("signup failed");
-    return false;
+    if (result.msg?.accessToken) {
+      toast.error('Successfully signup.');
+      return true;
+    } else {
+      if (result.msg?.Message) toast.error(result.msg?.Message);
+    }
   }
+  return false;
 };
 
 const handleSigninManual = async (email: string, password: string) => {
@@ -64,7 +75,7 @@ const handleSigninGoogle = async () => {
     });
     if (result !== null) {
       handleCookie(result);
-      alert("signin successful google");
+      toast.success("signin successful google");
     } else
       alert("signin failed google");
   } else signIn('google');

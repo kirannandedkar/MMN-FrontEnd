@@ -5,6 +5,14 @@ const fetchData = async (url: string, method: string, req_body: any, customHeade
     const access_token = Cookies.get('access_token');
     const authHeader = auth ? { Authorization: `Bearer ${access_token}`, } : {};
 
+    let result: any = {
+        isSuccess: false,
+        msg: 'Please sign in.'
+    };
+
+    if (auth && !access_token)
+        return result;
+
     const options = {
         method: method,
         headers: {
@@ -12,22 +20,19 @@ const fetchData = async (url: string, method: string, req_body: any, customHeade
             "Content-Type": "application/json",
             ...customHeaders
         },
-        body: req_body ? JSON.stringify(req_body) : null,
+        body: req_body ? JSON.stringify(req_body) : ''
     };
 
     try {
         const response = await fetch(url, options);
+        if (response)
+            result.isSuccess = true;
         const responseData = await response.json();
-
-        if ((responseData?.IsSuccess != undefined && responseData?.IsSuccess === false) || (responseData?.status != undefined && responseData?.status !== 200)) {
-            console.error(`Failed: ${url}`, responseData.Message);
-            return null;
-        }
-        return responseData;
+        result.msg = responseData;
     } catch (error) {
-        console.error(`Error: ${url}`, error);
+        result.msg = error;
     }
-    return null;
+    return result;
 }
 
 const APIPOST = async (url: string, req_body: any = {}, headers = {}) => await fetchData(process.env.NEXT_PUBLIC_API_ENDPOIONT + url, 'POST', req_body, headers);

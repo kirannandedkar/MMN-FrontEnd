@@ -11,7 +11,10 @@ import FooterBar from "@/layout/Footer";
 import Providers from "./providers";
 import { Provider as ReduxProvider } from 'react-redux'
 import store from "@/redux/store";
-
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from "react";
+import { initCookie } from "@/utils/funcs";
 //default font-14px, weight 500, family-poppin
 const inter = Poppins({
   weight: ['400', '500', '600', '700', '800'],
@@ -23,6 +26,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useEffect(() => {
+    // initCookie();
+  }, []);
+
   return (
     <SessionWrapper>
       <ReduxProvider store={store}>
@@ -50,6 +57,17 @@ export default function RootLayout({
 
             <FooterBar />
             <div id="modal-container"></div>
+            <ToastContainer position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
+            />
           </body>
         </html>
       </ReduxProvider>
