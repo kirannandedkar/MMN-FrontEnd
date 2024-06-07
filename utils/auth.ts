@@ -41,7 +41,8 @@ const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: 
 const handleSignupManually = async (member: AccountInfo | null, password: string, familyAccounts: (FamilyAccountInfo | null)[] = []) => {
   if (!member)
     return false;
-
+  
+  member.phoneNumber = `${PhoneCode}${member.mobile}`;
   const result = await AUTHPOST("UserAccount/create-user", { ...member, password: password });
 
   if (!result.isSuccess) {
