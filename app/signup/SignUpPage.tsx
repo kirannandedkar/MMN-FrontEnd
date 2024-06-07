@@ -18,7 +18,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ErrorMessage } from "./ErrorMessage";
 import { useRouter } from "next/navigation";
-import { isOlder18 } from "@/utils/funcs";
+import { isOlder16 } from "@/utils/funcs";
 import { toast } from "react-toastify";
 
 const NavData = [
@@ -76,7 +76,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     useEffect(() => {
         let count = 1; //primary account
         familyAccounts.map(acc => {
-            if (isOlder18(acc?.birth)) count++;
+            if (isOlder16(acc?.birth)) count++;
         });
         setMemberCount(count);
     }, [familyAccounts]);
@@ -206,7 +206,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                                     key={index}
                                     showAddButton={(index === familyAccounts.length - 1)}
                                     disabled={(index !== familyAccounts.length - 1)}
-                                    account={account}
+                                    // account={account}
                                     onRemove={() => onRemoveFamilyAccountClicked(index)}
                                 />
                             )

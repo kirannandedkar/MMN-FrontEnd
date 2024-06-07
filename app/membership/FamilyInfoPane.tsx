@@ -12,6 +12,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { ErrorMessage } from "../signup/ErrorMessage";
 import MMNButton from "@/components/MMNButton";
 import TrashButton from "@/components/icons/trash";
+import Select from 'react-select'
 
 type IData = Pick<FamilyAccountInfo, "firstName" | "lastName" | "email" | "gender" | "birth" | "relation">
 const schema = yup.object({
@@ -60,6 +61,13 @@ const FamilyInfoPane = forwardRef(({ showAddButton = false, onSubmit, account = 
             }
         };
     }, []);
+
+    const customStyles = {
+        control: (provided: any) => ({
+            ...provided,
+            padding: '8px 0px'
+        }),
+    };
 
     return (
         <>
@@ -122,13 +130,12 @@ const FamilyInfoPane = forwardRef(({ showAddButton = false, onSubmit, account = 
                             <div className="pb-[5px]">Gender*</div>
                             <Controller name="gender" control={control} rules={{ required: true }} render={({ field: { value, onChange } }) => (
                                 <>
-                                    <DropDown options={Genders}
-                                        controlClassName="!rounded-[6px] !pl-[14px] !py-[16px] !line-height-mmn-medium"
-                                        arrowClassName={"!right-[27px] !top-[27px]"}
-                                        placeholder={"Select your Gender"}
-                                        value={value}
-                                        onChange={(e) => onChange(e.value)}
-                                        disabled={disabled}
+                                    <Select
+                                        options={Genders}
+                                        value={Genders.find((item) => item.value === value)}
+                                        onChange={(e) => onChange(e?.value)}
+                                        styles={customStyles}
+                                        isSearchable={false} // Disable searching
                                     />
                                     {
                                         formState.errors.gender && <ErrorMessage msg={`Select gender`} />
@@ -140,13 +147,12 @@ const FamilyInfoPane = forwardRef(({ showAddButton = false, onSubmit, account = 
                             <div className="pb-[5px]">Relationship*</div>
                             <Controller name="relation" control={control} rules={{ required: true }} render={({ field: { value, onChange } }) => (
                                 <>
-                                    <DropDown options={Relationships}
-                                        controlClassName="!rounded-[6px] !pl-[14px] !py-[16px] !line-height-mmn-medium"
-                                        arrowClassName={"!right-[27px] !top-[27px]"}
-                                        placeholder={"Select Relation"}
-                                        value={value as string}
-                                        onChange={(e) => onChange(e.value)}
-                                        disabled={disabled}
+                                    <Select
+                                        options={Relationships}
+                                        value={Relationships.find((item) => item.value === value)}
+                                        onChange={(e) => onChange(e?.value)}
+                                        styles={customStyles}
+                                        isSearchable={false} // Disable searching
                                     />
                                     {
                                         formState.errors.relation && <ErrorMessage msg={`Select relation`} />

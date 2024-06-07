@@ -15,6 +15,8 @@ import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from "react";
 import { initCookie } from "@/utils/funcs";
+import Select from 'react-select'
+
 //default font-14px, weight 500, family-poppin
 const inter = Poppins({
   weight: ['400', '500', '600', '700', '800'],
@@ -26,6 +28,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   useEffect(() => {
     initCookie();
   }, []);

@@ -22,10 +22,10 @@ const initCookie = () => {
     Cookies.set("sub", '');
 }
 
-const isOlder18 = (birth: string | undefined) => {
+const isOlder16 = (birth: string | undefined, age: number = 16) => {
     if (!birth)
         return false;
-    return ((Date.now() - Date.parse(birth)) / 1000) > (18 * 365 * 24 * 60 * 60);
+    return ((Date.now() - Date.parse(birth)) / 1000) > (age * 365 * 24 * 60 * 60);
 }
 
-export { isOlder18, handleCookie, initCookie }
+export { isOlder16 , handleCookie, initCookie }

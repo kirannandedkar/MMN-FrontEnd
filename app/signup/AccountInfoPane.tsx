@@ -9,7 +9,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "./ErrorMessage";
-
+import Select from 'react-select'
 interface Props {
     account?: AccountInfo | null,
     disabled?: boolean,
@@ -59,6 +59,13 @@ const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle
             }
         };
     }, []);
+   
+    const customStyles = {
+        control: (provided: any) => ({
+          ...provided,
+          padding: '8px 0px'
+        }),
+    };
 
     return (
         <form onSubmit={handleSubmit(submit)}>
@@ -134,14 +141,13 @@ const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle
                         <div className="pb-[5px]">Kommune*</div>
                         <Controller name="muncipality" control={control} rules={{ required: true }} render={({ field: { value, onChange } }) => (
                             <>
-                                <DropDown
+                                <Select
                                     options={CountryList}
-                                    controlClassName="!rounded-[6px] !pl-[14px] !py-[16px] !line-height-mmn-medium"
-                                    arrowClassName={"!right-[27px] !top-[27px]"}
-                                    value={value}
-                                    onChange={(e) => onChange(e.value)}
-                                    disabled={disabled}
-                                    placeholder={"Select Kommune"} />
+                                    value={CountryList.find((item) => item.value === value)}
+                                    onChange={(e: any) => onChange(e?.value)}
+                                    styles={customStyles}
+                                    isSearchable={false} // Disable searching
+                                />
                                 {
                                     formState.errors.muncipality && <ErrorMessage msg={`Choose muncipality`} />
                                 }
@@ -151,20 +157,23 @@ const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle
 
                     <div>
                         <div className="pb-[5px]">Gender*</div>
-                        <Controller name="gender" control={control} render={({ field: { value, onChange } }) => (
-                            <>
-                                <DropDown options={Genders}
-                                    controlClassName="!rounded-[6px] !pl-[14px] !py-[16px] !line-height-mmn-medium"
-                                    arrowClassName={"!right-[27px] !top-[27px]"}
-                                    value={value}
-                                    onChange={(e) => onChange(e.value)}
-                                    disabled={disabled}
-                                    placeholder={"Select your Gender"} />
-                                {
-                                    formState.errors.gender && <ErrorMessage msg={`Choose gender`} />
-                                }
-                            </>
-                        )} />
+                        <Controller name="gender" control={control} render={({ field: { value, onChange } }) => {
+                            return (
+                                <>
+                                    <Select
+                                        options={Genders}
+                                        value={Genders.find((item) => item.value === value)}
+                                        onChange={(e) => onChange(e?.value)}
+                                        styles={customStyles}
+                                        isSearchable={false} // Disable searching
+                                    />
+                                    {
+                                        formState.errors.gender && <ErrorMessage msg={`Choose gender`} />
+                                    }
+                                </>
+                            )
+                        }
+                        } />
                     </div>
                 </div>
             </div>
