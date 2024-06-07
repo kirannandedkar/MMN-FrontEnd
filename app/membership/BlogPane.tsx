@@ -4,11 +4,11 @@ import MMNTitle from "@/components/MMNTItle";
 import { AccountInfo } from "@/constants/types";
 
 interface BlogPaneProps {
-    member?: AccountInfo | null,
+    fullName?: string,
     signed?: boolean
 }
 
-export default function BlogPane({ member, signed }: BlogPaneProps) {
+export default function BlogPane({ fullName, signed }: BlogPaneProps) {
     return (
         <div className="flex flex-col gap-[10px]">
             <MMNTitle title="Become a member" color="purple" />
@@ -20,7 +20,7 @@ export default function BlogPane({ member, signed }: BlogPaneProps) {
                     signed ? (
                         <div className="flex flex-col gap-[10px]">
                             <div className="text-[24px] leeading-[36px] font-semibold text-red-500">
-                                {`🎉 Congratulations! ${member?.firstName || ''} ${member?.lastName || ''}`}
+                                {`🎉 Congratulations! ${fullName || ''}`}
                             </div>
 
                             <div className="rounded-[8px] p-[10px] bg-[#FFEFEC] text-[14px] leading-[28px]">

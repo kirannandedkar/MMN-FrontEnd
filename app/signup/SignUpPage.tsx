@@ -80,6 +80,9 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
         });
         setMemberCount(count);
     }, [familyAccounts]);
+
+    let account: any = null;
+
     const onAddEmptyFamilyAccountClicked = () => {
         setFamilyAccounts((prev) => ([...prev, null]));
     }
@@ -107,14 +110,15 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     }
 
     const signUpManually: SubmitHandler<CredentialData> = async (data) => {
-        setPassword(data);
-        if (data.password != data.repassword) return;
-        const flag = await handleSignupManually(primaryAccount, data.password, familyAccounts);
+        if (data.password != data.repassword) 
+            return;
+        const flag = await handleSignupManually(account, data.password, familyAccounts);
         setSigned(flag);
+        setPrimaryAccount(account);
     }
 
     const onPrimaryAccountCallback = async (_member: any) => {
-        setPrimaryAccount(_member);
+        account = _member;
         if (byGoogle) {
             setSigned(await handleSignupByGoogle(_member, familyAccounts));
         }
@@ -139,15 +143,15 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
             <TopNav itemList={NavData} />
             <MMNContainer className="gap-[40px] pb-[40px] lg:flex-row flex-col">
                 <div className="flex flex-col gap-[20px] grow-[2]">
-                    <BlogPane member={primaryAccount} signed={signed} />
+                    <BlogPane fullName={ `${primaryAccount?.firstName || ''} ${primaryAccount?.lastName || ''}` } signed={signed} />
                     <AccountInfoPane
                         ref={primaryAcocuntInfoPaneRef}
                         onSubmit={onPrimaryAccountCallback}
-                        disabled={signed}
                         account={primaryAccount}
+                        disabled={signed}
                         byGoogle={byGoogle} />
                     {
-                        !signed && 
+                        !signed &&
                         (
                             <>
                                 <form onSubmit={handleSubmit(signUpManually)}>

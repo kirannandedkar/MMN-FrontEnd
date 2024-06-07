@@ -11,7 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "./ErrorMessage";
 
 interface Props {
-    account: AccountInfo | null,
+    account?: AccountInfo | null,
     disabled?: boolean,
     byGoogle?: boolean,
     onSubmit: (data: IData) => void
@@ -28,7 +28,7 @@ const schema = yup.object({
     mobile: yup.number().required(),
 }).required();
 
-const AccountInfoPane = forwardRef(({ account, disabled = false, byGoogle = false, onSubmit }: Props, ref) => {
+const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle = false, onSubmit }: Props, ref) => {
     const submitButtonRef = useRef<HTMLButtonElement>(null)
     const { register, handleSubmit, control, watch, formState, reset } = useForm<IData>({
         resolver: yupResolver<IData>(schema)
