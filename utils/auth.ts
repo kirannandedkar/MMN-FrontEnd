@@ -20,7 +20,7 @@ const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: 
     gender: member.gender,
     referenceUserAccountId: null,
     muncipality: member.muncipality,
-    phoneNumber: `${PhoneCode}${member.mobile}`
+    phoneNumber: member.phoneNumber,
   }, {
     Authorization: `Bearer ${session?.id_token}`,
   });
@@ -42,7 +42,6 @@ const handleSignupManually = async (member: AccountInfo | null, password: string
   if (!member)
     return false;
   
-  member.phoneNumber = `${PhoneCode}${member.mobile}`;
   const result = await AUTHPOST("UserAccount/create-user", { ...member, password: password });
 
   if (!result.isSuccess) {

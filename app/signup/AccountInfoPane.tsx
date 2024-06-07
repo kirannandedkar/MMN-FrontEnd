@@ -66,7 +66,7 @@ const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle
             padding: '8px 0px'
         }),
     };
-    console.log(formState.errors)
+    
     return (
         <form onSubmit={handleSubmit(submit)}>
             <button ref={submitButtonRef} className="hidden" type="submit" />

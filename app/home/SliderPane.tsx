@@ -1,14 +1,9 @@
 "use client";
 
 import React from "react";
-import MMNContainer from "@/components/MMNContainer";
-import InfoCard from "./InfoCard";
-import Image from "next/image";
 import Slider from "react-slick";
-import { Item } from "./SliderItem";
-import dynamic from "next/dynamic"
+import SliderItem, { Item } from "./SliderItem";
 
-const SliderItem = dynamic(() => import("./SliderItem"), { ssr: false })
 const data: Item[] = [
 	{
 		title: "Ganesh Chaturthi",
@@ -35,7 +30,7 @@ const data: Item[] = [
 
 const setting = {
 	autoplaySpeed: 1500,
-    autoplay: false,
+	autoplay: false,
 
 	dots: true,
 	speed: 500,

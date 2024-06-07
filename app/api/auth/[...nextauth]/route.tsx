@@ -19,6 +19,7 @@ const handler = NextAuth({
     async signIn({ user, account, profile, email }) {
       // const dispatch = useDispatch<AppDispatch>();
       // dispatch(SignInGoogle());
+      console.log('signing, ');
       return true;
     },
     async jwt({ token, user, account, profile, trigger }) {
