@@ -1,7 +1,6 @@
 'use client'
 
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react"
-import DropDown from 'react-dropdown';
 import { AccountInfo, Genders, CountryList } from "@/constants/types";
 import _ from "lodash"
 import { PhoneCode } from "@/constants";
@@ -17,15 +16,16 @@ interface Props {
     onSubmit: (data: IData) => void
 }
 
-type IData = Pick<AccountInfo, "firstName" | "lastName" | "email" | "gender" | "birth" | "muncipality" | "mobile">
+type IData = Pick<AccountInfo, "firstName" | "lastName" | "email" | "gender" | "birth" | "muncipality" | "phoneNumber">
 const schema = yup.object({
-    firstName: yup.string().required(),
-    lastName: yup.string().required(),
-    email: yup.string().email().required(),
-    gender: yup.string().required(),
-    birth: yup.string().required(),
-    muncipality: yup.string().required(),
-    mobile: yup.number().required(),
+    firstName: yup.string().required('This field is required.'),
+    lastName: yup.string().required('This field is required.'),
+    email: yup.string().email().required('This field is required.'),
+    gender: yup.string().required('This field is required.'),
+    birth: yup.string().required('This field is required.'),
+    muncipality: yup.string().required('This field is required.'),
+    phoneNumber: yup.string().matches(/^\d{8}$/, 'Must be exactly 8 digits')
+        .required('This field is required.'),
 }).required();
 
 const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle = false, onSubmit }: Props, ref) => {
@@ -42,9 +42,9 @@ const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle
             gender: account?.gender || '',
             birth: account?.birth || '',
             muncipality: account?.muncipality || '',
-            mobile: account?.mobile || '',
+            phoneNumber: account?.phoneNumber || '',
         }); // Reset the form values when account changes
-    }, [account, reset]);
+    }, [account, reset]); //only need for google
 
     //call callback func in parent
     const submit: SubmitHandler<IData> = (data) => {
@@ -59,14 +59,14 @@ const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle
             }
         };
     }, []);
-   
+
     const customStyles = {
         control: (provided: any) => ({
-          ...provided,
-          padding: '8px 0px'
+            ...provided,
+            padding: '8px 0px'
         }),
     };
-
+    console.log(formState.errors)
     return (
         <form onSubmit={handleSubmit(submit)}>
             <button ref={submitButtonRef} className="hidden" type="submit" />
@@ -81,7 +81,7 @@ const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle
                             disabled={disabled || byGoogle}
                         />
                         {
-                            formState.errors.firstName && <ErrorMessage msg={`Input First Name`} />
+                            formState.errors.firstName && <ErrorMessage msg={`${formState.errors.firstName.message}`} />
                         }
                     </div>
 
@@ -93,7 +93,7 @@ const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle
                             disabled={disabled || byGoogle}
                         />
                         {
-                            formState.errors.lastName && <ErrorMessage msg={`Input Last Name`} />
+                            formState.errors.lastName && <ErrorMessage msg={`${formState.errors.lastName.message}`} />
                         }
                     </div>
 
@@ -105,7 +105,7 @@ const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle
                             disabled={disabled}
                         />
                         {
-                            formState.errors.birth && <ErrorMessage msg={`Choose your birth`} />
+                            formState.errors.birth && <ErrorMessage msg={`${formState.errors.birth.message}`} />
                         }
                     </div>
 
@@ -117,7 +117,7 @@ const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle
                             disabled={disabled || byGoogle}
                         />
                         {
-                            formState.errors.email && <ErrorMessage msg={`Input valid email`} />
+                            formState.errors.email && <ErrorMessage msg={`${formState.errors.email.message}`} />
                         }
                     </div>
 
@@ -128,12 +128,12 @@ const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle
                                 <span className=" text-gray-400">{PhoneCode}</span>
                             </div>
                             <input type="text" step="any" className="py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium flex-grow focus:border-0 focus-visible:border-0 pl-[44px] pr-[14px] w-full"
-                                {...register("mobile")}
+                                {...register("phoneNumber")}
                                 disabled={disabled}
                             />
                         </div>
                         {
-                            formState.errors.mobile && <ErrorMessage msg={`Input valid mobile number`} />
+                            formState.errors.phoneNumber && <ErrorMessage msg={`${formState.errors.phoneNumber.message}`} />
                         }
                     </div>
 

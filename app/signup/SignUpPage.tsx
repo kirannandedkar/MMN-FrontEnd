@@ -27,8 +27,18 @@ const NavData = [
 ];
 
 const schema = yup.object({
-    password: yup.string().required(),
-    repassword: yup.string().required(),
+    password: yup.string().required('Password is required.')
+        .min(7, 'Password must be at least 7 characters long.')
+        .matches(/[A-Z]/, 'Password must contain at least one uppercase letter.')
+        .matches(/[a-z]/, 'Password must contain at least one lowercase letter.')
+        .matches(/[0-9]/, 'Password must contain at least one digit.')
+        .matches(/[^a-zA-Z0-9]/, 'Password must contain at least one special character.'),
+    repassword: yup.string().required('Password is required.')
+        .min(7, 'Password must be at least 7 characters long.')
+        .matches(/[A-Z]/, 'Password must contain at least one uppercase letter.')
+        .matches(/[a-z]/, 'Password must contain at least one lowercase letter.')
+        .matches(/[0-9]/, 'Password must contain at least one digit.')
+        .matches(/[^a-zA-Z0-9]/, 'Password must contain at least one special character.'),
 });
 
 type CredentialData = {
@@ -110,7 +120,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     }
 
     const signUpManually: SubmitHandler<CredentialData> = async (data) => {
-        if (data.password != data.repassword) 
+        if (data.password != data.repassword)
             return;
         const flag = await handleSignupManually(account, data.password, familyAccounts);
         setSigned(flag);
@@ -143,7 +153,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
             <TopNav itemList={NavData} />
             <MMNContainer className="gap-[40px] pb-[40px] lg:flex-row flex-col">
                 <div className="flex flex-col gap-[20px] grow-[2]">
-                    <BlogPane fullName={ `${primaryAccount?.firstName || ''} ${primaryAccount?.lastName || ''}` } signed={signed} />
+                    <BlogPane fullName={`${primaryAccount?.firstName || ''} ${primaryAccount?.lastName || ''}`} signed={signed} />
                     <AccountInfoPane
                         ref={primaryAcocuntInfoPaneRef}
                         onSubmit={onPrimaryAccountCallback}
@@ -166,7 +176,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                                                     {...register('password')}
                                                 />
                                                 {
-                                                    formState.errors.password && <ErrorMessage msg={`Input password`} />
+                                                    formState.errors.password && <ErrorMessage msg={`${formState.errors.password.message}`} />
                                                 }
                                             </div>
 
@@ -177,7 +187,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                                                     {...register('repassword')}
                                                 />
                                                 {
-                                                    formState.errors.repassword && <ErrorMessage msg={`Confirm password`} />
+                                                    formState.errors.repassword && <ErrorMessage msg={`${formState.errors.repassword.message}`} />
                                                 }
                                                 {
                                                     !formState.errors.password && !formState.errors.repassword && password.password != password.repassword && (

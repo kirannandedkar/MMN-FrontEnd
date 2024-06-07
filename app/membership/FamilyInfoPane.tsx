@@ -2,7 +2,6 @@
 
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react"
 
-import DropDown from 'react-dropdown';
 import { FamilyAccountInfo, Genders, Relationships } from "@/constants/types";
 import _ from "lodash";
 
@@ -16,12 +15,12 @@ import Select from 'react-select'
 
 type IData = Pick<FamilyAccountInfo, "firstName" | "lastName" | "email" | "gender" | "birth" | "relation">
 const schema = yup.object({
-    firstName: yup.string().required(),
-    lastName: yup.string().required(),
-    email: yup.string().email().required(),
-    gender: yup.string().required(),
-    birth: yup.string().required(),
-    relation: yup.string().required(),
+    firstName: yup.string().required('This field is required.'),
+    lastName: yup.string().required('This field is required.'),
+    email: yup.string().email().required('This field is required.'),
+    gender: yup.string().required('This field is required.'),
+    birth: yup.string().required('This field is required.'),
+    relation: yup.string().required('This field is required.'),
 }).required();
 
 interface Props {
@@ -87,7 +86,7 @@ const FamilyInfoPane = forwardRef(({ showAddButton = false, onSubmit, account = 
                                 disabled={disabled}
                             />
                             {
-                                formState.errors.firstName && <ErrorMessage msg={`Input First Name`} />
+                                formState.errors.firstName && <ErrorMessage msg={`${formState.errors.firstName.message}`} />
                             }
                         </div>
                         <div>
@@ -98,7 +97,7 @@ const FamilyInfoPane = forwardRef(({ showAddButton = false, onSubmit, account = 
                                 disabled={disabled}
                             />
                             {
-                                formState.errors.lastName && <ErrorMessage msg={`Input Last Name`} />
+                                formState.errors.lastName && <ErrorMessage msg={`${formState.errors.lastName.message}`} />
                             }
                         </div>
 
@@ -110,7 +109,7 @@ const FamilyInfoPane = forwardRef(({ showAddButton = false, onSubmit, account = 
                                 disabled={disabled}
                             />
                             {
-                                formState.errors.birth && <ErrorMessage msg={`Choose your birth`} />
+                                formState.errors.birth && <ErrorMessage msg={`${formState.errors.birth.message}`} />
                             }
                         </div>
 
@@ -122,7 +121,7 @@ const FamilyInfoPane = forwardRef(({ showAddButton = false, onSubmit, account = 
                                 disabled={disabled}
                             />
                             {
-                                formState.errors.email && <ErrorMessage msg={`Input valid email`} />
+                                formState.errors.email && <ErrorMessage msg={`${formState.errors.email.message}`} />
                             }
                         </div>
 
