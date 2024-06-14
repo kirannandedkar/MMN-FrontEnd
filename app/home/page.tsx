@@ -1,6 +1,6 @@
 "use client";
 
-import { GetPageTitle, FavIcon } from "../../constants";
+import { GetPageTitle } from "../../constants";
 import MMNContainer from "@/components/MMNContainer";
 import AboutPane from "./AboutPane";
 import LoginCard from "./LoginCard";
@@ -9,6 +9,9 @@ import SliderPane from "./SliderPane";
 import MMNTitle from "@/components/MMNTItle";
 import Image from "next/image";
 import { useSelector } from "react-redux";
+import {useEffect} from "react";
+import {GET} from "@/utils/fetch-factory";
+import {useRouter} from "next/navigation";
 
 const title = GetPageTitle("Home");
 
@@ -20,7 +23,18 @@ const sponsorimages = [
 ];
 
 export default function HomePage() {
+    const router = useRouter();
     const { authresult } = useSelector((state: any) => state.auth);
+
+    useEffect(() => {
+        if(authresult){
+            const fetchUserSubscription = async () => {
+                const result = await GET("/proxy/User/subscription");
+                if(!result.isSubscribed) router.push('/signup/manual');
+            }
+            fetchUserSubscription();
+        }
+    }, [authresult]);
 
     return (
         <>

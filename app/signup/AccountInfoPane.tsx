@@ -98,83 +98,98 @@ const AccountInfoPane = forwardRef(({ account = null, disabled = false, byGoogle
                     </div>
 
                     <div>
-                        <div className="pb-[5px]">Date of Birth*</div>
-                        <input type="date" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium flex-grow w-full"
-                            placeholder="Enter Birth"
-                            {...register("birth")}
-                            disabled={disabled}
-                        />
-                        {
-                            formState.errors.birth && <ErrorMessage msg={`${formState.errors.birth.message}`} />
-                        }
-                    </div>
-
-                    <div>
                         <div className="pb-[5px]">Email id*</div>
-                        <input type="text" className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
-                            placeholder="email@email.no"
-                            {...register("email")}
-                            disabled={disabled || byGoogle}
+                        <input type="text"
+                               className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
+                               placeholder="email@email.no"
+                               {...register("email")}
+                               disabled={disabled || byGoogle}
                         />
                         {
                             formState.errors.email && <ErrorMessage msg={`${formState.errors.email.message}`} />
                         }
                     </div>
 
-                    <div>
-                        <div className="pb-[5px]">Mobile no (Norway only)*</div>
-                        <div className="relative">
-                            <div className="absolute flex items-center justify-center h-full pl-[14px]">
-                                <span className=" text-gray-400">{PhoneCode}</span>
-                            </div>
-                            <input type="text" step="any" className="py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium flex-grow focus:border-0 focus-visible:border-0 pl-[44px] pr-[14px] w-full"
-                                {...register("phoneNumber")}
-                                disabled={disabled}
-                            />
-                        </div>
-                        {
-                            formState.errors.phoneNumber && <ErrorMessage msg={`${formState.errors.phoneNumber.message}`} />
-                        }
-                    </div>
-
-                    <div>
-                        <div className="pb-[5px]">Kommune*</div>
-                        <Controller name="muncipality" control={control} rules={{ required: true }} render={({ field: { value, onChange } }) => (
+                    {
+                        !disabled ? (
                             <>
-                                <Select
-                                    options={CountryList}
-                                    value={CountryList.find((item) => item.value === value)}
-                                    onChange={(e: any) => onChange(e?.value)}
-                                    styles={customStyles}
-                                    isSearchable={false} // Disable searching
-                                />
-                                {
-                                    formState.errors.muncipality && <ErrorMessage msg={`Choose muncipality`} />
-                                }
-                            </>
-                        )} />
-                    </div>
-
-                    <div>
-                        <div className="pb-[5px]">Gender*</div>
-                        <Controller name="gender" control={control} render={({ field: { value, onChange } }) => {
-                            return (
-                                <>
-                                    <Select
-                                        options={Genders}
-                                        value={Genders.find((item) => item.value === value)}
-                                        onChange={(e) => onChange(e?.value)}
-                                        styles={customStyles}
-                                        isSearchable={false} // Disable searching
+                                <div>
+                                    <div className="pb-[5px]">Date of Birth*</div>
+                                    <input type="date"
+                                           className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium flex-grow w-full"
+                                           placeholder="Enter Birth"
+                                           {...register("birth")}
+                                           disabled={disabled}
                                     />
                                     {
-                                        formState.errors.gender && <ErrorMessage msg={`Choose gender`} />
+                                        formState.errors.birth &&
+                                        <ErrorMessage msg={`${formState.errors.birth.message}`}/>
                                     }
-                                </>
-                            )
-                        }
-                        } />
-                    </div>
+                                </div>
+                                <div>
+                                    <div className="pb-[5px]">Mobile no (Norway only)*</div>
+                                    <div className="relative">
+                                        <div className="absolute flex items-center justify-center h-full pl-[14px]">
+                                            <span className=" text-gray-400">{PhoneCode}</span>
+                                        </div>
+                                        <input type="text" step="any"
+                                               className="py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium flex-grow focus:border-0 focus-visible:border-0 pl-[44px] pr-[14px] w-full"
+                                               {...register("phoneNumber")}
+                                               disabled={disabled}
+                                        />
+                                    </div>
+                                    {
+                                        formState.errors.phoneNumber &&
+                                        <ErrorMessage msg={`${formState.errors.phoneNumber.message}`}/>
+                                    }
+                                </div>
+
+                                <div>
+                                    <div className="pb-[5px]">Kommune*</div>
+                                    <Controller name="muncipality" control={control} rules={{required: true}}
+                                                render={({field: {value, onChange}}) => (
+                                                    <>
+                                                        <Select
+                                                            options={CountryList}
+                                                            value={CountryList.find((item) => item.value === value)}
+                                                            onChange={(e: any) => onChange(e?.value)}
+                                                            styles={customStyles}
+                                                            isSearchable={false} // Disable searching
+                                                        />
+                                                        {
+                                                            formState.errors.muncipality &&
+                                                            <ErrorMessage msg={`Choose muncipality`}/>
+                                                        }
+                                                    </>
+                                                )}/>
+                                </div>
+
+                                <div>
+                                    <div className="pb-[5px]">Gender*</div>
+                                    <Controller name="gender" control={control}
+                                                render={({field: {value, onChange}}) => {
+                                                    return (
+                                                        <>
+                                                            <Select
+                                                                options={Genders}
+                                                                value={Genders.find((item) => item.value === value)}
+                                                                onChange={(e) => onChange(e?.value)}
+                                                                styles={customStyles}
+                                                                isSearchable={false} // Disable searching
+                                                            />
+                                                            {
+                                                                formState.errors.gender &&
+                                                                <ErrorMessage msg={`Choose gender`}/>
+                                                            }
+                                                        </>
+                                                    )
+                                                }
+                                                }/>
+                                </div>
+                            </>
+                        ) : ''
+                    }
+
                 </div>
             </div>
         </form>

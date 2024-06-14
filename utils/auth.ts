@@ -12,7 +12,6 @@ const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: 
   const session: any = await getSession();
   if (!session || !member)
     return false;
-
   const result = await AUTHPOST("UserAccount/create-user-with-google", {
     firstName: member.firstName,
     lastName: member.lastName,
@@ -29,7 +28,7 @@ const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: 
     toast.error('Error Occured.');
   } else {
     if (result.msg?.accessToken) {
-      toast.error('Successfully signup.');
+      toast.success('Signup succeed.');
       return true;
     } else {
       if (result.msg?.Message) toast.error(result.msg?.Message);
@@ -41,14 +40,15 @@ const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: 
 const handleSignupManually = async (member: AccountInfo | null, password: string, familyAccounts: (FamilyAccountInfo | null)[] = []) => {
   if (!member)
     return false;
-  
+
   const result = await AUTHPOST("UserAccount/create-user", { ...member, password: password });
 
   if (!result.isSuccess) {
     toast.error('Error Occured.');
   } else {
     if (result.msg?.accessToken) {
-      toast.error('Successfully signup.');
+      handleCookie(result.msg as AuthResult);
+      toast.success('Signup succeed.');
       return true;
     } else {
       if (result.msg?.Message) toast.error(result.msg?.Message);
@@ -61,9 +61,9 @@ const handleSigninManual = async (email: string, password: string) => {
   const result = await AUTHPOST("UserAccount/login", { email, password });
   if (result !== null) {
     handleCookie(result as AuthResult);
-    alert("signin successful manually");
+    // toast.success("signin successful manually");
   } else {
-    alert("signin failed");
+    toast.error("signing failed");
   }
 };
 
@@ -75,9 +75,9 @@ const handleSigninGoogle = async () => {
     });
     if (result !== null) {
       handleCookie(result);
-      toast.success("signin successful google");
+      //toast.success("signin successful google");
     } else
-      alert("signin failed google");
+      toast.error("signin failed google");
   } else signIn('google');
 };
 

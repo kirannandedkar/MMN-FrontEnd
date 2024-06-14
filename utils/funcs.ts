@@ -28,4 +28,11 @@ const isOlder16 = (birth: string | undefined, age: number = 16) => {
     return ((Date.now() - Date.parse(birth)) / 1000) > (age * 365 * 24 * 60 * 60);
 }
 
-export { isOlder16 , handleCookie, initCookie }
+const formatDate = (datetime: string | null): string => {
+    if (datetime == null)
+        return '';
+
+    return datetime.split('T')[0];
+};
+
+export { isOlder16 , handleCookie, initCookie, formatDate }

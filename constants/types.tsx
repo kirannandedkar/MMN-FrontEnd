@@ -1,4 +1,5 @@
 export interface FamilyAccountInfo {
+    [key: string]: any;
     firstName: string,
     lastName: string,
     email: string,
@@ -7,8 +8,7 @@ export interface FamilyAccountInfo {
     muncipality?: string,
     phoneNumber?: string,
     referenceUserAccountId?: number,
-
-    birth: string,
+    dateOfBirth: string,
     relation?: string | null,
     memberid?: string | null,
 }

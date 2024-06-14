@@ -5,21 +5,24 @@ import MMNContainer from "@/components/MMNContainer";
 import BlogPane from "@/app/membership/BlogPane";
 import PaymentCard from "./PaymentCard";
 import AccountInfoPane from './AccountInfoPane';
-import { AccountInfo, FamilyAccountInfo } from "@/constants/types";
+import {AccountInfo, FamilyAccountInfo} from "@/constants/types";
 
 import MMNButton from "@/components/MMNButton";
-import { useEffect, useRef, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import FamilyInfoPane from "@/app/membership/FamilyInfoPane";
-import { useSession } from "next-auth/react";
-import { handleSignupByGoogle, handleSignupManually } from "@/utils/auth";
+import {useSession} from "next-auth/react";
+import {handleSignupByGoogle, handleSignupManually} from "@/utils/auth";
 
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { ErrorMessage } from "./ErrorMessage";
-import { useRouter } from "next/navigation";
-import { isOlder16 } from "@/utils/funcs";
-import { toast } from "react-toastify";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {ErrorMessage} from "./ErrorMessage";
+import {useRouter} from "next/navigation";
+import {isOlder16} from "@/utils/funcs";
+import {toast} from "react-toastify";
+import {GET, POST} from "@/utils/fetch-factory";
+import {useSelector} from "react-redux";
+import {camelCaseToSentenceCase} from "@/utils/form";
 
 const NavData = [
     { title: "Home", link: "/home" },
@@ -46,6 +49,15 @@ type CredentialData = {
     repassword: string
 }
 
+const emptyFamilyMember = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    mobile: '',
+    gender: '',
+    dateOfBirth: ''
+}
+
 export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     const { register, handleSubmit, control, watch, formState, reset } = useForm<CredentialData>({
         resolver: yupResolver<CredentialData>(schema)
@@ -55,14 +67,19 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
 
     const [signed, setSigned] = useState(false);
     const [primaryAccount, setPrimaryAccount] = useState<AccountInfo | null>(null);
-    const [familyAccounts, setFamilyAccounts] = useState<(FamilyAccountInfo | null)[]>([]);
+    const [familyAccounts, setFamilyAccounts] = useState<(FamilyAccountInfo)[]>([]);
     // add two password properties
     const [password, setPassword] = useState<CredentialData>({ password: '', repassword: '' });
     const [memberCount, setMemberCount] = useState(1); //primary account
+    const [MembershipFee, setMembershipFee] = useState<number>(0);
 
     const primaryAcocuntInfoPaneRef = useRef<any>(null);
     const submitButtonForCredentialRef = useRef<any>(null);
-
+    const { authresult } = useSelector((state: any) => state.auth);
+    const [familyMemberNotAdded, setFamilyMemberNotAdded] = useState(true);
+    const [notPaid, setNotPaid] = useState(false);
+    const [familyMemberFormState, setFamilyMemberFormState] = useState<(FamilyAccountInfo)[]>([]);
+    const [isFamilyMemberLastFormValid, setFamilyMemberLastFormValid] = useState(false);
     if (byGoogle) {
         const { data: session } = useSession();
         useEffect(() => {
@@ -77,41 +94,69 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                 id_token: id_token,
                 mobile: '',
                 gender: '',
-                birth: '',
+                dateOfBirth: '',
                 muncipality: '',
             })
         }, [session]);
     }
-
     useEffect(() => {
-        let count = 1; //primary account
-        familyAccounts.map(acc => {
-            if (isOlder16(acc?.birth)) count++;
+        const fetchData = async () => {
+            const {price} = await GET("/proxy/subscription-plan");
+            setMembershipFee(price / 100);
+            if(authresult){
+                setSigned(true);
+                await fetchUserInfo();
+                await fetchFamilyMembers();
+            }
+        }
+        fetchData();
+    }, []);
+
+    const fetchUserInfo = async () => {
+        const userInfo = await GET("/proxy/user/me");
+        setPrimaryAccount({
+            firstName: userInfo.firstName || '',
+            lastName: userInfo.lastName || '',
+            email: userInfo.email || '',
+            mobile: '',
+            gender: '',
+            dateOfBirth: '',
+            muncipality: '',
+        })
+    }
+
+    const fetchFamilyMembers = async () => {
+        const familyMembers = await GET("/proxy/family-members");
+        if (familyMembers && familyMembers.length > 0)
+        {
+            setFamilyAccounts(familyMembers);
+            countingFamilyMembers(familyMembers);
+            await fetchUserSubscription();
+            setFamilyMemberNotAdded(false);
+            setFamilyMemberLastFormValid(true);
+        }
+        else
+        {
+            setFamilyMemberNotAdded(true);
+        }
+    }
+
+    const fetchUserSubscription = async () => {
+        const subscription = await GET("/proxy/user/subscription");
+        if(!subscription.isSubscribed) setNotPaid(true);
+    }
+
+    const countingFamilyMembers = (familyAccounts: (FamilyAccountInfo | null)[]) => {
+        let count = 1;
+        familyAccounts?.forEach(acc => {
+            if (isOlder16(acc?.dateOfBirth)) {
+                count++;
+            }
         });
         setMemberCount(count);
-    }, [familyAccounts]);
+    };
 
     let account: any = null;
-
-    const onAddEmptyFamilyAccountClicked = () => {
-        setFamilyAccounts((prev) => ([...prev, null]));
-    }
-
-    const onAddCompletedFamilyAccountCallback = (_familymember: any) => {
-        let newFamilyAccounts = [...familyAccounts];
-        newFamilyAccounts.pop();
-        newFamilyAccounts.push(_familymember);
-        newFamilyAccounts.push(null);
-
-        setFamilyAccounts(newFamilyAccounts);
-    }
-
-    const onRemoveFamilyAccountClicked = (index: number) => {
-        setFamilyAccounts(prev => {
-            prev.splice(index, 1);
-            return [...prev];
-        });
-    }
 
     const onCompletePrimaryAccountClicked = async () => {
         if (primaryAcocuntInfoPaneRef.current) {
@@ -137,23 +182,96 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
         }
     }
 
-    const processPayment = () => {
+    const processPayment = async () => {
         if (!signed) {
             toast.info('You need to sign up first.');
             return;
         }
 
-        const finalFamilyAccounts = familyAccounts.filter(acc => acc != null);
-        setFamilyAccounts(finalFamilyAccounts);
+        //add family members
+        if(familyMemberNotAdded){
+            const result = await POST("/proxy/family-members", familyAccounts);
+            if(result.isSuccess){
+                await processCheckout();
+            }
+        }else{
+            await processCheckout();
+        }
+    }
 
+    const processCheckout = async () => {
         router.push('/payment/checkout');
+    }
+
+    //Family member related handler
+    const onFamilyMemberChangeHandlerChangeHandler = (i: number, value: string | null, fieldName: string) => {
+        const updatedAccounts = [...familyAccounts];
+        const updatedAccount = {...updatedAccounts[i]}
+        updatedAccount[fieldName] = value;
+        updatedAccounts[i] = updatedAccount;
+
+        //field validation
+        const updatedStates = [...familyMemberFormState];
+        updatedStates[i] = validate({...updatedStates[i]}, value, fieldName);
+
+        setFamilyMemberFormState(updatedStates);
+        setFamilyAccounts(updatedAccounts);
+
+        if(fieldName == 'dateOfBirth')
+            countingFamilyMembers(updatedAccounts);
+    };
+
+    const onAddEmptyFamilyAccountClicked = async (isProcessBtnClicked = false) => {
+        if(familyAccounts.length == 0){
+            addNewFamilyAccount();
+        }else if(familyAccounts.length > 0 && isFamilyMemberLastFormValid){
+            if(isProcessBtnClicked) await processPayment();
+            else addNewFamilyAccount();
+        }else{
+            toast.error("Form is not valid.");
+        }
+    }
+
+    const addNewFamilyAccount = () =>{
+        setFamilyAccounts((prev) => ([...prev, emptyFamilyMember]));
+        setFamilyMemberLastFormValid(false);
+    }
+
+    const onRemoveFamilyAccountClicked = (index: number) => {
+        setFamilyAccounts(prev => {
+            prev.splice(index, 1);
+            return [...prev];
+        });
+    }
+
+    const validate = (formState: FamilyAccountInfo, value: string | null, fieldName: string) => {
+        const updated = {...formState};
+        if(value == null || value === '')
+            updated[fieldName] = `${camelCaseToSentenceCase(fieldName)} field is required`;
+        else
+            updated[fieldName] = null;
+        setFamilyMemberLastFormValid(checkFormValid(updated))
+        return updated;
+    }
+
+    const checkFormValid = (formState: FamilyAccountInfo | null) => {
+        let isFormValid = true;
+        for (let key in formState){
+            isFormValid = isFormValid && formState[key] !== '';
+        }
+        return isFormValid;
     }
     return (
         <div className="max-w-[1440px] m-auto">
             <TopNav itemList={NavData} />
             <MMNContainer className="gap-[40px] pb-[40px] lg:flex-row flex-col">
                 <div className="flex flex-col gap-[20px] grow-[2]">
-                    <BlogPane fullName={`${primaryAccount?.firstName || ''} ${primaryAccount?.lastName || ''}`} signed={signed} />
+                    <BlogPane
+                        fullName={`${primaryAccount?.firstName || ''} ${primaryAccount?.lastName || ''}`}
+                        signed={signed}
+                        notPaid={notPaid}
+                        familyMemberNotAdded={familyMemberNotAdded} />
+
                     <AccountInfoPane
                         ref={primaryAcocuntInfoPaneRef}
                         onSubmit={onPrimaryAccountCallback}
@@ -212,11 +330,14 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                         familyAccounts.map((account, index) => {
                             return (
                                 <FamilyInfoPane
-                                    onSubmit={onAddCompletedFamilyAccountCallback}
+                                    errorState={familyMemberFormState[index]}
+                                    familyMemberAlreadyAdded={!familyMemberNotAdded}
                                     key={index}
+                                    account={account}
+                                    onChangeHandler={(value, fieldName) => onFamilyMemberChangeHandlerChangeHandler(index, value, fieldName)}
                                     showAddButton={(index === familyAccounts.length - 1)}
-                                    disabled={(index !== familyAccounts.length - 1)}
-                                    // account={account}
+                                    disabled={(index !== familyAccounts.length - 1) || !familyMemberNotAdded}
+                                    onAddFamilyMemberHandler={onAddEmptyFamilyAccountClicked}
                                     onRemove={() => onRemoveFamilyAccountClicked(index)}
                                 />
                             )
@@ -224,9 +345,9 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                     }
 
                     {
-                        signed && familyAccounts.length == 0 && (
+                        signed && familyMemberNotAdded && familyAccounts.length == 0 &&  (
                             <div className="flex">
-                                <div onClick={onAddEmptyFamilyAccountClicked}>
+                                <div onClick={() => onAddEmptyFamilyAccountClicked()}>
                                     <MMNButton title={"+ Add family member"} color="white" className={"border border-color-mmn-purple"} />
                                 </div>
                             </div>
@@ -235,10 +356,10 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                 </div>
                 <div>
                     <div className="sticky top-[20px]">
-                        <PaymentCard memberCount={memberCount} processClicked={processPayment} />
+                        <PaymentCard memberCount={memberCount} processClicked={() => onAddEmptyFamilyAccountClicked(true)} MembershipFee={MembershipFee}/>
                     </div>
                 </div>
-            </MMNContainer >
+            </MMNContainer>
         </div >
     );
 }
