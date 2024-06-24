@@ -18,7 +18,7 @@ interface Props {
     disabled?: boolean,
     onAddFamilyMemberHandler: () => void,
     onRemove?: () => void,
-    onChangeHandler: (value: string | null, fieldName: string) => void
+    onChangeHandler: (value: string | undefined, fieldName: string) => void
     errorState?: FamilyAccountInfo | null
 }
 

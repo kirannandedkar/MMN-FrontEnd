@@ -204,7 +204,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     }
 
     //Family member related handler
-    const onFamilyMemberChangeHandlerChangeHandler = (i: number, value: string | null, fieldName: string) => {
+    const onFamilyMemberChangeHandlerChangeHandler = (i: number, value: string | undefined | null, fieldName: string) => {
         const updatedAccounts = [...familyAccounts];
         const updatedAccount = {...updatedAccounts[i]}
         updatedAccount[fieldName] = value;
@@ -222,12 +222,15 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     };
 
     const onAddEmptyFamilyAccountClicked = async (isProcessBtnClicked = false) => {
-        if(familyAccounts.length == 0){
+        if(familyAccounts.length == 0 && !isProcessBtnClicked){
             addNewFamilyAccount();
         }else if(familyAccounts.length > 0 && isFamilyMemberLastFormValid){
             if(isProcessBtnClicked) await processPayment();
             else addNewFamilyAccount();
-        }else{
+        }else if(familyAccounts.length == 0 && isProcessBtnClicked){
+            await processPayment();
+        }
+        else{
             toast.error("Form is not valid.");
         }
     }
@@ -244,7 +247,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
         });
     }
 
-    const validate = (formState: FamilyAccountInfo, value: string | null, fieldName: string) => {
+    const validate = (formState: FamilyAccountInfo, value: string | undefined | null, fieldName: string) => {
         const updated = {...formState};
         if(value == null || value === '')
             updated[fieldName] = `${camelCaseToSentenceCase(fieldName)} field is required`;

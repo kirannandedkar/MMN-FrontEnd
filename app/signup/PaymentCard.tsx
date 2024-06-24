@@ -15,15 +15,9 @@ export default function PaymentCard({ memberCount = 1, MembershipFee = 0, proces
             </div>
 
             <div className="grid md:grid-cols-2 grid-cols-1">
-                {memberCount > 0 ? (
-                    <div onClick={processClicked}>
-                        <MMNButton title="Proceed payment" color="white" className={"min-w-max"} />
-                    </div>
-                ): (
-                    <div onClick={() => {}} style={{cursor: 'not-allowed'}}>
-                        <MMNButton title="Proceed payment" color="white" className={"min-w-max"}/>
-                    </div>
-                )}
+                <div onClick={processClicked}>
+                    <MMNButton title="Proceed payment" color="white" className={"min-w-max"}/>
+                </div>
             </div>
         </div>
     )

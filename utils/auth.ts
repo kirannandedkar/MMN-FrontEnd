@@ -25,7 +25,7 @@ const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: 
   });
 
   if (!result.isSuccess) {
-    toast.error('Error Occured.');
+    toast.error('Error Occurred.');
   } else {
     if (result.msg?.accessToken) {
       toast.success('Signup succeed.');
@@ -44,7 +44,7 @@ const handleSignupManually = async (member: AccountInfo | null, password: string
   const result = await AUTHPOST("UserAccount/create-user", { ...member, password: password });
 
   if (!result.isSuccess) {
-    toast.error('Error Occured.');
+    toast.error('Error Occurred.');
   } else {
     if (result.msg?.accessToken) {
       handleCookie(result.msg as AuthResult);
@@ -61,7 +61,6 @@ const handleSigninManual = async (email: string, password: string) => {
   const result = await AUTHPOST("UserAccount/login", { email, password });
   if (result !== null) {
     handleCookie(result as AuthResult);
-    // toast.success("signin successful manually");
   } else {
     toast.error("signing failed");
   }
@@ -75,9 +74,8 @@ const handleSigninGoogle = async () => {
     });
     if (result !== null) {
       handleCookie(result);
-      //toast.success("signin successful google");
     } else
-      toast.error("signin failed google");
+      toast.error("signing failed google");
   } else signIn('google');
 };
 
