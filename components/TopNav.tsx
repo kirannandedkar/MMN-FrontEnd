@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import MMNContainer from "./MMNContainer";
+import {useSelector} from "react-redux";
 
 interface Item {
     title: string,
@@ -17,6 +18,7 @@ export default function TopNav(params: Props) {
     if(itemList == undefined) return null;
 
     const count: number = itemList.length;
+    const { authresult } = useSelector((state: any) => state.auth);
 
     return (
         <MMNContainer>

@@ -22,6 +22,12 @@ const initCookie = () => {
     Cookies.set("sub", '');
 }
 
+const clearCookie = ()=>{
+    Cookies.remove("access_token");
+    Cookies.remove("refresh_token");
+    Cookies.remove("sub");
+}
+
 const isOlder16 = (birth: string | undefined, age: number = 16) => {
     if (!birth)
         return false;
@@ -35,4 +41,4 @@ const formatDate = (datetime: string | undefined): string => {
     return datetime.split('T')[0];
 };
 
-export { isOlder16 , handleCookie, initCookie, formatDate }
+export { isOlder16 , handleCookie, initCookie, formatDate, clearCookie }

@@ -1,7 +1,7 @@
 'use client'
 
 import { createSlice } from "@reduxjs/toolkit";
-import { GetSubscription, SignInGoogle, SignInManualy } from './auth.action'
+import {GetSubscription, SignInGoogle, SignInManualy, SignOut} from './auth.action'
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -27,7 +27,6 @@ const userSlice = createSlice({
             .addCase(SignInManualy.fulfilled, (state, { payload }) => {
                 state.loading = false;
                 state.authresult = payload;
-                toast.success('Signin success');
             })
             .addCase(SignInManualy.rejected, (state, { payload }) => {
                 state.loading = false;
@@ -42,7 +41,7 @@ const userSlice = createSlice({
             .addCase(SignInGoogle.fulfilled, (state, { payload }) => {
                 state.loading = false;
                 state.authresult = payload;
-                toast.success('Signin success');
+                // toast.success('Signin success');
             })
             .addCase(SignInGoogle.rejected, (state, { payload }) => {
                 state.loading = false;
@@ -53,6 +52,16 @@ const userSlice = createSlice({
             .addCase(GetSubscription.fulfilled, (state, { payload }) => {
                 state.subscription = payload;
             })
+            .addCase(SignOut.fulfilled, (state) => {
+                state.loading = false;
+                state.profile = null;
+                state.authresult = null;
+                state.subscription = null;
+            })
+            .addCase(SignOut.rejected, (state, { payload }) => {
+                state.loading = false;
+                toast.error(`${payload}`);
+            });
     },
 });
 

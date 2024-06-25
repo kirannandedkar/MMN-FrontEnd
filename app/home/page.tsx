@@ -9,9 +9,11 @@ import SliderPane from "./SliderPane";
 import MMNTitle from "@/components/MMNTItle";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {GET} from "@/utils/fetch-factory";
 import {useRouter} from "next/navigation";
+import Modal from "@/components/Modal";
+ //import Modal from "react-modal";
 
 const title = GetPageTitle("Home");
 
@@ -46,9 +48,10 @@ export default function HomePage() {
 
                     <div className="xl:grid xl:grid-cols-2 gap-[40px] pb-[40px] flex flex-col">
                         {/* <VolunteerCard /> */}
-                        {authresult ? <div></div> : <LoginCard />}
-                        <MemberCard />
+                        {/*{authresult ? <div></div> : <LoginCard />}*/}
+                        <MemberCard/>
                     </div>
+
 
                     <div className="flex flex-col gap-[30px] pb-[40px]">
                         <MMNTitle title="Our sponsors" color="purple" />

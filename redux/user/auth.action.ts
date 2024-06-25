@@ -1,11 +1,10 @@
 'use client'
 
-import { AuthResult } from "@/app/types";
 import { APIGET, APIPOST, AUTHPOST } from "@/utils/fetch-api";
-import { handleCookie } from "@/utils/funcs";
+import {clearCookie, handleCookie} from "@/utils/funcs";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { getSession, signIn } from "next-auth/react";
+import { getSession, signIn, signOut } from "next-auth/react";
 
 export const SignInManualy = createAsyncThunk(
     "user/manualsignin",
@@ -33,7 +32,7 @@ export const SignInGoogle = createAsyncThunk(
             const result = await AUTHPOST("UserAccount/login-with-google", null, { Authorization: `Bearer ${session?.id_token}`, });
 
             if (!result.isSuccess) {
-                return rejectWithValue('Error Occured.');
+                return rejectWithValue('Error Occurred.');
             } else {
                 if (result.msg?.accessToken) {
                     handleCookie(result.msg);
@@ -46,6 +45,18 @@ export const SignInGoogle = createAsyncThunk(
         } else {
             signIn('google');
             return rejectWithValue('Please sign in your Google Account.')
+        }
+    }
+);
+
+export const SignOut = createAsyncThunk(
+    "user/signout",
+    async (_, { getState, rejectWithValue }) => {
+        try {
+            clearCookie();
+            await signOut();
+        } catch (error) {
+            return rejectWithValue('Error Occurred.');
         }
     }
 );
