@@ -37,7 +37,7 @@ const ChangePasswordPage: React.FC = () => {
         if (!authresult) {
             router.push('/home');
         }
-    }, [authresult, router]);
+    }, [authresult]);
 
     const submitHandler = async () => {
         if (!isFormValid) {

@@ -11,6 +11,7 @@ import {GET} from "@/utils/fetch-factory";
 import {ProfileType} from "@/app/types/profile.type";
 import Modal from "@/components/Modal";
 import LoginCard from "@/app/home/LoginCard";
+import Profile from "@/components/icons/Profile";
 
 export default function DesktopHeader() {
     const pathName = usePathname();
@@ -79,9 +80,10 @@ export default function DesktopHeader() {
                     {authresult ? (
                         <SubMenuItem item={{
                             title: `${profileInfo?.firstName} ${profileInfo?.lastName}`,
+                            icon: <Profile/>,
                             link: '',
                             subItems: [
-                                {title: "Membership Details", link: ""},
+                                {title: "Membership Details", link: "/auth/membership-details"},
                                 {title: "Change Password", link: "/auth/change-password"},
                                 {title: "Logout", link: ""}
                             ]

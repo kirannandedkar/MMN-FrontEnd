@@ -2,6 +2,7 @@
 export interface MenuItem {
     title: string,
     link: string,
+    icon?: any,
     href?: string,
     subItems?: MenuItem[]
 }

@@ -39,7 +39,8 @@ export default function SubMenuItem({ item }: {item: MenuItem}) {
             onMouseLeave={e => setPopupFlag(false)}
         >
             <div className="line-height-mmn-normal self-center flex gap-[6px] items-center">
-                <span> {title} </span>
+                {item.icon}
+                <span>  {title} </span>
                 {popupFlag ? '⮝' : '⮟' }
             </div>
 

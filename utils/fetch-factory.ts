@@ -8,7 +8,6 @@ async function fetchData(url : string, method: string, req_body: any, customHead
         body: req_body ? JSON.stringify(req_body) : null,
     };
     try {
-        debugger;
         const response = await fetch(url, options);
 
         const responseData = await response.json();
