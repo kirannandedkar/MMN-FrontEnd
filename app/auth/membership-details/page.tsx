@@ -7,6 +7,7 @@ import {GET} from "@/utils/fetch-factory";
 import {AccountInfo, FamilyAccountInfo} from "@/constants/types";
 import {useSelector} from "react-redux";
 import {useRouter} from "next/navigation";
+import Loader from "@/components/Loader";
 
 const NavData = [
     { title: "Home", link: "/home" },
@@ -43,7 +44,7 @@ const Page = () => {
     }, []);
 
     if(loading)
-        return <span>Loading...</span>
+        return <Loader></Loader>
     return (
         <div className="max-w-[1440px] m-auto">
             <TopNav itemList={NavData}/>
