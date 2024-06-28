@@ -45,7 +45,7 @@ export default function FamilyMemberModal({ open, onClose, onSave }: FamilyMembe
                         <img src="/xmark.circle.fill.svg" />
                     </div>
                 </div>
-                <FamilyInfoPane onSubmit={acoountReceived} ref={acocuntInfoPaneRef} />
+                {/*<FamilyInfoPane onSubmit={acoountReceived} ref={acocuntInfoPaneRef} />*/}
                 <div className="flex justify-end gap-[20px]">
                     <div onClick={onClose}>
                         <MMNButton title="Close" color="white" className={"border-[1px] border-color-mmn-purple"} />

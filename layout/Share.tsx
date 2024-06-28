@@ -2,6 +2,7 @@
 export interface MenuItem {
     title: string,
     link: string,
+    icon?: any,
     href?: string,
     subItems?: MenuItem[]
 }
@@ -22,6 +23,5 @@ export const menuItemData = [
     { title: "Event", link: "" },
     { title: "Gallery", link: "" },
     { title: "MMN Initiatives", link: "" },
-    { title: "Contact us", link: "" },
-    { title: "Login", link: "" },
+    { title: "Contact us", link: "" }
 ]

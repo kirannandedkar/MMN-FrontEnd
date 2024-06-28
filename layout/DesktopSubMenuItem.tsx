@@ -2,13 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import ArrowDown from "@/components/icons/ArrowDown"
-import ArrowUp from "@/components/icons/ArrowUp"
 import { MenuItem } from "./Share";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "@/redux/store";
+import {SignOut} from "@/redux/user/auth.action";
 
 export default function SubMenuItem({ item }: {item: MenuItem}) {
     const router = useRouter();
     const pathName = usePathname();
+    const dispatch = useDispatch<AppDispatch>();
 
     const [popupFlag, setPopupFlag] = useState(false);
 
@@ -22,11 +24,9 @@ export default function SubMenuItem({ item }: {item: MenuItem}) {
     }, [pathName]);
 
     const subMenuClicked = (subItem: MenuItem) => {
-        if (subItem.link)
-            router.push(parentPath + subItem.link);
-        if (subItem.href){
-            window.open(subItem.href, "_blank");
-        }
+        if (subItem.title === 'Logout') dispatch(SignOut());
+        if (subItem.link) router.push(parentPath + subItem.link);
+        if (subItem.href) window.open(subItem.href, "_blank");
         setPopupFlag(false);
     }
 
@@ -39,8 +39,8 @@ export default function SubMenuItem({ item }: {item: MenuItem}) {
             onMouseLeave={e => setPopupFlag(false)}
         >
             <div className="line-height-mmn-normal self-center flex gap-[6px] items-center">
-                <span> {title} </span>
-                {/* {popupFlag ? <ArrowUp /> : <ArrowDown />} */}
+                {item.icon}
+                <span>  {title} </span>
                 {popupFlag ? '⮝' : '⮟' }
             </div>
 

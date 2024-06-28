@@ -5,19 +5,24 @@ import { useRouter, usePathname } from "next/navigation";
 import ArrowDown from "@/components/icons/ArrowDown"
 import ArrowUp from "@/components/icons/ArrowUp"
 import { MenuItem } from "./Share";
+import {SignOut} from "@/redux/user/auth.action";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "@/redux/store";
 
 export default function MobileSubMenuItem({ item, callback }: {
     item: MenuItem,
     callback?: () => void
 }) {
     const router = useRouter();
-
+    const dispatch = useDispatch<AppDispatch>();
     const [popupFlag, setPopupFlag] = useState(false);
 
     const items = item.subItems;
     const parentPath = item.link;
 
     const subMenuClicked = (subItem: MenuItem) => {
+        if (subItem.title === 'Logout') dispatch(SignOut());
+
         if (subItem.link)
             router.push(parentPath + subItem.link);
         if (subItem.href)
@@ -43,8 +48,9 @@ export default function MobileSubMenuItem({ item, callback }: {
                     </div> : <></>
             }
             <div className="lead-[21px] self-center flex items-center gap-[10px]" onClick={() => setPopupFlag(true)}>
+                {item.icon}
                 <span> {item.title} </span>
-                {popupFlag ? <ArrowUp /> : <ArrowDown />}
+                {popupFlag ? '⮝' : '⮟'}
             </div>
         </div>
     )

@@ -1,44 +1,92 @@
-'use client'
+'use client';
 
-import { APIPOST } from "@/utils/fetch-api";
+import React, { useEffect, useRef } from "react";
+import { POST } from "@/utils/fetch-factory";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-const checkoutPage = () => {
-    const router = useRouter();
-    const subscriptionId = 4;
-    const containerId = 'nexipay-checkout';
-
-    useEffect(() => {
-        const script = document.createElement('script');
-        script.src = 'https://test.checkout.dibspayment.eu/v1/checkout.js?v=1'; // Replace with actual NexiPay script URL
-        script.async = true;
-        script.onload = () => {
-            APIPOST(`Payment/create-payment/${subscriptionId}`).then((response) => {
-                const paymentId = response?.paymentId;
-                if (paymentId) {
-                    const checkoutOptions = {
-                        checkoutKey: process.env.NEXT_PUBLIC_NEXI_PUB_KEY,
-                        paymentId: paymentId,
-                        containerId: containerId,
-                    };
-
-                    const checkout = new window.Dibs.Checkout(checkoutOptions);
-                    checkout.on('payment-completed', (response: any) => {
-                        setTimeout(() => {
-                            router.back();
-                        }, 1000);
-                    });
-                }
-            });
-        };
-        document.body.appendChild(script);
-        return () => {
-            document.body.removeChild(script);
-        };
-    }, []);
-
-    return <div id={containerId}></div>;
+declare global {
+    interface Window {
+        Dibs: any;
+    }
 }
 
-export default checkoutPage;
+const CheckoutPage = () => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const router = useRouter();
+
+    useEffect(() => {
+        const initializePayment = async () => {
+            try {
+                // Load the Nexi SDK
+                await loadScript(process.env.NEXT_PUBLIC_PAYMENT_GATEWAY_SCRIPT || '');
+                console.log('Nexi SDK script loaded successfully.');
+
+                // Fetch payment ID from your server
+                const defaultSubscriptionId = process.env.NEXT_PUBLIC_DEFAULT_SUBSCRIPTION_PLAN || '';
+                const paymentResult = await POST("/proxy/payment/create-payment/" + defaultSubscriptionId, {});
+                console.log('Payment ID fetched:', paymentResult);
+
+                if (paymentResult.isSuccess) {
+                    // Set up the checkout options
+                    const checkoutOptions = {
+                        checkoutKey: process.env.NEXT_PUBLIC_PAYMENT_CHECKOUT_KEY || '',
+                        paymentId: paymentResult.result.paymentId,
+                        containerId: containerRef.current?.id || '',
+                        language: "en-GB",
+                        theme: {
+                            buttonRadius: "5px",
+                        },
+                    };
+
+                    // Initialize the checkout
+                    if (window.Dibs) {
+                        console.log('Initializing Dibs checkout with options:', checkoutOptions);
+                        const checkout = new window.Dibs.Checkout(checkoutOptions);
+                        checkout.on('payment-completed', function (response: any) {
+                            console.log('Payment completed response:', response);
+                            const paymentId = response['paymentId'];
+                            paymentSuccess(paymentId);
+                        });
+                    } else {
+                        console.error('Nexi SDK not loaded');
+                    }
+                } else {
+                    console.error('Payment initialization failed:', paymentResult.message);
+                }
+            } catch (error) {
+                console.error('Error during payment initialization:', error);
+            }
+        };
+
+        initializePayment();
+    }, []);
+
+    const paymentSuccess = async (paymentId: string) => {
+        try {
+            const result = await POST(`/proxy/payment/complete-payment/${paymentId}`, {});
+            console.log('Payment completion result:', result);
+            if (result.isSuccess) {
+                router.push('/payment/complete');
+            } else {
+                console.error('Payment completion failed:', result.message);
+            }
+        } catch (error) {
+            console.error('Error completing payment:', error);
+        }
+    };
+
+    const loadScript = (src: string) => {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            script.onload = () => resolve(true);
+            script.onerror = () => reject(new Error(`Script load error for ${src}`));
+            document.body.appendChild(script);
+        });
+    };
+
+    return <div id="checkout-container-div" ref={containerRef}></div>;
+};
+
+export default CheckoutPage;

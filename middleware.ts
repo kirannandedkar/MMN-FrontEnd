@@ -20,8 +20,12 @@ export async function middleware(request: NextRequest) {
     },
     body: request.body,
   });
+  console.log(result)
   if (result.status === 401) {
     return NextResponse.redirect("/login");
+  }
+  if (result.status === 400) {
+    return NextResponse.json(await result.json());
   }
   if (result.status === 403) {
     return NextResponse.redirect("/login");

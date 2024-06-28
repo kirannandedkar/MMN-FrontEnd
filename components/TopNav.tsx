@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import MMNContainer from "./MMNContainer";
+import {useSelector} from "react-redux";
+
 
 interface Item {
     title: string,
@@ -15,8 +17,10 @@ interface Props{
 export default function TopNav(params: Props) {
     const itemList = params.itemList;
     if(itemList == undefined) return null;
+    const router = useRouter();
 
     const count: number = itemList.length;
+    const { authresult } = useSelector((state: any) => state.auth);
 
     return (
         <MMNContainer>
@@ -29,7 +33,7 @@ export default function TopNav(params: Props) {
                             </span>
                         } else {
                             return <span key={`topnav-${index}`}>
-                                <a className="text-color-mmn-yellow underline" href={item.link}>
+                                <a className="text-color-mmn-yellow underline" href="#" onClick={() => router.push(item.link)}>
                                     {`${item.title}`}
                                 </a>
                                 <span>{" > "}</span>

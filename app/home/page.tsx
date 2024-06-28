@@ -1,18 +1,19 @@
 "use client";
 
-import { Metadata } from "next";
-import { GetPageTitle, FavIcon } from "../../constants";
+import { GetPageTitle } from "../../constants";
 import MMNContainer from "@/components/MMNContainer";
 import AboutPane from "./AboutPane";
-import VolunteerCard from "./VoluteerCard";
 import LoginCard from "./LoginCard";
 import MemberCard from "./MemberCard";
 import SliderPane from "./SliderPane";
 import MMNTitle from "@/components/MMNTItle";
 import Image from "next/image";
-import Curtain from "@/components/Curtain";
-import { useContext, useEffect, useState } from "react";
-import { PublicContext } from "@/context/public-context";
+import { useSelector } from "react-redux";
+import {useEffect, useState} from "react";
+import {GET} from "@/utils/fetch-factory";
+import {useRouter} from "next/navigation";
+import Modal from "@/components/Modal";
+ //import Modal from "react-modal";
 
 const title = GetPageTitle("Home");
 
@@ -24,7 +25,18 @@ const sponsorimages = [
 ];
 
 export default function HomePage() {
-    const { isCurtainClicked } = useContext(PublicContext)
+    const router = useRouter();
+    const { authresult } = useSelector((state: any) => state.auth);
+
+    useEffect(() => {
+        if(authresult){
+            const fetchUserSubscription = async () => {
+                const result = await GET("/proxy/User/subscription");
+                if(!result.isSubscribed) router.push('/signup/manual');
+            }
+            fetchUserSubscription();
+        }
+    }, [authresult]);
 
     return (
         <>
@@ -36,9 +48,10 @@ export default function HomePage() {
 
                     <div className="xl:grid xl:grid-cols-2 gap-[40px] pb-[40px] flex flex-col">
                         {/* <VolunteerCard /> */}
-                        <LoginCard />
-                        <MemberCard />
+                        {/*{authresult ? <div></div> : <LoginCard />}*/}
+                        <MemberCard/>
                     </div>
+
 
                     <div className="flex flex-col gap-[30px] pb-[40px]">
                         <MMNTitle title="Our sponsors" color="purple" />

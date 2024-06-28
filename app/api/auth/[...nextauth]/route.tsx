@@ -1,8 +1,11 @@
 // imports
-import { handleSigninGoogle } from "@/utils/auth";
+import { AppDispatch } from "@/redux/store";
+import { SignInGoogle } from "@/redux/user/auth.action";
+
 import NextAuth from "next-auth"
 // importing providers
 import GoogleProvider from "next-auth/providers/google";
+import { useDispatch } from "react-redux";
 
 const handler = NextAuth({
   providers: [
@@ -14,7 +17,9 @@ const handler = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile, email }) {
-      handleSigninGoogle();
+      // const dispatch = useDispatch<AppDispatch>();
+      // dispatch(SignInGoogle());
+      console.log('signing, ');
       return true;
     },
     async jwt({ token, user, account, profile, trigger }) {

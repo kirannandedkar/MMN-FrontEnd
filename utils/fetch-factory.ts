@@ -9,6 +9,7 @@ async function fetchData(url : string, method: string, req_body: any, customHead
     };
     try {
         const response = await fetch(url, options);
+
         const responseData = await response.json();
         return responseData;
     } catch (error) {

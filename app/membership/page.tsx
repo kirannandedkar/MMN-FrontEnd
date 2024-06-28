@@ -9,6 +9,7 @@ import GoogleButton from "@/components/GoogleButton";
 import RenewMemberCard from "./RenewMemberCard";
 import { useRouter } from "next/navigation";
 import { useSession, signIn, signOut } from "next-auth/react"
+import { useSelector } from "react-redux";
 
 const title = GetPageTitle("Membership");
 
@@ -18,6 +19,7 @@ const NavData = [
 ];
 
 export default function MemberShipPage() {
+    const { authresult } = useSelector((state: any) => state.auth);
     const router = useRouter();
     return (
         <div className="max-w-[1440px] m-auto">
@@ -25,15 +27,18 @@ export default function MemberShipPage() {
             <MMNContainer className="gap-[40px] pb-[40px] flex-col sm:flex-row">
                 <div className="flex flex-col gap-[20px] grow-[2]">
                     <BlogPane />
-                    <div className="flex flex-col gap-[20px] w-max pr-[30px]">
-                        <div onClick={() => signIn("google", { redirect: false, callbackUrl: process.env.NEXT_PUBLIC_SITE_ROOT + 'signup/google' } )}>
-                            <GoogleButton title={"Signup with Google"} className="max-w-full" />
-                        </div>
+                    {
+                        !authresult && (
+                            <div className="flex flex-col gap-[20px] w-max pr-[30px]">
+                                <div onClick={() => signIn("google", { redirect: false, callbackUrl: process.env.NEXT_PUBLIC_SITE_ROOT + 'signup/google' })}>
+                                    <GoogleButton title={"Signup with Google"} className="max-w-full" />
+                                </div>
 
-                        <div onClick={() => router.push("/signup/manual")}>
-                            <MMNButton title="Sign up manually" color="purple" className={"w-full"} />
-                        </div>
-                    </div>
+                                <div onClick={() => router.push("/signup/manual")}>
+                                    <MMNButton title="Sign up manually" color="purple" className={"w-full"} />
+                                </div>
+                            </div>)
+                    }
                 </div>
 
                 <RenewMemberCard className="w-full sm:max-w-[420px]" />
