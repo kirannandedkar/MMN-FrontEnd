@@ -7,7 +7,7 @@ const data = [
         title: "Quick links", items: [
             { title: "Become a member", link: "" },
             { title: "Become a volunteer", link: "" },
-            { title: "FAQ", link: "" },
+            { title: "FAQ", link: "/faq" },
             { title: "Terms & Conditions", link: "/terms" },
         ]
     },
