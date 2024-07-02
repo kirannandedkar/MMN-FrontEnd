@@ -42,6 +42,7 @@ const  LoginCard = ({onClose}: IProps) => {
     }, [authresult]);
 
     return (
+
         <MMNPanel className="">
             <MMNTitle title="Already member?" color="purple" />
             <div onClick={signinGoogle}>
@@ -72,7 +73,7 @@ const  LoginCard = ({onClose}: IProps) => {
                     />
                 </div>
 
-                <div className="flex justify-between">
+                <div className="flex justify-between py-[10px]">
                     <div onClick={() => handleMembership()}>
                         <MMNButton title="Become a member"  className="border border-color-mmn-purple" color="white" size="normal"/>
                     </div>

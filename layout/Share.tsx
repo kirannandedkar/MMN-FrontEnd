@@ -19,7 +19,7 @@ export const menuItemData = [
             { title: "Become a MMN member", link: "" },
         ]
     },
-    { title: "MemberShip", link: "/membership" },
+    { title: "Membership", link: "/membership" },
     { title: "Event", link: "" },
     { title: "Gallery", link: "" },
     { title: "MMN Initiatives", link: "" },

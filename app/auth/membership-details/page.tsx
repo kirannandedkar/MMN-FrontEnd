@@ -12,7 +12,7 @@ import Loader from "@/components/Loader";
 const NavData = [
     { title: "Home", link: "/home" },
     { title: "Auth", link: "#" },
-    { title: "Membership-Details", link: "#" }
+    { title: "Membership-details", link: "#" }
 ];
 
 const Page = () => {
@@ -89,7 +89,8 @@ const Page = () => {
                         </div>
                     </div>
 
-                    <div className="line-height-mmn-large font-bold">Family members</div>
+                    {familyMembers.length > 0 ? <div className="line-height-mmn-large font-bold">Family members</div> : ''}
+
                     {
                         familyMembers.map((account, index) => {
                             return (

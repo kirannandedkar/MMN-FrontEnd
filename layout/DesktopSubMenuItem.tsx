@@ -46,7 +46,7 @@ export default function SubMenuItem({ item }: {item: MenuItem}) {
 
             {
                 popupFlag ?
-                    <div className="absolute cusor-pointer text-black top-[83px] left-[0px] w-max border-b-[2px] rounded-b-[6px] border-[#808080] border-b-[2px] bg-[#ECE9E9] flex flex-col p-[2px]">
+                    <div className="absolute cusor-pointer text-black top-[83px] min-w-[225px] left-[0px] w-max border-b-[2px] rounded-b-[6px] border-[#808080] border-b-[2px] bg-[#ECE9E9] flex flex-col p-[2px]">
                         {
                             items?.map((item, index) => (
                                 <div className="flex hover:text-[#FF5733] hover:bg-white p-[20px] animate-dissolve ease-out duration-300"

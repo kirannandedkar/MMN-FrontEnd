@@ -2,7 +2,13 @@
 
 import MMNContainer from "@/components/MMNContainer";
 import { DefaultMemberFee } from "@/constants";
+import TopNav from "@/components/TopNav";
+import React from "react";
 
+const NavData = [
+    { title: "Home", link: "/home" },
+    { title: "Terms & Conditions", link: "#" },
+];
 const DescriptionItems = [
     { title: `Payment`, description: `At the checkout, you can pay with VISA/MASTERCARD and VIPPS. When you shop with a payment card at MaharashtraMandalNorway.no, the payment is processed by NETS/Netaxept, a secure electronic payment solution for Visa and MasterCard. All card information is stored in accordance with the card companies' regulations. All information you provide will be encrypted directly between you as a customer and our payment partner NETS/Netaxept. We use NETS' own checkout solution "Nets Easy".` },
     { title: `Prices`, description: `All prices are in Norwegian kroner and are shown including VAT.` },
@@ -13,22 +19,26 @@ const DescriptionItems = [
 
 export default function TermsAndCondition() {
     return (
-        <MMNContainer className="gap-[40px] py-[60px] flex-col max-w-[1440px] m-auto bg-[#F0F0F0]">
-            {
-                DescriptionItems.map((item, index) => {
-                    return (
-                        <div key={index}>
-                            <div className="text-[18px] font-bold py-[10px]">
-                                {item.title}
+        <div className="max-w-[1440px] m-auto">
+            <TopNav itemList={NavData} />
+            <MMNContainer className="gap-[40px] pb-[40px] flex-col max-w-[1440px] m-auto">
+                {
+                    DescriptionItems.map((item, index) => {
+                        return (
+                            <div key={index}>
+                                <div className="text-[18px] font-bold py-[10px]">
+                                    {item.title}
+                                </div>
+                                <div className="">
+                                    {item.description}
+                                </div>
                             </div>
-                            <div className="">
-                                {item.description}
-                            </div>
-                        </div>
 
-                    )
-                })
-            }
-        </MMNContainer>
+                        )
+                    })
+                }
+            </MMNContainer>
+        </div>
+
     )
 }

@@ -15,7 +15,7 @@ import {AppDispatch} from "@/redux/store";
 const NavData = [
     { title: "Home", link: "/home" },
     { title: "Auth", link: "#" },
-    { title: "change-password", link: "#" },
+    { title: "Change-password", link: "#" },
 ];
 
 interface IChangePasswordRequest {
@@ -133,7 +133,7 @@ const ChangePasswordPage: React.FC = () => {
                             {errorState?.confirmPassword && <ErrorMessage msg={`${errorState.confirmPassword}`} />}
                         </div>
                     </div>
-                    <div className="flex" onClick={submitHandler}>
+                    <div className="flex py-[10px]" onClick={submitHandler}>
                         <MMNButton title={"Change Password"} color="white"
                                    className="border border-color-mmn-purple" />
                     </div>

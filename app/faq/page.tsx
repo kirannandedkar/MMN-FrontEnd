@@ -3,6 +3,10 @@ import MMNContainer from "@/components/MMNContainer";
 import TopNav from "@/components/TopNav";
 import FaqPane from "@/app/faq/FaqPane";
 
+const NavData = [
+    { title: "Home", link: "/home" },
+    { title: "FAQ", link: "#" },
+];
 const faqs = [
     {
         question: "What do you mean by \"Figma assets\"?",
@@ -30,17 +34,20 @@ const faqs = [
 
 const FaqPage = () => {
     return (
-        <MMNContainer className="gap-[40px] py-[60px] flex-col max-w-[1440px] m-auto bg-[#F0F0F0]">
-            <div className="grid md:gap-16 md:grid-cols-2">
-                {faqs.map((faq, index) => (
-                    <FaqPane
-                        key={index}
-                        answer={faq.answer}
-                        question={faq.question}
-                    />
-                ))}
-            </div>
-        </MMNContainer>
+        <div className="max-w-[1440px] m-auto">
+            <TopNav itemList={NavData}/>
+            <MMNContainer className="gap-[40px] pb-[40px] lg:flex-row flex-col">
+                <div className="grid md:gap-16 md:grid-cols-2">
+                    {faqs.map((faq, index) => (
+                        <FaqPane
+                            key={index}
+                            answer={faq.answer}
+                            question={faq.question}
+                        />
+                    ))}
+                </div>
+            </MMNContainer>
+        </div>
     );
 };
 
