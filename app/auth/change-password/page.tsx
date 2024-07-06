@@ -30,8 +30,12 @@ const ChangePasswordPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { authresult } = useSelector((state: any) => state.auth);
     const [errorState, setErrorState] = useState<IChangePasswordRequest | null>(null);
-    const [isFormValid, setFormIsValid] = useState(false);
-    const [formData, setFormData] = useState<IChangePasswordRequest | null>(null);
+    const [isButtonClicked, submitBtnClicked] = useState(false);
+    const [formData, setFormData] = useState<IChangePasswordRequest>({
+        confirmPassword: '',
+        newPassword: '',
+        currentPassword: '',
+    });
 
     useEffect(() => {
         if (!authresult) {
@@ -40,23 +44,24 @@ const ChangePasswordPage: React.FC = () => {
     }, [authresult]);
 
     const submitHandler = async () => {
-        if (!isFormValid) {
+        if (!validatesAllField()) {
             toast.warning('Form is not valid!');
             return;
         }
+        submitBtnClicked(true);
 
         const result = await POST('/proxy/user/change-password', {
             newPassword: formData?.newPassword,
             currentPassword: formData?.currentPassword,
         });
 
-        console.log(result)
         if(result.isSuccess){
             toast.success('Successfully changed password! Please login again.');
             dispatch(SignOut())
             router.push('/home');
         }else{
             toast.warning(result.Message);
+            submitBtnClicked(false);
         }
 
     }
@@ -82,17 +87,22 @@ const ChangePasswordPage: React.FC = () => {
             if(formData?.newPassword && formData?.confirmPassword && formData?.newPassword !== formData?.confirmPassword)
                 updated.confirmPassword = "New password and confirmed password not matched";
         }
-        setFormIsValid(checkFormValid(updated));
         return updated;
     };
 
-    const checkFormValid = (formState: IChangePasswordRequest | null) => {
-        let isFormValid = true;
-        for (let key in formState) {
-            isFormValid = isFormValid && formState[key] !== '';
+    const validatesAllField = () => {
+        let isValid = true;
+        const state = {...errorState};
+        const lastFormData = {...formData};
+        for (let key in lastFormData){
+            if(lastFormData[key] == null || lastFormData[key] === ''){
+                isValid = isValid && false;
+                state[key] = `${camelCaseToSentenceCase(key)} field is required`
+            }
         }
-        return isFormValid;
-    };
+        setErrorState(state);
+        return isValid;
+    }
 
     return (
         <div className="max-w-[1440px] m-auto">
@@ -133,8 +143,8 @@ const ChangePasswordPage: React.FC = () => {
                             {errorState?.confirmPassword && <ErrorMessage msg={`${errorState.confirmPassword}`} />}
                         </div>
                     </div>
-                    <div className="flex py-[10px]" onClick={submitHandler}>
-                        <MMNButton title={"Change Password"} color="white"
+                    <div className="flex py-[10px]" onClick={isButtonClicked ? () => {} : submitHandler}>
+                        <MMNButton title={"Change Password"} disabled={isButtonClicked} color="white"
                                    className="border border-color-mmn-purple" />
                     </div>
                 </div>

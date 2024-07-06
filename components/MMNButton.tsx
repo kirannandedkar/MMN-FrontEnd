@@ -3,7 +3,8 @@ interface Props {
     title: string,
     size?: "big" | "normal" | "small",
     color?: "purple" | "white",
-    className?: string | null
+    className?: string | null,
+    disabled?: boolean,
 }
 
 export default function MMNButton(params: Props){
@@ -34,7 +35,7 @@ export default function MMNButton(params: Props){
     }
 
     return (
-        <div className={`${className} ${params.className || ""}`} >
+        <div className={`${className} ${params.className || ""}`} style={{ cursor:params.disabled ? "not-allowed" : "pointer" }}>
             <div className="line-height-mmn-medium text-size-mmn-medium self-center w-full text-center">
                 { params.title }
             </div>

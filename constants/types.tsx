@@ -1,16 +1,19 @@
-export interface FamilyAccountInfo {
+export interface FamilyAccountInfo extends FamilyMember{
+    password?: string,
+    muncipality?: string,
+    phoneNumber?: string,
+    referenceUserAccountId?: number,
+    memberid?: string | null,
+}
+
+export interface FamilyMember {
     [key: string]: any;
     firstName: string,
     lastName: string,
     email: string,
-    password?: string,
-    gender: 'male' | 'female' | string,
-    muncipality?: string,
-    phoneNumber?: string,
-    referenceUserAccountId?: number,
     dateOfBirth: string,
     relation?: string | null,
-    memberid?: string | null,
+    gender: 'male' | 'female' | string,
 }
 
 export interface AccountInfo extends FamilyAccountInfo {
