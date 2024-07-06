@@ -5,7 +5,7 @@ import MMNContainer from "@/components/MMNContainer";
 import {useDispatch, useSelector} from "react-redux";
 import { useRouter } from "next/navigation";
 import MMNButton from "@/components/MMNButton";
-import { camelCaseToSentenceCase } from "@/utils/form";
+import {camelCaseToSentenceCase, validatedForm} from "@/utils/form";
 import {ErrorMessage} from "@/app/signup/ErrorMessage";
 import {toast} from "react-toastify";
 import {POST} from "@/utils/fetch-factory";
@@ -29,7 +29,7 @@ const ChangePasswordPage: React.FC = () => {
     const router = useRouter();
     const dispatch = useDispatch<AppDispatch>();
     const { authresult } = useSelector((state: any) => state.auth);
-    const [errorState, setErrorState] = useState<IChangePasswordRequest | null>(null);
+    const [errorState, setErrorState] = useState<IChangePasswordRequest>({});
     const [isButtonClicked, submitBtnClicked] = useState(false);
     const [formData, setFormData] = useState<IChangePasswordRequest>({
         confirmPassword: '',
@@ -44,10 +44,14 @@ const ChangePasswordPage: React.FC = () => {
     }, [authresult]);
 
     const submitHandler = async () => {
-        if (!validatesAllField()) {
+
+        const validated = validatedForm(errorState, formData)
+        if (!validated.isValid) {
+            setErrorState(validated.updatedErrorState);
             toast.warning('Form is not valid!');
             return;
         }
+
         submitBtnClicked(true);
 
         const result = await POST('/proxy/user/change-password', {
@@ -72,7 +76,6 @@ const ChangePasswordPage: React.FC = () => {
         let updatedErrorState = validate( { ...errorState }, value, fieldName, updatedFormData);
         setFormData(updatedFormData);
         setErrorState(updatedErrorState);
-
     };
 
     const validate = (formState: IChangePasswordRequest | null, value: string | undefined | null, fieldName: string, formData: IChangePasswordRequest | null) => {
@@ -90,19 +93,6 @@ const ChangePasswordPage: React.FC = () => {
         return updated;
     };
 
-    const validatesAllField = () => {
-        let isValid = true;
-        const state = {...errorState};
-        const lastFormData = {...formData};
-        for (let key in lastFormData){
-            if(lastFormData[key] == null || lastFormData[key] === ''){
-                isValid = isValid && false;
-                state[key] = `${camelCaseToSentenceCase(key)} field is required`
-            }
-        }
-        setErrorState(state);
-        return isValid;
-    }
 
     return (
         <div className="max-w-[1440px] m-auto">
