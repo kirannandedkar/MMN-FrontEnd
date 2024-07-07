@@ -109,7 +109,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
             }
         }
         fetchData();
-    }, []);
+    }, [authresult]);
 
     const fetchUserInfo = async () => {
         const userInfo = await GET("/proxy/user/me");
