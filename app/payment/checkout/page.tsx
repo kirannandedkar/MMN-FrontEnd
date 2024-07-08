@@ -17,15 +17,14 @@ const CheckoutPage = () => {
     useEffect(() => {
         const initializePayment = async () => {
             try {
+
                 // Load the Nexi SDK
                 await loadScript(process.env.NEXT_PUBLIC_PAYMENT_GATEWAY_SCRIPT || '');
-                console.log('Nexi SDK script loaded successfully.');
 
                 // Fetch payment ID from your server
                 const defaultSubscriptionId = process.env.NEXT_PUBLIC_DEFAULT_SUBSCRIPTION_PLAN || '';
                 const paymentResult = await POST("/proxy/payment/create-payment/" + defaultSubscriptionId, {});
-                console.log('Payment ID fetched:', paymentResult);
-
+                
                 if (paymentResult.isSuccess) {
                     // Set up the checkout options
                     const checkoutOptions = {
@@ -43,7 +42,6 @@ const CheckoutPage = () => {
                         console.log('Initializing Dibs checkout with options:', checkoutOptions);
                         const checkout = new window.Dibs.Checkout(checkoutOptions);
                         checkout.on('payment-completed', function (response: any) {
-                            console.log('Payment completed response:', response);
                             const paymentId = response['paymentId'];
                             paymentSuccess(paymentId);
                         });
@@ -64,7 +62,6 @@ const CheckoutPage = () => {
     const paymentSuccess = async (paymentId: string) => {
         try {
             const result = await POST(`/proxy/payment/complete-payment/${paymentId}`, {});
-            console.log('Payment completion result:', result);
             if (result.isSuccess) {
                 router.push('/payment/complete');
             } else {

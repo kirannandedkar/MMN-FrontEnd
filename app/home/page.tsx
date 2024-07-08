@@ -12,8 +12,6 @@ import { useSelector } from "react-redux";
 import {useEffect, useState} from "react";
 import {GET} from "@/utils/fetch-factory";
 import {useRouter} from "next/navigation";
-import Modal from "@/components/Modal";
- //import Modal from "react-modal";
 
 const title = GetPageTitle("Home");
 

@@ -17,24 +17,23 @@ const completePage = () => {
 
     useEffect(() => {
         const fetchData = async () =>{
+            debugger;
             const familyMembers = await GET("/proxy/family-members");
             if(familyMembers && familyMembers.length > 0){
-                const totalMember = familyMembers.length;
+                const totalMember = familyMembers.length + 1;
                 setFamilyMember(totalMember);
             }else{
-                setLoading(false)
                 toast.error("Something went wrong");
             }
 
             const fetchSubscription = await GET("/proxy/subscription-plan");
             if(fetchSubscription){
                 const perPerson = fetchSubscription.price / 100;
-                setPaidAmount(((familyMembers) * perPerson))
-                setLoading(false)
+                setPaidAmount(familyMember * perPerson)
             }else{
                 toast.error("Something went wrong");
-                setLoading(false)
             }
+            setLoading(false)
         }
         if(authresult){
             fetchData();
