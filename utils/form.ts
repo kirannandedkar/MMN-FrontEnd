@@ -10,4 +10,31 @@ const camelCaseToSentenceCase = (input: string) => {
     return result;
 }
 
-export { camelCaseToSentenceCase }
+type ErrorState<T> = {
+    [K in keyof T]: string;
+};
+
+type ValidationResult<T> = {
+    isValid: boolean;
+    updatedErrorState: ErrorState<T>;
+};
+
+const validatedForm = <T extends Record<string, any>>(errorState: ErrorState<T>, formData: T): ValidationResult<T> => {
+    let isValid = true;
+    const state = { ...errorState };
+
+    for (let key in formData) {
+        if (formData[key] == null || formData[key] === '') {
+            isValid = false;
+            state[key] = `${camelCaseToSentenceCase(String(key))} field is required`;
+        }
+    }
+    return {
+        isValid: isValid,
+        updatedErrorState: state
+    };
+};
+
+
+
+export { camelCaseToSentenceCase, validatedForm }

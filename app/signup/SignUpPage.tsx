@@ -5,7 +5,7 @@ import MMNContainer from "@/components/MMNContainer";
 import BlogPane from "@/app/membership/BlogPane";
 import PaymentCard from "./PaymentCard";
 import AccountInfoPane from './AccountInfoPane';
-import {AccountInfo, FamilyAccountInfo} from "@/constants/types";
+import {AccountInfo, FamilyAccountInfo, FamilyMember} from "@/constants/types";
 
 import MMNButton from "@/components/MMNButton";
 import {useEffect, useRef, useState} from "react";
@@ -53,7 +53,6 @@ const emptyFamilyMember = {
     firstName: '',
     lastName: '',
     email: '',
-    mobile: '',
     gender: '',
     dateOfBirth: ''
 }
@@ -67,7 +66,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
 
     const [signed, setSigned] = useState(false);
     const [primaryAccount, setPrimaryAccount] = useState<AccountInfo | null>(null);
-    const [familyAccounts, setFamilyAccounts] = useState<(FamilyAccountInfo)[]>([]);
+    const [familyAccounts, setFamilyAccounts] = useState<(FamilyMember)[]>([]);
     // add two password properties
     const [password, setPassword] = useState<CredentialData>({ password: '', repassword: '' });
     const [memberCount, setMemberCount] = useState(1); //primary account
@@ -78,7 +77,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     const { authresult } = useSelector((state: any) => state.auth);
     const [familyMemberNotAdded, setFamilyMemberNotAdded] = useState(true);
     const [notPaid, setNotPaid] = useState(false);
-    const [familyMemberFormState, setFamilyMemberFormState] = useState<(FamilyAccountInfo)[]>([]);
+    const [familyMemberFormState, setFamilyMemberFormState] = useState<(FamilyMember)[]>([]);
     const [isFamilyMemberLastFormValid, setFamilyMemberLastFormValid] = useState(false);
     if (byGoogle) {
         const { data: session } = useSession();
@@ -110,7 +109,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
             }
         }
         fetchData();
-    }, []);
+    }, [authresult]);
 
     const fetchUserInfo = async () => {
         const userInfo = await GET("/proxy/user/me");
@@ -143,7 +142,10 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
 
     const fetchUserSubscription = async () => {
         const subscription = await GET("/proxy/user/subscription");
-        if(!subscription.isSubscribed) setNotPaid(true);
+        if(!subscription.isSubscribed)
+            setNotPaid(true);
+        else
+            router.push('/home');
     }
 
     const countingFamilyMembers = (familyAccounts: (FamilyAccountInfo | null)[]) => {
@@ -222,16 +224,21 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     };
 
     const onAddEmptyFamilyAccountClicked = async (isProcessBtnClicked = false) => {
+        const isValid = validatesAllField();
+        if(!isValid)
+        {
+            toast.error("Form is not valid.");
+            return;
+        }
+
         if(familyAccounts.length == 0 && !isProcessBtnClicked){
             addNewFamilyAccount();
-        }else if(familyAccounts.length > 0 && isFamilyMemberLastFormValid){
-            if(isProcessBtnClicked) await processPayment();
+        }else if(familyAccounts.length > 0){
+            if(isProcessBtnClicked)
+                await processPayment();
             else addNewFamilyAccount();
         }else if(familyAccounts.length == 0 && isProcessBtnClicked){
             await processPayment();
-        }
-        else{
-            toast.error("Form is not valid.");
         }
     }
 
@@ -250,20 +257,35 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     const validate = (formState: FamilyAccountInfo, value: string | undefined | null, fieldName: string) => {
         const updated = {...formState};
         if(value == null || value === '')
+        {
             updated[fieldName] = `${camelCaseToSentenceCase(fieldName)} field is required`;
+            setFamilyMemberLastFormValid(false);
+        }
         else
             updated[fieldName] = null;
-        setFamilyMemberLastFormValid(checkFormValid(updated))
         return updated;
     }
 
-    const checkFormValid = (formState: FamilyAccountInfo | null) => {
-        let isFormValid = true;
-        for (let key in formState){
-            isFormValid = isFormValid && formState[key] !== '';
+    const validatesAllField = () => {
+        debugger;
+        let isValid = true;
+        if(familyAccounts.length > 0){
+            const states = [...familyMemberFormState];
+            const state = {...states[familyAccounts.length - 1]};
+            const lastFormData = {...familyAccounts[familyAccounts.length - 1]};
+            for (let key in lastFormData){
+                if(lastFormData[key] == null || lastFormData[key] === ''){
+                    isValid = isValid && false;
+                    state[key] = `${camelCaseToSentenceCase(key)} field is required`
+                }
+            }
+            states[familyAccounts.length - 1] = state;
+            setFamilyMemberFormState(states);
         }
-        return isFormValid;
+
+        return isValid;
     }
+
     return (
         <div className="max-w-[1440px] m-auto">
             <TopNav itemList={NavData} />
@@ -359,7 +381,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                 </div>
                 <div>
                     <div className="sticky top-[20px]">
-                        <PaymentCard memberCount={memberCount} processClicked={() => onAddEmptyFamilyAccountClicked(true)} MembershipFee={MembershipFee}/>
+                        <PaymentCard memberCount={memberCount} isSignedIn={signed} processClicked={() => onAddEmptyFamilyAccountClicked(true)} MembershipFee={MembershipFee}/>
                     </div>
                 </div>
             </MMNContainer>
