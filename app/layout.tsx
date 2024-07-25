@@ -33,6 +33,8 @@ export default function RootLayout({
     initCookie();
   }, []);
 
+  
+
   return (
     <SessionWrapper>
       <ReduxProvider store={store}>

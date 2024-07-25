@@ -10,6 +10,7 @@ import { AppDispatch } from "@/redux/store";
 import { SignInGoogle, SignInManualy } from "@/redux/user/auth.action";
 import { toast } from "react-toastify";
 import {useRouter} from "next/navigation";
+import {GET} from "@/utils/fetch-factory";
 
 interface IProps{
     onClose: () => void
@@ -38,7 +39,14 @@ const  LoginCard = ({onClose}: IProps) => {
         router.push('/membership');
     }
     useEffect(() => {
-        if(authresult) onClose();
+        if(authresult){
+            const fetchUserSubscription = async () => {
+                const result = await GET("/proxy/User/subscription");
+                if(!result.isSubscribed) router.push('/signup/manual');
+            }
+            fetchUserSubscription();
+            onClose();
+        }
     }, [authresult]);
 
     return (

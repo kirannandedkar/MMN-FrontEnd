@@ -5,7 +5,7 @@ import MMNContainer from "@/components/MMNContainer";
 import {useDispatch, useSelector} from "react-redux";
 import { useRouter } from "next/navigation";
 import MMNButton from "@/components/MMNButton";
-import { camelCaseToSentenceCase } from "@/utils/form";
+import {camelCaseToSentenceCase, validatedForm} from "@/utils/form";
 import {ErrorMessage} from "@/app/signup/ErrorMessage";
 import {toast} from "react-toastify";
 import {POST} from "@/utils/fetch-factory";
@@ -29,9 +29,13 @@ const ChangePasswordPage: React.FC = () => {
     const router = useRouter();
     const dispatch = useDispatch<AppDispatch>();
     const { authresult } = useSelector((state: any) => state.auth);
-    const [errorState, setErrorState] = useState<IChangePasswordRequest | null>(null);
-    const [isFormValid, setFormIsValid] = useState(false);
-    const [formData, setFormData] = useState<IChangePasswordRequest | null>(null);
+    const [errorState, setErrorState] = useState<IChangePasswordRequest>({});
+    const [isButtonClicked, submitBtnClicked] = useState(false);
+    const [formData, setFormData] = useState<IChangePasswordRequest>({
+        confirmPassword: '',
+        newPassword: '',
+        currentPassword: '',
+    });
 
     useEffect(() => {
         if (!authresult) {
@@ -40,23 +44,28 @@ const ChangePasswordPage: React.FC = () => {
     }, [authresult]);
 
     const submitHandler = async () => {
-        if (!isFormValid) {
+
+        const validated = validatedForm(errorState, formData)
+        if (!validated.isValid) {
+            setErrorState(validated.updatedErrorState);
             toast.warning('Form is not valid!');
             return;
         }
+
+        submitBtnClicked(true);
 
         const result = await POST('/proxy/user/change-password', {
             newPassword: formData?.newPassword,
             currentPassword: formData?.currentPassword,
         });
 
-        console.log(result)
         if(result.isSuccess){
             toast.success('Successfully changed password! Please login again.');
             dispatch(SignOut())
             router.push('/home');
         }else{
             toast.warning(result.Message);
+            submitBtnClicked(false);
         }
 
     }
@@ -67,7 +76,6 @@ const ChangePasswordPage: React.FC = () => {
         let updatedErrorState = validate( { ...errorState }, value, fieldName, updatedFormData);
         setFormData(updatedFormData);
         setErrorState(updatedErrorState);
-
     };
 
     const validate = (formState: IChangePasswordRequest | null, value: string | undefined | null, fieldName: string, formData: IChangePasswordRequest | null) => {
@@ -82,17 +90,9 @@ const ChangePasswordPage: React.FC = () => {
             if(formData?.newPassword && formData?.confirmPassword && formData?.newPassword !== formData?.confirmPassword)
                 updated.confirmPassword = "New password and confirmed password not matched";
         }
-        setFormIsValid(checkFormValid(updated));
         return updated;
     };
 
-    const checkFormValid = (formState: IChangePasswordRequest | null) => {
-        let isFormValid = true;
-        for (let key in formState) {
-            isFormValid = isFormValid && formState[key] !== '';
-        }
-        return isFormValid;
-    };
 
     return (
         <div className="max-w-[1440px] m-auto">
@@ -133,8 +133,8 @@ const ChangePasswordPage: React.FC = () => {
                             {errorState?.confirmPassword && <ErrorMessage msg={`${errorState.confirmPassword}`} />}
                         </div>
                     </div>
-                    <div className="flex py-[10px]" onClick={submitHandler}>
-                        <MMNButton title={"Change Password"} color="white"
+                    <div className="flex py-[10px]" onClick={isButtonClicked ? () => {} : submitHandler}>
+                        <MMNButton title={"Change Password"} disabled={isButtonClicked} color="white"
                                    className="border border-color-mmn-purple" />
                     </div>
                 </div>
