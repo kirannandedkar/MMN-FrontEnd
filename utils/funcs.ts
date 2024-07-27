@@ -41,4 +41,22 @@ const formatDate = (datetime: string | undefined): string => {
     return datetime.split('T')[0];
 };
 
-export { isOlder16 , handleCookie, initCookie, formatDate, clearCookie }
+interface Grouped<T> {
+    [key: string]: T[];
+}
+  
+function groupBy<T extends Record<string, any>>(array: T[], key: keyof T): Grouped<T> {
+    return array.reduce((result: Grouped<T>, currentValue: T) => {
+      const groupKey = currentValue[key] as string;
+  
+      if (!result[groupKey]) {
+        result[groupKey] = [];
+      }
+  
+      result[groupKey].push(currentValue);
+  
+      return result;
+    }, {} as Grouped<T>);
+  }
+
+export { isOlder16 , handleCookie, initCookie, formatDate, clearCookie, groupBy }

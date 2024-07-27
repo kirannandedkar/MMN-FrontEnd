@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { GET } from "@/utils/fetch-factory";
 import SectionLoader from "@/components/SectionLoader";
 import NavigationIcon from "@/components/icons/Navigation";
+import Image from "next/image";
+import EventButton from "../events/EventButton";
 
 export interface EventResponseDto {
   id: number;
@@ -69,11 +71,13 @@ function EventsCalendar() {
                     {event.eventDate.month} '{event.eventDate.year}
                   </div>
                 </div>
-                <img
-                  src={event.eventImagePath}
-                  alt={event.name}
-                  className="w-26 h-26 object-cover mx-4"
-                />
+                <Image
+                      src={event.eventImagePath}
+                      alt={event.name}
+                      width={140}
+                      height={140}
+                      className="mx-2"
+                  />
                 <div className="flex-1 self-start">
                   <div className="text-lg font-semibold">{event.name}</div>
                   <div>
@@ -82,7 +86,7 @@ function EventsCalendar() {
                   </div>
                 </div>
                 <div className="flex-shrink-0 ms-2">
-                  {<RenderButton event={event}/>}
+                  {<EventButton isEventFinished={event.isEventFinished} isEventOpenedForRegistration={event.isEventOpenedForRegistration}/>}
                 </div>
               </div>
             ))
@@ -92,31 +96,5 @@ function EventsCalendar() {
     </div>
   );
 }
-
-const RenderButton: React.FC<{ event: EventResponseDto }> = ({ event }) => {
-  if (event.isEventFinished) {
-    return (
-      <MMNButton
-        title="This event is over"
-        disabled={true}
-        className="border-[1px] border-[#00205B] text-[#00205B]"
-        size="normal"
-      />
-    );
-  }
-
-  if (event.isEventOpenedForRegistration) {
-    return <MMNButton title="Register for event" color="purple" />;
-  }
-
-  return (
-    <MMNButton
-      title="Coming soon"
-      disabled={true}
-      className="border-[1px] border-[#00205B] text-[#00205B]"
-      size="normal"
-    />
-  );
-};
 
 export default EventsCalendar;
