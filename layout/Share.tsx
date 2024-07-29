@@ -20,7 +20,7 @@ export const menuItemData = [
         ]
     },
     { title: "Membership", link: "/membership" },
-    { title: "Event", link: "" },
+    { title: "Event", link: "/events" },
     { title: "Gallery", link: "" },
     { title: "MMN Initiatives", link: "" },
     { title: "Contact us", link: "" }
