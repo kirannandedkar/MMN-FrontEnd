@@ -9,23 +9,23 @@ const NavData = [
 ];
 const faqs = [
     {
-        question: "Will the non members do not get an invitation for upcoming events",
-        answer: "Everyone will get invitation to upcoming events if you are registered in our google group. You can do so by sending email to our committe at mmn@marathimandalnorway.no . You can also be part of whatsapp group by sending your no to said email",
+        question: "How members can send suggestions and feedback for AGM agenda Q&A?",
+        answer: "6-8 weeks prior to AGM, board of MMN will send google form to register suggestion and feedback for AGM agenda Q&A.",
     },
     {
-        question: "When are AGM (Annual general meetings) held?",
-        answer: "AGM are held every 2 years.",
+        question: "When will be AGM arranged by MMN in each financial year?",
+        answer: "AGM can be held every year or every second year around December.",
     },
     {
-        question: "Is AGM online or physically held?",
-        answer: "If we get place then we will held it physically otherwise will be online.",
+        question: "How AGM will be conducted in MMN?",
+        answer: "AGM will be conducted either online or physically depending on situation.",
     },
     {
         question: "Where can i find the constitution?",
         answer: "You can find constitution under the menu AboutUs> MMN Constitution or by just clicking here https://maharashtramandalnorway.no/constitution.pdf",
     }, {
-        question: "Where can i ask if we have any general questions. Do you have any open forum?",
-        answer: "You can ask questions during Annual general meeting or you can send email to mmn@marathimandalnorway.no . Apart from it there is no open forum. This is because we are frivillig organisation. Every Organisation always ask their paid members to contact on organisation mail Id for their open question doubts suggestion feedbacks.For eg. Turn forening, swimming, any Gym members has to ask questions by sending email to support. "
+        question: "How members can send feedbacks and suggestions in general?",
+        answer: "Members can fill the feedback form on our website in contact us menu. "
     }, {
         question: "What is yearly membership cost?",
         answer: "yearly membership is 160 NOK per person for all above 16 years."
