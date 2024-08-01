@@ -15,7 +15,11 @@ const MarathiBoliShaalaPage = () => {
       <TopNav itemList={NavData} />
       <MMNContainer className="gap-[40px] pb-[40px] lg:flex-row flex-col">
         <div className="min-h-screen flex flex-col bg-white">
-          <img src="/image/marathi-boli/banner.png" alt="MarathiBoli Logo" />
+          <video style={{width: '100%', height: '50%'}} controls>
+            <source src="/image/marathi-boli/intro.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          
           <MMNTitle
             title="MarathiBoli Marathi Shaala"
             className="pb-2 mb-2"
