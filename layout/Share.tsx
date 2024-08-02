@@ -30,5 +30,5 @@ export const menuItemData = [
             { title: "Grants", link: "/grants" }
         ]
     },
-    { title: "Contact us", link: "" }
+    { title: "Contact us", link: "/contact-us" }
 ]

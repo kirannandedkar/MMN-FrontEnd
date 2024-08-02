@@ -267,7 +267,6 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     }
 
     const validatesAllField = () => {
-        debugger;
         let isValid = true;
         if(familyAccounts.length > 0){
             const states = [...familyMemberFormState];
