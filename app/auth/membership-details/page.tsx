@@ -31,7 +31,6 @@ const Page = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            debugger;
             const userInfo = await GET('/proxy/user/me');
             const familyMembers = await GET("/proxy/family-members");
             setUserInfo(userInfo);

@@ -46,3 +46,13 @@ export interface CommitteeMember{
         begin: number, end: number
     }
 }
+
+export interface IContactUs{
+    [key: string]: any;
+    firstName: string,
+    lastName: string,
+    email: string,
+    contactNumber: string,
+    subject: string,
+    message: string
+}
