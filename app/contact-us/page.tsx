@@ -195,7 +195,15 @@ const ContactUsPage = () => {
                 >
                   Subject *
                 </label>
-                <select
+                <input
+                    type="tel"
+                    id="contactNumber"
+                    name="contactNumber"
+                    className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
+                    value={formData?.subject}
+                    onChange={(e) => onInputChangeHandler(e.target.value, 'subject')}
+                  />
+                {/* <select
                   id="subject"
                   name="subject"
                   className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
@@ -214,7 +222,7 @@ const ContactUsPage = () => {
                     Queries about MMN Membership
                   </option>
                   <option value="Queries about MMN Membership">Other</option>
-                </select>
+                </select> */}
                 {formState?.subject && <ErrorMessage msg={`${formState.subject}`}/>}
               </div>
               <div className="w-full">

@@ -16,7 +16,7 @@ export const menuItemData = [
             { title: "MMN History", link: "/history" },
             { title: "MMN Constitution", link: "", href: "/constitution.pdf"},
             { title: "Committee Members", link: "/committeemember" },
-            { title: "Become a MMN member", link: "" },
+            //{ title: "Become a MMN member", link: "" },
         ]
     },
     { title: "Membership", link: "/membership" },
