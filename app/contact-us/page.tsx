@@ -27,7 +27,7 @@ const contactUsIntialData = {
 const ContactUsPage = () => {
   const [formData, setFormData] = useState<IContactUs>(contactUsIntialData);
   const [formState, setFormatState] = useState<IContactUs>(contactUsIntialData);
-
+  const [btnDisabled, setBtnDisabled] = useState(false);
   //Family member related handler
   const onInputChangeHandler = (
     value: string | undefined | null,
@@ -59,7 +59,6 @@ const ContactUsPage = () => {
   };
 
   const checkFormValidation = () => {
-    debugger;
     let isValid = true;
     let updatedState = {...formState}
     for(let key in formData){
@@ -77,12 +76,15 @@ const ContactUsPage = () => {
 
   const formSubmitHandler = async () => {
     if(checkFormValidation()){
+      setBtnDisabled(true);
         const result = await POST("/proxy/contact-us", formData);
         if(result.isSuccess){
             setFormData(contactUsIntialData);
             setFormatState(contactUsIntialData);
             toast.info('Thank you for contacting us.');
         }
+        setBtnDisabled(false);
+        
     }
   }
 
@@ -232,7 +234,7 @@ const ContactUsPage = () => {
                 {formState?.subject && <ErrorMessage msg={`${formState.subject}`}/>}
               </div>
               <div onClick={formSubmitHandler} className="flex justify-center lg:justify-end">
-                <MMNButton title={"Submit"} color="purple" />
+                <MMNButton disabled={btnDisabled} title={ btnDisabled ? "Loading" : "Submit"} color="purple" />
               </div>
             </form>
           </div>
