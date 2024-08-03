@@ -1,13 +1,13 @@
 "use client"
 
 import MMNButton from "@/components/MMNButton";
-import MMNContainer from "@/components/MMNContainer";
 
 import MMNTitle from "@/components/MMNTItle";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Paypane from "./Paypane";
 import { FamilyAccountInfo } from "@/constants/types";
-import { DefaultMemberFee } from "@/constants";
+import { GET } from "@/utils/fetch-factory";
+import SectionLoader from "@/components/SectionLoader";
 
 interface Props {
     className?: string,
@@ -26,6 +26,17 @@ const defUser: FamilyAccountInfo = {
 export default function RenewMemberCard(params: Props) {
     const [accountID, setAccountID] = useState<string>("1234567890");
     const [account, setAccount] = useState<FamilyAccountInfo>();
+    const [loading, setLoading] = useState(true);
+    const [membershipFee, setMembershipFee ] = useState(0);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const {price} = await GET("/proxy/subscription-plan");
+            setMembershipFee(price / 100);
+            setLoading(false);
+        }
+        fetchData();
+    }, []);
 
     const handleRenewNowClick = () => {
         if (accountID == "" || accountID == undefined)
@@ -34,12 +45,15 @@ export default function RenewMemberCard(params: Props) {
         setAccount(defUser);
     }
 
+    if(loading)
+        return <SectionLoader/>
+
     return (
         <div className={`flex flex-col p-[24px] gap-[14px] rounded-[10px] border-[1px] border-color-mmn-lightgrey h-max ${params.className || ""}`}>
             <MMNTitle title="Renew membership?" color="purple" />
             <div className="flex flex-wrap gap-[10px]">
                 <span>Price:</span>
-                <span className="font-semibold">{` kr ${DefaultMemberFee}`}</span>
+                <span className="font-semibold">{` kr ${membershipFee}`}</span>
                 <span>per member</span>
             </div>
 

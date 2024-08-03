@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 
 const NavData = [
   { title: "Home", link: "/home" },
-  { title: "Contact Us", link: "#" },
+  { title: "Contact us", link: "#" },
 ];
 
 const contactUsIntialData = {
@@ -96,14 +96,12 @@ const ContactUsPage = () => {
               src="/image/contact-us/banner.png"
               alt="logo"
               className="max-w-full h-auto"
-              style={{ width: "60%" }}
+              style={{ width: "50%" }}
             />
           </div>
           <div className="w-full lg:w-1/2 p-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center lg:text-left">
-              Contact us
-            </h2>
-            <p className="text-center lg:text-left mb-6">
+          <MMNTitle title="Contact us" color="purple" className={'text-center mb-3'}/>
+            <p className="text-center mb-6">
               For any questions you may have, please do not hesitate to reach
               us.
               <br />
