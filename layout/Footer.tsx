@@ -6,7 +6,7 @@ const data = [
     {
         title: "Quick links", items: [
             { title: "Become a member", link: "" },
-            { title: "Become a volunteer", link: "" },
+            //{ title: "Become a volunteer", link: "" },
             { title: "FAQ", link: "/faq" },
             { title: "Terms & Conditions", link: "/terms" },
         ]
@@ -16,13 +16,13 @@ const data = [
             { title: "Marathi Shaala", link: "/initiative/marathiboli-shaala" },
         ]
     },
-    {
-        title: "Social Media", items: [
-            { title: "Facebook", link: "" },
-            { title: "Instagram", link: "" },
-            { title: "Youtube", link: "" },
-        ]
-    },
+    // {
+    //     title: "Social Media", items: [
+    //         { title: "Facebook", link: "" },
+    //         { title: "Instagram", link: "" },
+    //         { title: "Youtube", link: "" },
+    //     ]
+    // },
     {
         title: "Reach us", items: [
             { title: "mmn@marathimandal-norway.no", link: "" },

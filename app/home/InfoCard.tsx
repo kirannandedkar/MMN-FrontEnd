@@ -44,10 +44,10 @@ export default function InfoCard(params: Props) {
                 {params.event.description}
             </div>
 
-            <div className="flex gap-[20px] flex-wrap">
+            {/* <div className="flex gap-[20px] flex-wrap">
                 <MMNButton title="Learn more" className="border-[1px] border-white text-white" size="normal" />
                 <MMNButton title="Register for event now" color="purple" />
-            </div>
+            </div> */}
         </div>
     )
 }

@@ -41,9 +41,9 @@ export default function HomePage() {
             <div>
                 <SliderPane />
                 <MMNContainer className="flex-col max-w-[1440px] m-auto">
-                    <AboutPane />
+                    {/* <AboutPane /> */}
 
-                    <div className="flex flex-col gap-10 pb-10 xl:grid xl:grid-cols-6">
+                    <div className="flex flex-col gap-10 pt-[30px] pb-[40px] xl:grid xl:grid-cols-6">
                         <div className="xl:col-span-4">
                             <EventsCalendar />
                         </div>
@@ -52,7 +52,7 @@ export default function HomePage() {
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-[30px] pb-[40px]">
+                    {/* <div className="flex flex-col gap-[30px] pb-[40px]">
                         <MMNTitle title="Our sponsors" color="purple" />
 
                         <div className="flex flex-wrap gap-[34px]">
@@ -72,7 +72,7 @@ export default function HomePage() {
                             }
 
                         </div>
-                    </div>
+                    </div> */}
                 </MMNContainer>
             </div>
         </>
