@@ -31,7 +31,7 @@ export default function InfoCard(params: Props) {
                     <span className="font-bold"> {params.event.date} </span>
                 </div>
                 <div>
-                    <MMNButton title="The date is tentative. Stay tuned for further details..." size="small" color="white" className={"!min-w-full"} />
+                    {/* <MMNButton title="The date is tentative. Stay tuned for further details..." size="small" color="white" className={"!min-w-full"} /> */}
                 </div>
             </div>
 
