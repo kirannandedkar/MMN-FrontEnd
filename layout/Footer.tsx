@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 const data = [
     {
         title: "Quick links", items: [
-            { title: "Become a member", link: "" },
+            // { title: "Become a member", link: "" },
             //{ title: "Become a volunteer", link: "" },
             { title: "FAQ", link: "/faq" },
             { title: "Terms & Conditions", link: "/terms" },
