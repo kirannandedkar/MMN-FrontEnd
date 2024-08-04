@@ -21,7 +21,7 @@ export const menuItemData = [
     },
     { title: "Membership", link: "/membership" },
     { title: "Event", link: "/events" },
-    { title: "Gallery", link: "" },
+    { title: "Gallery", link: "/gallery" },
     { 
         title: "MMN Initiatives", 
         link: "/initiative",
