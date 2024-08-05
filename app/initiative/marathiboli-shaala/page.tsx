@@ -30,7 +30,7 @@ const MarathiBoliShaalaPage = () => {
             Purposes and goals of the program:
           </p>
           <p className="text-gray-700 mb-4">
-            The purpose of the MarathiBoli Marathi Shaala is to encourage
+            The purpose of the MarathiBoli Shala is to encourage
             children to speak in Marathi. Children should have the ability to
             conduct meaningful conversations in Marathi due to exposure to the
             language in the classroom and at home. In addition to speaking
@@ -39,7 +39,7 @@ const MarathiBoliShaalaPage = () => {
           </p>
           <br />
           <p className="text-gray-700 mb-4">
-            The MarathiBoli Marathi Shalla is operated by Maharashtra Mandal
+            The MarathiBoli Marathi Shala is operated by Maharashtra Mandal
             Norway, a Oslo-based non-profit organization that encourages Marathi
             cultural and language education among Norway-born Indian children.
           </p>
