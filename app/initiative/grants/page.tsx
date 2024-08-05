@@ -22,12 +22,7 @@ const GrantsPage = () => {
             color="purple"
           />
           <p className="text-gray-700 mb-4">
-            The purpose of the MarathiBoli Marathi Shaala is to encourage
-            children to speak in Marathi. Children should have the ability to
-            conduct meaningful conversations in Marathi due to exposure to the
-            language in the classroom and at home. In addition to speaking
-            ability, this shaala also emphasizes learning the Devanagari script,
-            and reading and writing short essays and letters.
+            Below is the list of grants which we have applied past 2 years. We get grants based on number of members registered so very important that many people take membership so we can get more grants.
           </p>
           <div className="overflow-x-auto">
           <ApplicationTable/>
