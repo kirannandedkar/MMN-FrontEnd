@@ -24,7 +24,7 @@ export default function BlogPane({ fullName, signed, familyMemberNotAdded, notPa
             <MMNTitle title="Become a member" color="purple"/>
             <div className="flex flex-col gap-[10px]">
                 <div className="font-bold line-height-mmn-large">
-                    Marathi Mandal Norway - Membership 2023
+                    Maharashtra Mandal Norway - Membership 2024
                 </div>
                 {
                     signed ? (
@@ -37,7 +37,7 @@ export default function BlogPane({ fullName, signed, familyMemberNotAdded, notPa
                         </div>
                     ) : (
                         <div className="line-height-mmn-large">
-                            This form is sent to you for the membership of Marathi Mandal Norway 2023.Please read this form carefully and fill in correct information and pay the applicable membership fee for your family.
+                            This form is sent to you for the membership of Maharashtra Mandal Norway 2024.Please read this form carefully and fill in correct information and pay the applicable membership fee for your family.
                         </div>
                     )
                 }
