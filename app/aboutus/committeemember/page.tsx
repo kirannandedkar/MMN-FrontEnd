@@ -22,24 +22,32 @@ const yearList = [
 
 const data = {
   executive: [
-    { name: "Member name , Member name, Member name, Member name,Member name, Member name, Member name", imageurl: "/image/members/executive/member1.jpg" },
-    { name: "Member name", imageurl: "/image/members/executive/member2.jpg" },
-    { name: "Member name", imageurl: "" },
-    { name: "Member name", imageurl: "" },
-    { name: "Member name", imageurl: "" },
-    { name: "Member name", imageurl: "" },
-    { name: "Member name", imageurl: "" },
-    { name: "Member name", imageurl: "" },
-    { name: "Member name", imageurl: "" },
+    { name: "        Shrikant Prabhu              Styre Leder", imageurl: "" },
+    { name: "        Sujata Prabhu              Neste Styre Leder", imageurl: "/image/members/executive/Sujata.jpg" },
+    // { name: "Member name", imageurl: "/image/members/executive/member2.jpg" },
+    { name: "Deep Vaishampayan ", imageurl: "/image/members/executive/Deep.jpeg" },
+    { name: "Trupti Shrivardhankar", imageurl: "/image/members/executive/Trupti.jpg" },
+    { name: "Sunil Shenoy ", imageurl: "" },
+    { name: "Amol Pandav", imageurl: "/image/members/executive/AmolPandav.jpg" },
+    { name: "Pradnya Rane", imageurl: "/image/members/executive/Pradnya.jpg" },
+    { name: "Santosh Dalal", imageurl: "/image/members/executive/Santosh.jpg" },
+    { name: "Omkar Kulkarni", imageurl: "/image/members/executive/Omkar.jpeg" },
+    { name: "Kiran Nandedkar", imageurl: "/image/members/executive/Kiran.jpg" },
   ],
   working: [
-    { name: "Member name 1", imageurl: "", period: { begin: 2018, end: 2020 } },
-    { name: "Member name 2", imageurl: "", period: { begin: 2019, end: 2021 } },
-    { name: "Member name 6", imageurl: "", period: { begin: 2018, end: 2019 } },
-    { name: "Member name 4", imageurl: "", period: { begin: 2018, end: 0 } },
-    { name: "Member name 8", imageurl: "", period: { begin: 2021, end: 0 } },
-    { name: "Member name 7", imageurl: "", period: { begin: 2021, end: 2022 } },
-    { name: "Member name 3", imageurl: "", period: { begin: 2018, end: 0 } },
+    { name: "        Shrikant Prabhu              Styre Leder", imageurl: "", period: { begin: 2020, end: 2022 } },
+    { name: "        Sujata Prabhu              Neste Styre Leder", imageurl: "/image/members/executive/Sujata.jpg", period: { begin: 2020, end: 2022 } },
+    { name: "        Kiran Nandedkar", imageurl: "/image/members/executive/Kiran.jpg", period: { begin: 2020, end: 2022 } },
+    { name: "        Trupti Shrivardhankar", imageurl: "/image/members/executive/Trupti.jpg", period: { begin: 2020, end: 2022 } },
+    { name: "        Kashmira Shinde", imageurl: "", period: { begin: 2020, end: 2022 } },
+    { name: "        Snehal Shridhankar", imageurl: "", period: { begin: 2020, end: 2022 } },
+    { name: "        Asavari Manjrekar Nandedkar", imageurl: "", period: { begin: 2020, end: 2022 } },
+
+    { name: "Sachin Karegoankar", imageurl: "", period: { begin: 2018, end: 2019 } },
+    { name: "Kiran Pawar", imageurl: "", period: { begin: 2018, end: 2019 } },
+    { name: "Amol More", imageurl: "", period: { begin: 2018, end: 2019 } },
+    { name: "Charuta Ranade", imageurl: "", period: { begin: 2018, end: 2019 } },
+    { name: "Ramakant Tilekar", imageurl: "", period: { begin: 2018, end: 2019 } },
   ]
 }
 
@@ -114,13 +122,13 @@ const CommitteeMemberPage = () => {
       <TopNav itemList={NavData} />
 
       <div className="flex flex-col sm:px-[90px] px-5 gap-[30px] pb-[40px] text-size-mmn-medium">
-        <MMNTitle title={"Executive committee members"} className={""} color='purple' />
+        <MMNTitle title={"Committee members"} className={""} color='purple' />
         {exeMemberList}
       </div>
 
       <div className="flex flex-col sm:px-[90px] px-5 gap-[30px] pb-[40px] text-size-mmn-medium">
         <div className='flex gap-[20px] flex-wrap'>
-          <MMNTitle title={"Working committee members"} className={""} color='purple' />
+          <MMNTitle title={"Previous committee members"} className={""} color='purple' />
           <DropDown options={yearList}
             className='w-fit'
             controlClassName="text-size-mmn-medium font-semibold line-height-mmn-medium text-color-mmn-yellow !rounded-[6px] !pl-[12px] !pr-[32px] bg-[#FFEDEA] !border-none cursor-pointer"
