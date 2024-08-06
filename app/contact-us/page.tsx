@@ -109,10 +109,10 @@ const ContactUsPage = () => {
               <br />
               You can write us an email on{" "}
               <a
-                href="mailto:mmn@marathimandal-norway.no"
+                href="mailto:mmn@maharashtramandalnorway.no"
                 className="text-blue-500"
               >
-                mmn@marathimandal-norway.no
+                mmn@maharashtramandalnorway.no
               </a>
             </p>
             <form className="space-y-4">
