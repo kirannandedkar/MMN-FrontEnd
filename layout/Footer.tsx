@@ -25,7 +25,7 @@ const data = [
     // },
     {
         title: "Reach us", items: [
-            { title: "mmn@marathimandal-norway.no", link: "" },
+            { title: "mmn@maharashtramandalnorway.no", link: "" },
         ]
     },
 ]
