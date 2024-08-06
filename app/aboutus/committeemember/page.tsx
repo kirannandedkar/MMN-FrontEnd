@@ -27,7 +27,7 @@ const data = {
     // { name: "Member name", imageurl: "/image/members/executive/member2.jpg" },
     { name: "Deep Vaishampayan ", imageurl: "/image/members/executive/Deep.jpeg" },
     { name: "Trupti Shrivardhankar", imageurl: "/image/members/executive/Trupti.jpg" },
-    { name: "Sunil Shenoy ", imageurl: "" },
+    { name: "Sunil Shenoy ", imageurl: "/image/members/executive/Sunil.jpg" },
     { name: "Amol Pandav", imageurl: "/image/members/executive/AmolPandav.jpg" },
     { name: "Pradnya Rane", imageurl: "/image/members/executive/Pradnya.jpg" },
     { name: "Santosh Dalal", imageurl: "/image/members/executive/Santosh.jpg" },
