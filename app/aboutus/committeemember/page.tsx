@@ -38,7 +38,7 @@ const data = {
     { name: "        Shrikant Prabhu              Styre Leder", imageurl: "", period: { begin: 2020, end: 2022 } },
     { name: "        Sujata Prabhu              Neste Styre Leder", imageurl: "/image/members/executive/Sujata.jpg", period: { begin: 2020, end: 2022 } },
     { name: "        Kiran Nandedkar", imageurl: "/image/members/executive/Kiran.jpg", period: { begin: 2020, end: 2022 } },
-    { name: "        Trupti Shriwardhankar", imageurl: "/image/members/executive/Trupti.jpg", period: { begin: 2020, end: 2022 } },
+    { name: "       Trupti Shriwardhankar", imageurl: "/image/members/executive/Trupti.jpg", period: { begin: 2020, end: 2022 } },
     { name: "        Kashmira Shinde", imageurl: "", period: { begin: 2020, end: 2022 } },
     { name: "        Snehal Shridhankar", imageurl: "", period: { begin: 2020, end: 2022 } },
     { name: "        Asavari Manjrekar Nandedkar", imageurl: "", period: { begin: 2020, end: 2022 } },
