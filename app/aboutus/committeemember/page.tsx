@@ -45,7 +45,7 @@ const data = {
 
     { name: "Sachin Karegoankar", imageurl: "", period: { begin: 2018, end: 2019 } },
     { name: "Kiran Pawar", imageurl: "", period: { begin: 2018, end: 2019 } },
-    { name: "Amol More", imageurl: "", period: { begin: 2018, end: 2019 } },
+    { name: "Amol More", imageurl: "/image/members/executive/AmolMore.jpg", period: { begin: 2018, end: 2019 } },
     { name: "Charuta Ranade", imageurl: "", period: { begin: 2018, end: 2019 } },
     { name: "Ramakant Tilekar", imageurl: "", period: { begin: 2018, end: 2019 } },
   ]
