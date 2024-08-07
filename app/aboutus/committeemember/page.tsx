@@ -26,7 +26,7 @@ const data = {
     { name: "        Sujata Prabhu              Neste Styre Leder", imageurl: "/image/members/executive/Sujata.jpg" },
     // { name: "Member name", imageurl: "/image/members/executive/member2.jpg" },
     { name: "Deep Vaishampayan ", imageurl: "/image/members/executive/Deep.jpeg" },
-    { name: "Trupti Shriwardhankar", imageurl: "/image/members/executive/Trupti.jpg" },
+    { name: "Trupti Shrivardhankar", imageurl: "/image/members/executive/Trupti.jpg" },
     { name: "Sunil Shenoy ", imageurl: "/image/members/executive/Sunil.jpg" },
     { name: "Amol Pandav", imageurl: "/image/members/executive/AmolPandav.jpg" },
     { name: "Pradnya Rane", imageurl: "/image/members/executive/Pradnya.jpg" },
@@ -46,8 +46,8 @@ const data = {
     { name: "Sachin Karegoankar", imageurl: "", period: { begin: 2018, end: 2019 } },
     { name: "Kiran Pawar", imageurl: "", period: { begin: 2018, end: 2019 } },
     { name: "Amol More", imageurl: "/image/members/executive/AmolMore.jpg", period: { begin: 2018, end: 2019 } },
-    { name: "Charuta Ranade", imageurl: "", period: { begin: 2018, end: 2019 } },
-    { name: "Ramakant Tilekar", imageurl: "", period: { begin: 2018, end: 2019 } },
+    { name: "Charuta Ranade", imageurl: "/image/members/executive/Charuta.jpg", period: { begin: 2018, end: 2019 } },
+    { name: "Ramakant Tilekar", imageurl: "/image/members/executive/Ramakant.jpg", period: { begin: 2018, end: 2019 } },
   ]
 }
 
