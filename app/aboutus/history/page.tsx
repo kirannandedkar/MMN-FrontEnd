@@ -48,7 +48,7 @@ const HistoryPage = () => {
           </p>
 
           <MMNTitle
-            title="Founds of MMN"
+            title="Founderss of Maharashtra Mandal Norway"
             className="pb-2 mt-10"
             color="purple"
           />
