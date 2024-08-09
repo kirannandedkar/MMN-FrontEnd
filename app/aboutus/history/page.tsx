@@ -12,10 +12,11 @@ const NavData = [
 ];
 
 const members = [
-  { name: 'Kasper Oen', image: '/image/members/executive/member1.jpg' },
-  { name: 'Max Andersen', image: '/image/members/executive/member2.jpg' },
-  { name: 'Mohammad Ottem', image: '/image/members/executive/member2.jpg' },
-  { name: 'Oliver Karlsen', image: '/image/members/executive/member1.jpg' },
+  { name: 'Arvind Phatak', image: '/image/members/executive/Arvind.jpg' },
+  { name: 'Arun Aurangabadkar', image: '/image/members/executive/Arun.jpg' },
+  { name: 'Aruna Phatak', image: '/image/members/executive/Aruna.jpg' },
+  { name: 'Smita Aurangabadkar', image: '/image/members/executive/member1.jpg' },
+  { name: 'Pratima Mundhe', image: '/image/members/executive/member1.jpg' },
 ]
 
 const HistoryPage = () => {
