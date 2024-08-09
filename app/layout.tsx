@@ -15,7 +15,6 @@ import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from "react";
 import { initCookie } from "@/utils/funcs";
-import Select from 'react-select'
 
 //default font-14px, weight 500, family-poppin
 const inter = Poppins({
@@ -33,14 +32,11 @@ export default function RootLayout({
     initCookie();
   }, []);
 
-  
-
   return (
     <SessionWrapper>
       <ReduxProvider store={store}>
         <html lang="en">
           <body className={`text-size-mmn-normal border-white line-height-mmn-normal font-medium ${inter.className}`}>
-
             <link rel="icon" href="/favicon.svg" sizes="any" />
             <SocialLinkBar />
 

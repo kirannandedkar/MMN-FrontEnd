@@ -20,7 +20,6 @@ export async function middleware(request: NextRequest) {
     },
     body: request.body,
   });
-  console.log(result)
   if (result.status === 401) {
     return NextResponse.redirect("/login");
   }

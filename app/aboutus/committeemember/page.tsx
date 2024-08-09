@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import DropDown from 'react-dropdown';
 import { CommitteeMember } from "@/constants/types"
-import MMNContainer from '@/components/MMNContainer';
 import MMNTitle from '@/components/MMNTItle';
 import TopNav from '@/components/TopNav';
 import LinesEllipsis from 'react-lines-ellipsis'
@@ -11,7 +10,7 @@ import { Urls } from '@/constants';
 
 const NavData = [
   { title: "Home", link: "/home" },
-  { title: "About us", link: "/aboutus" },
+  { title: "About us", link: "#" },
   { title: "Committee Members", link: "#" },
 ];
 
