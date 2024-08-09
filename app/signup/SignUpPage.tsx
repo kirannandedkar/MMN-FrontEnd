@@ -23,6 +23,7 @@ import {toast} from "react-toastify";
 import {GET, POST} from "@/utils/fetch-factory";
 import {useSelector} from "react-redux";
 import {camelCaseToSentenceCase} from "@/utils/form";
+import ConfirmDialog from "@/components/ConfirmDialog";
 
 const NavData = [
     { title: "Home", link: "/home" },
@@ -79,6 +80,9 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     const [notPaid, setNotPaid] = useState(false);
     const [familyMemberFormState, setFamilyMemberFormState] = useState<(FamilyMember)[]>([]);
     const [isFamilyMemberLastFormValid, setFamilyMemberLastFormValid] = useState(false);
+
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
     if (byGoogle) {
         const { data: session } = useSession();
         useEffect(() => {
@@ -235,11 +239,18 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
             addNewFamilyAccount();
         }else if(familyAccounts.length > 0){
             if(isProcessBtnClicked)
-                await processPayment();
+            {
+                setIsDialogOpen(true);
+            }
             else addNewFamilyAccount();
         }else if(familyAccounts.length == 0 && isProcessBtnClicked){
-            await processPayment();
+            setIsDialogOpen(true); 
         }
+    }
+
+    const handleConfirm = async () => {
+        setIsDialogOpen(false);
+        await processPayment();
     }
 
     const addNewFamilyAccount = () =>{
@@ -384,6 +395,14 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                     </div>
                 </div>
             </MMNContainer>
+
+        <ConfirmDialog
+                isOpen={isDialogOpen}
+                onClose={() => setIsDialogOpen(false)}
+                onConfirm={handleConfirm}
+                title="Confirm Action"
+                message="Are you sure you want to proceed payment?"
+            />
         </div >
     );
 }
