@@ -43,7 +43,7 @@ const data = {
     { name: "        Snehal Shridhankar", imageurl: "", period: { begin: 2020, end: 2022 } },
     { name: "        Asavari Manjrekar Nandedkar", imageurl: "", period: { begin: 2020, end: 2022 } },
 
-    { name: "Sachin Karegoankar", imageurl: "", period: { begin: 2018, end: 2019 } },
+    { name: "Sachin Karegoankar", imageurl: "/image/members/executive/SachinKaregoankar.jpg", period: { begin: 2018, end: 2019 } },
     { name: "Kiran Pawar", imageurl: "", period: { begin: 2018, end: 2019 } },
     { name: "Amol More", imageurl: "/image/members/executive/AmolMore.jpg", period: { begin: 2018, end: 2019 } },
     { name: "Charuta Ranade", imageurl: "/image/members/executive/Charuta.jpg", period: { begin: 2018, end: 2019 } },
