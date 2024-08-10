@@ -15,8 +15,8 @@ const members = [
   { name: 'Arvind Phatak', image: '/image/members/executive/Arvind.jpg' },
   { name: 'Arun Aurangabadkar', image: '/image/members/executive/Arun.jpg' },
   { name: 'Aruna Phatak', image: '/image/members/executive/Aruna.jpg' },
-  { name: 'Smita Aurangabadkar', image: '/image/members/executive/member1.jpg' },
-  { name: 'Pratima Mundhe', image: '/image/members/executive/member1.jpg' },
+  { name: 'Smita Aurangabadkar', image: '/image/members/executive/Smita.jpg' },
+  { name: 'Pratima Mundhe', image: '/image/members/executive/Pratima.jpg' },
 ]
 
 const HistoryPage = () => {
