@@ -14,7 +14,9 @@ const NavData = [
 const members = [
   { name: 'Arvind Phatak', image: '/image/members/executive/Arvind.jpg' },
   { name: 'Arun Aurangabadkar', image: '/image/members/executive/Arun.jpg' },
+  { name: 'Shrikant Prabhu', image: '/image/members/executive/Shrikant.jpeg' },
   { name: 'Aruna Phatak', image: '/image/members/executive/Aruna.jpg' },
+  { name: 'Sujata Prabhu', image: '/image/members/executive/Sujata.jpg' },
   { name: 'Smita Aurangabadkar', image: '/image/members/executive/Smita.jpg' },
   { name: 'Pratima Mundhe', image: '/image/members/executive/Pratima.jpg' },
 ]
