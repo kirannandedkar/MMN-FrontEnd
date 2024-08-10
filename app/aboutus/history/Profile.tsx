@@ -14,7 +14,7 @@ const Profile: React.FC<ProfileProps> = ({ member }) => {
     <div className="bg-white border rounded-lg overflow-hidden">
       <div className="flex items-center p-4">
         <img
-          className="w-[130px] h-[130px] rounded-full border"
+          className="w-[180px] h-[180px] rounded-full border"
           src={member.image}
           alt="Profile"
         />
@@ -22,7 +22,7 @@ const Profile: React.FC<ProfileProps> = ({ member }) => {
           <table className="min-w-full text-left text-sm">
             <tbody>
               <tr>
-                <td className="px-4 py-2 font-semibold">{member.name}</td>
+                <td className="px-4 py-2 font-bold">{member.name}</td>
               </tr>
             </tbody>
           </table>
