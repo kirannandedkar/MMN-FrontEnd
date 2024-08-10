@@ -21,7 +21,7 @@ const yearList = [
 
 const data = {
   executive: [
-    { name: "        Shrikant Prabhu              Styre Leder", imageurl: "/image/members/executive/¨Shrikant.jpeg" },
+    { name: "        Shrikant Prabhu              Styre Leder", imageurl: "/image/members/executive/Shrikant.jpeg" },
     { name: "        Sujata Prabhu              Neste Styre Leder", imageurl: "/image/members/executive/Sujata.jpg" },
     // { name: "Member name", imageurl: "/image/members/executive/member2.jpg" },
     { name: "Deep Vaishampayan ", imageurl: "/image/members/executive/Deep.jpeg" },
