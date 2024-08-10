@@ -11,6 +11,7 @@ import { SignInGoogle, SignInManualy } from "@/redux/user/auth.action";
 import { toast } from "react-toastify";
 import {useRouter} from "next/navigation";
 import {GET} from "@/utils/fetch-factory";
+import Link from "next/link";
 
 interface IProps{
     onClose: () => void
@@ -37,6 +38,11 @@ const  LoginCard = ({onClose}: IProps) => {
     const handleMembership = () => {
         onClose();
         router.push('/membership');
+    }
+
+    const handleForgotPasswordClicked = () => {
+        onClose();
+        router.push('/reset-password-request');
     }
     useEffect(() => {
         if(authresult){
@@ -80,7 +86,7 @@ const  LoginCard = ({onClose}: IProps) => {
                            onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-
+                <a href="#" className="text-end" onClick={handleForgotPasswordClicked}>Forgot password?</a>
                 <div className="flex justify-between py-[10px]">
                     <div onClick={() => handleMembership()}>
                         <MMNButton title="Become a member"  className="border border-color-mmn-purple" color="white" size="normal"/>
