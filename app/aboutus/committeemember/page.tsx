@@ -51,7 +51,7 @@ const data = {
 
     { name: "Rajendra Danve", imageurl: "", period: { begin: 2016, end: 2017 } },
     { name: "Amit Pawar", imageurl: "/image/members/executive/AmitPawar.jpg", period: { begin: 2016, end: 2017 } },
-    { name: "Girish Revatkar", imageurl: "", period: { begin: 2016, end: 2017 } },
+    { name: "Girish Rewatkar", imageurl: "/image/members/executive/Girish.jepg", period: { begin: 2016, end: 2017 } },
     { name: "Sujay Talwalkar", imageurl: "", period: { begin: 2016, end: 2017 } },
   ]
 }
