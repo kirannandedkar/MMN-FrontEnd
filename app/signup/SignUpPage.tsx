@@ -174,8 +174,10 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
         if (data.password != data.repassword)
             return;
         const flag = await handleSignupManually(account, data.password, familyAccounts);
-        setSigned(flag);
-        setPrimaryAccount(account);
+        if(flag) 
+            router.push('/home');
+        // setSigned(flag);
+        // setPrimaryAccount(account);
     }
 
     const onPrimaryAccountCallback = async (_member: any) => {

@@ -46,16 +46,28 @@ const handleSignupManually = async (member: AccountInfo | null, password: string
   if (!result.isSuccess) {
     toast.error('Error Occurred.');
   } else {
-    if (result.msg?.accessToken) {
-      handleCookie(result.msg as AuthResult);
-      toast.success('Signup succeed.');
-      return true;
-    } else {
-      if (result.msg?.Message) toast.error(result.msg?.Message);
-    }
+    toast.success('Email verification link sent.');
+    return true;
+    // if (result.msg?.accessToken) {
+    //   handleCookie(result.msg as AuthResult);
+    //   toast.success('Signup succeed.');
+    //   return true;
+    // } else {
+    //   if (result.msg?.Message) toast.error(result.msg?.Message);
+    // }
   }
   return false;
 };
+
+const handleEmailConfirm = (result: AuthResult) => {
+   if (result?.accessToken) {
+      handleCookie(result);
+      return true;
+    } else {
+      toast.error('Login failed');
+    }
+    return false;
+}
 
 const handleSigninManual = async (email: string, password: string) => {
   const result = await AUTHPOST("UserAccount/login", { email, password });
@@ -94,4 +106,4 @@ const handleCookie = (res_body: AuthResult) => {
   Cookies.set("sub", res_body.sub, option);
 };
 
-export { handleSignupManually, handleSignupByGoogle, handleSigninManual, handleSigninGoogle };
+export { handleSignupManually, handleSignupByGoogle, handleSigninManual, handleSigninGoogle, handleEmailConfirm };

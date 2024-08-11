@@ -1,10 +1,18 @@
 'use client'
 
 import { createSlice } from "@reduxjs/toolkit";
-import {GetSubscription, SignInGoogle, SignInManualy, SignOut} from './auth.action'
+import { GetSubscription, SignInGoogle, SignInMailVerification, SignInManualy, SignOut } from './auth.action';
 import { toast } from "react-toastify";
+import { AuthResult } from "@/app/types";
 
-const initialState = {
+type auth = {
+    loading: boolean,
+    profile: null,
+    authresult: AuthResult | null,
+    subscription: null
+}
+
+const initialState : auth = {
     loading: false,
     profile: null,
     authresult: null,
@@ -15,8 +23,8 @@ const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        udpateUser: (state, action) => {
-
+        updateUser: (state, action) => {
+            state.profile = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -27,6 +35,9 @@ const userSlice = createSlice({
             .addCase(SignInManualy.fulfilled, (state, { payload }) => {
                 state.loading = false;
                 state.authresult = payload;
+                // Assuming `profile` is part of the payload
+                state.profile = payload.profile;
+                toast.success('Sign-in successful!');
             })
             .addCase(SignInManualy.rejected, (state, { payload }) => {
                 state.loading = false;
@@ -34,14 +45,22 @@ const userSlice = createSlice({
                 state.authresult = null;
                 toast.error(`${payload}`);
             })
-
+            .addCase(SignInMailVerification.fulfilled, (state, { payload }) => {
+                state.authresult = payload;
+            })
+            .addCase(SignInMailVerification.rejected, (state, { payload }) => {
+                state.loading = false;
+                state.authresult = null;
+                toast.error(`${payload}`);
+            })
             .addCase(SignInGoogle.pending, (state) => {
                 state.loading = true;
             })
             .addCase(SignInGoogle.fulfilled, (state, { payload }) => {
                 state.loading = false;
                 state.authresult = payload;
-                // toast.success('Signin success');
+                state.profile = payload.profile;
+                toast.success('Google sign-in successful!');
             })
             .addCase(SignInGoogle.rejected, (state, { payload }) => {
                 state.loading = false;
@@ -52,11 +71,16 @@ const userSlice = createSlice({
             .addCase(GetSubscription.fulfilled, (state, { payload }) => {
                 state.subscription = payload;
             })
+            .addCase(GetSubscription.rejected, (state, { payload }) => {
+                state.subscription = null;
+                toast.error(`${payload}`);
+            })
             .addCase(SignOut.fulfilled, (state) => {
                 state.loading = false;
                 state.profile = null;
                 state.authresult = null;
                 state.subscription = null;
+                toast.success('Sign-out successful!');
             })
             .addCase(SignOut.rejected, (state, { payload }) => {
                 state.loading = false;
@@ -65,5 +89,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { udpateUser, } = userSlice.actions;
+export const { updateUser } = userSlice.actions;
 export default userSlice.reducer;
