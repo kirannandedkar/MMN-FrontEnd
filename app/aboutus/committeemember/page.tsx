@@ -49,10 +49,10 @@ const data = {
     { name: "Charuta Ranade", imageurl: "/image/members/executive/Charuta.jpg", period: { begin: 2018, end: 2019 } },
     { name: "Ramakant Tilekar", imageurl: "/image/members/executive/Ramakant.jpg", period: { begin: 2018, end: 2019 } },
 
-    { name: "Rajendra Danve", imageurl: "", period: { begin: 2017, end: 2017 } },
-    { name: "Amit Pawar", imageurl: "/image/members/executive/AmitPawar.jpg", period: { begin: 2017, end: 2017 } },
-    { name: "Girish Revatkar", imageurl: "", period: { begin: 2017, end: 2017 } },
-    { name: "Sujay Talwalkar", imageurl: "", period: { begin: 2017, end: 2017 } },
+    { name: "Rajendra Danve", imageurl: "", period: { begin: 2016, end: 2017 } },
+    { name: "Amit Pawar", imageurl: "/image/members/executive/AmitPawar.jpg", period: { begin: 2016, end: 2017 } },
+    { name: "Girish Revatkar", imageurl: "", period: { begin: 2016, end: 2017 } },
+    { name: "Sujay Talwalkar", imageurl: "", period: { begin: 2016, end: 2017 } },
   ]
 }
 
@@ -112,7 +112,7 @@ const CommitteeMemberPage = () => {
     if (!member.period || isNaN(beginYear)) return false;
 
     const mbeginyear = member.period.begin, mendyear = member.period.end;
-    const endyear = beginYear + 2;
+    const endyear = beginYear + 1;
 
     if (mbeginyear > mendyear && mendyear > 0) return false;
 
