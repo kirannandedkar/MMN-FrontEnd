@@ -17,6 +17,7 @@ const NavData = [
 const yearList = [
   { value: '2020', label: "2020-2022" },
   { value: '2018', label: "2018-2020" },
+  { value: '2017', label: "2017-2018" },
 ];
 
 const data = {
@@ -38,7 +39,7 @@ const data = {
     { name: "        Sujata Prabhu              Neste Styre Leder", imageurl: "/image/members/executive/Sujata.jpg", period: { begin: 2020, end: 2022 } },
     { name: "        Kiran Nandedkar", imageurl: "/image/members/executive/Kiran.jpg", period: { begin: 2020, end: 2022 } },
     { name: "       Trupti Shriwardhankar", imageurl: "/image/members/executive/Trupti.jpg", period: { begin: 2020, end: 2022 } },
-    { name: "        Kashmira Shinde", imageurl: "", period: { begin: 2020, end: 2022 } },
+    { name: "        Kashmira Shinde", imageurl: "/image/members/executive/Kashmira.jpeg", period: { begin: 2020, end: 2022 } },
     { name: "        Snehal Shridhankar", imageurl: "", period: { begin: 2020, end: 2022 } },
     { name: "        Asavari Manjrekar", imageurl: "/image/members/executive/Asavari.jpg", period: { begin: 2020, end: 2022 } },
 
@@ -47,6 +48,11 @@ const data = {
     { name: "Amol More", imageurl: "/image/members/executive/AmolMore.jpg", period: { begin: 2018, end: 2019 } },
     { name: "Charuta Ranade", imageurl: "/image/members/executive/Charuta.jpg", period: { begin: 2018, end: 2019 } },
     { name: "Ramakant Tilekar", imageurl: "/image/members/executive/Ramakant.jpg", period: { begin: 2018, end: 2019 } },
+
+    { name: "Rajendra Danve", imageurl: "", period: { begin: 2017, end: 2017 } },
+    { name: "Amit Pawar", imageurl: "/image/members/executive/AmitPawar.jpg", period: { begin: 2017, end: 2017 } },
+    { name: "Girish Revatkar", imageurl: "", period: { begin: 2017, end: 2017 } },
+    { name: "Sujay Talwalkar", imageurl: "", period: { begin: 2017, end: 2017 } },
   ]
 }
 
