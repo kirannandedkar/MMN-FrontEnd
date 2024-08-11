@@ -15,7 +15,8 @@ export default function EventPane() {
             </div>
 
             <div className="line-height-mmn-large text-white">
-                MMN Membership goes from January to December of each year. Do check our membership benefits and join us.
+                MMN Membership is valid for the calendar year, starting from January 1st and ending on December 31st. Regardless of when you join during the year, your membership will be active only until the end of December. 
+                To continue enjoying the benefits of MMN Membership, renewal is required at the beginning of each new year.
             </div>
 
             <div className="flex justify-end">
