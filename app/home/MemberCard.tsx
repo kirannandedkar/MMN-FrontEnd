@@ -29,7 +29,7 @@ const MemberCard = () => {
         <MMNPanel className="bg-mmn-red">
             <MMNTitle title="Become a member" color="white"/>
             <div className="line-height-mmn-normal text-white">
-                Price:
+                Fee:
                 <div className="inline text-red-500 bg-white mx-[8px] px-[8px] py-[4px] rounded-[3px]">kr {membershipFee}</div>
                 per member
             </div>
