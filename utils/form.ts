@@ -19,9 +19,9 @@ type ValidationResult<T> = {
     updatedErrorState: ErrorState<T>;
 };
 
-const validatedForm = <T extends Record<string, any>>(errorState: ErrorState<T>, formData: T): ValidationResult<T> => {
+const validatedForm = <T extends Record<string, any>>(errorState: T, formData: T): ValidationResult<T> => {
     let isValid = true;
-    const state = { ...errorState };
+    const state: ErrorState<T> = { ...errorState };
 
     for (let key in formData) {
         if (formData[key] == null || formData[key] === '') {

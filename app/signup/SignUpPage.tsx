@@ -51,6 +51,7 @@ type CredentialData = {
 }
 
 const emptyFamilyMember = {
+    id: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -91,6 +92,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
             const descriptor = Object.getOwnPropertyDescriptor(session, 'id_token');
             const id_token = descriptor?.value || "";
             setPrimaryAccount({
+                id: '',
                 firstName: session.user.name?.split(' ')[0] || '',
                 lastName: session.user.name?.split(' ')[1] || '',
                 email: session.user.email || '',
@@ -118,6 +120,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     const fetchUserInfo = async () => {
         const userInfo = await GET("/proxy/user/me");
         setPrimaryAccount({
+            id: '',
             firstName: userInfo.firstName || '',
             lastName: userInfo.lastName || '',
             email: userInfo.email || '',
