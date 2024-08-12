@@ -40,7 +40,7 @@ const data = {
     { name: "        Kiran Nandedkar", imageurl: "/image/members/executive/Kiran.jpg", period: { begin: 2020, end: 2022 } },
     { name: "       Trupti Shriwardhankar", imageurl: "/image/members/executive/Trupti.jpg", period: { begin: 2020, end: 2022 } },
     { name: "        Kashmira Shinde", imageurl: "/image/members/executive/Kashmira.jpeg", period: { begin: 2020, end: 2022 } },
-    { name: "        Snehal Shridhankar", imageurl: "", period: { begin: 2020, end: 2022 } },
+    { name: "        Snehal Shirdhankar", imageurl: "", period: { begin: 2020, end: 2022 } },
     { name: "        Asavari Manjrekar", imageurl: "/image/members/executive/Asavari.jpg", period: { begin: 2020, end: 2022 } },
 
     { name: "Sachin Karegoankar", imageurl: "/image/members/executive/SachinKaregoankar.jpg", period: { begin: 2018, end: 2019 } },
