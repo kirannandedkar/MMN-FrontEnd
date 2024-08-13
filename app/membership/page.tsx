@@ -10,6 +10,7 @@ import RenewMemberCard from "./RenewMemberCard";
 import { useRouter } from "next/navigation";
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useSelector } from "react-redux";
+import Banner from "./Banner";
 
 const title = GetPageTitle("Membership");
 
@@ -24,6 +25,9 @@ export default function MemberShipPage() {
     return (
         <div className="max-w-[1440px] m-auto">
             <TopNav itemList={NavData} />
+            <div className="w-full xl:px-[90px] sm:px-[40px] px-[20px] pb-[40px]">
+                <Banner/>
+            </div>
             <MMNContainer className="gap-[40px] pb-[40px] flex-col sm:flex-row">
                 <div className="flex flex-col gap-[20px] grow-[2]">
                     <BlogPane />

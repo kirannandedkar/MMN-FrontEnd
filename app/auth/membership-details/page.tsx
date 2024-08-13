@@ -4,11 +4,7 @@ import TopNav from "@/components/TopNav";
 import MMNContainer from "@/components/MMNContainer";
 import FamilyInfo from "@/app/auth/membership-details/FamilyInfo";
 import { GET, DELETE, POST } from "@/utils/fetch-factory";
-import {
-  AccountInfo,
-  FamilyAccountInfo,
-  FamilyMember,
-} from "@/constants/types";
+import { AccountInfo, FamilyMember } from "@/constants/types";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
@@ -18,6 +14,8 @@ import ConfirmDialog from "@/components/ConfirmDialog";
 import MMNButton from "@/components/MMNButton";
 import AddFamilyMemberForm from "./AddFamilyMemberForm";
 import { camelCaseToSentenceCase, validatedForm } from "@/utils/form";
+import PaymentCard from "./PaymentCard";
+import { isOlder16 } from "@/utils/funcs";
 
 const NavData = [
   { title: "Home", link: "/home" },
@@ -44,6 +42,8 @@ const Page = () => {
   const [selectedMemberId, setSelectedMemberId] = useState<string>("");
   const [addFamilyMemberForm, setFamilyMemberFormVisible] = useState(false);
   const [isSubmitBtnLoading, setSubmitBtnLoading] = useState(false);
+  const [membershipFee, setMembershipFee] = useState(0);
+  const [memberCount, setMemberCount] = useState(0);
   const { authresult } = useSelector((state: any) => state.auth);
   const [familyMember, setFamilyMember] =
     useState<FamilyMember>(initialFamilyMember);
@@ -61,14 +61,25 @@ const Page = () => {
   }, []);
 
   const fetchData = async () => {
-    const userInfo = await GET("/proxy/user/me");
+    const userInfo: AccountInfo = await GET("/proxy/user/me");
+    const { price } = await GET("/proxy/subscription-plan");
+    setMembershipFee(price / 100);
     setUserInfo(userInfo);
     getFamilyMembers();
     setLoading(false);
   };
 
   const getFamilyMembers = async () => {
+    const {isSubscribed} = await GET("/proxy/user/subscription");
+    let count = isSubscribed ? 0 : 1;
     const familyMembers = await GET("/proxy/family-members");
+    for (let index = 0; index < familyMembers.length; index++) {
+      const member = familyMembers[index];
+      if (!member.isPaid && isOlder16(member?.dateOfBirth)) {
+        count++;
+      }
+    }
+    setMemberCount(count);
     setFamilyMembers(familyMembers);
   };
 
@@ -131,23 +142,29 @@ const Page = () => {
 
     setErrorState(validateState);
     if (validationResult.isValid) {
-        setSubmitBtnLoading(true);
-        const response = await POST('/proxy/family-members',[
-            familyMember
-        ]);
+      setSubmitBtnLoading(true);
+      const response = await POST("/proxy/family-members", [familyMember]);
 
-        if(response.isSuccess){
-            setSubmitBtnLoading(false);
-            setFamilyMemberFormVisible(false);
-            setFamilyMember(initialFamilyMember);
-            setErrorState(initialFamilyMember);
-            toast.success("Family member addedd successfully!");
-            getFamilyMembers();
-        }else{
-            toast.error(response.message);
-        }
+      if (response.isSuccess) {
+        setSubmitBtnLoading(false);
+        setFamilyMemberFormVisible(false);
+        setFamilyMember(initialFamilyMember);
+        setErrorState(initialFamilyMember);
+        toast.success("Family member addedd successfully!");
+        getFamilyMembers();
+      } else {
+        toast.error(response.message);
+      }
     }
   };
+
+  const processPayment = async () => {
+    if(addFamilyMemberForm){
+      toast.info("Please submit member form then payment");
+      return;
+    }
+    router.push('/payment/checkout');
+  }
 
   if (loading) return <Loader></Loader>;
   return (
@@ -231,6 +248,15 @@ const Page = () => {
               </div>
             </div>
           )}
+        </div>
+        <div>
+          <div className="sticky top-[20px]">
+            <PaymentCard
+              memberCount={memberCount}
+              processClicked={processPayment}
+              MembershipFee={membershipFee}
+            />
+          </div>
         </div>
       </MMNContainer>
 

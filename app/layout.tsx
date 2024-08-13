@@ -58,7 +58,7 @@ export default function RootLayout({
 
             <FooterBar />
             <div id="modal-container"></div>
-            <ToastContainer position="top-right"
+            <ToastContainer position="bottom-right"
               autoClose={5000}
               hideProgressBar={false}
               newestOnTop={false}
