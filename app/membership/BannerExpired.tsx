@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Banner: React.FC = () => {
+const ExpiredBanner = ({ membershipName}: {membershipName: string})  => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   const closeBanner = () => {
@@ -31,4 +31,4 @@ const Banner: React.FC = () => {
   );
 };
 
-export default Banner;
+export default ExpiredBanner;
