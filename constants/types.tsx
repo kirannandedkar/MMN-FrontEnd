@@ -4,10 +4,12 @@ export interface FamilyAccountInfo extends FamilyMember{
     phoneNumber?: string,
     referenceUserAccountId?: number,
     memberid?: string | null,
+    isPaid?: boolean
 }
 
 export interface FamilyMember {
     [key: string]: any;
+    id:string;
     firstName: string,
     lastName: string,
     email: string,

@@ -1,6 +1,7 @@
 'use client'
 
 import { APIGET, APIPOST, AUTHPOST } from "@/utils/fetch-api";
+import { POST } from "@/utils/fetch-factory";
 import {clearCookie, handleCookie} from "@/utils/funcs";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -19,6 +20,23 @@ export const SignInManualy = createAsyncThunk(
             } else {
                 if (result.msg?.Message)
                     return rejectWithValue(result.msg?.Message);
+            }
+        }
+    }
+);
+
+export const SignInMailVerification = createAsyncThunk(
+    "user/SignInMailVerification",
+    async ({ token }: { token: string }, { getState, rejectWithValue }) => {
+        console.log(token)
+        const response = await POST("/proxy/userAccount/email-verify", { token: token });
+        console.log(response);
+        if (!response.isSuccess) {
+            return rejectWithValue('Error Occured.');
+        } else {
+            if (response.result?.accessToken) {
+                handleCookie(response.result);
+                return response.result;
             }
         }
     }

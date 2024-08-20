@@ -23,6 +23,7 @@ import {toast} from "react-toastify";
 import {GET, POST} from "@/utils/fetch-factory";
 import {useSelector} from "react-redux";
 import {camelCaseToSentenceCase} from "@/utils/form";
+import ConfirmDialog from "@/components/ConfirmDialog";
 
 const NavData = [
     { title: "Home", link: "/home" },
@@ -50,6 +51,7 @@ type CredentialData = {
 }
 
 const emptyFamilyMember = {
+    id: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -79,6 +81,9 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     const [notPaid, setNotPaid] = useState(false);
     const [familyMemberFormState, setFamilyMemberFormState] = useState<(FamilyMember)[]>([]);
     const [isFamilyMemberLastFormValid, setFamilyMemberLastFormValid] = useState(false);
+
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
     if (byGoogle) {
         const { data: session } = useSession();
         useEffect(() => {
@@ -87,6 +92,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
             const descriptor = Object.getOwnPropertyDescriptor(session, 'id_token');
             const id_token = descriptor?.value || "";
             setPrimaryAccount({
+                id: '',
                 firstName: session.user.name?.split(' ')[0] || '',
                 lastName: session.user.name?.split(' ')[1] || '',
                 email: session.user.email || '',
@@ -114,6 +120,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     const fetchUserInfo = async () => {
         const userInfo = await GET("/proxy/user/me");
         setPrimaryAccount({
+            id: '',
             firstName: userInfo.firstName || '',
             lastName: userInfo.lastName || '',
             email: userInfo.email || '',
@@ -170,8 +177,10 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
         if (data.password != data.repassword)
             return;
         const flag = await handleSignupManually(account, data.password, familyAccounts);
-        setSigned(flag);
-        setPrimaryAccount(account);
+        if(flag) 
+            router.push('/home');
+        // setSigned(flag);
+        // setPrimaryAccount(account);
     }
 
     const onPrimaryAccountCallback = async (_member: any) => {
@@ -235,11 +244,18 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
             addNewFamilyAccount();
         }else if(familyAccounts.length > 0){
             if(isProcessBtnClicked)
-                await processPayment();
+            {
+                setIsDialogOpen(true);
+            }
             else addNewFamilyAccount();
         }else if(familyAccounts.length == 0 && isProcessBtnClicked){
-            await processPayment();
+            setIsDialogOpen(true); 
         }
+    }
+
+    const handleConfirm = async () => {
+        setIsDialogOpen(false);
+        await processPayment();
     }
 
     const addNewFamilyAccount = () =>{
@@ -384,6 +400,14 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                     </div>
                 </div>
             </MMNContainer>
+
+        <ConfirmDialog
+                isOpen={isDialogOpen}
+                onClose={() => setIsDialogOpen(false)}
+                onConfirm={handleConfirm}
+                title="Confirm Action"
+                message="Are you sure you want to proceed payment?"
+            />
         </div >
     );
 }
