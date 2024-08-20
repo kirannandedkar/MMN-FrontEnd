@@ -39,6 +39,7 @@ const Page = () => {
   const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>([]);
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isPaymentConfirmOpen, setPaymentConfirmOpen] = useState(false);
   const [selectedMemberId, setSelectedMemberId] = useState<string>("");
   const [addFamilyMemberForm, setFamilyMemberFormVisible] = useState(false);
   const [isSubmitBtnLoading, setSubmitBtnLoading] = useState(false);
@@ -111,9 +112,6 @@ const Page = () => {
 
     setErrorState(validate(errorState, value, fieldName));
     setFamilyMember(updatedAccount);
-
-    // if(fieldName == 'dateOfBirth')
-    //     countingFamilyMembers(updatedAccounts);
   };
 
   const validate = (
@@ -158,11 +156,15 @@ const Page = () => {
     }
   };
 
-  const processPayment = async () => {
+  const paymentBtnClickedHandler = async () => {
     if(addFamilyMemberForm){
       toast.info("Please submit member form then payment");
       return;
     }
+    setPaymentConfirmOpen(true);
+  }
+
+  const processPayment = async () => {
     router.push('/payment/checkout');
   }
 
@@ -253,7 +255,7 @@ const Page = () => {
           <div className="sticky top-[20px]">
             <PaymentCard
               memberCount={memberCount}
-              processClicked={processPayment}
+              processClicked={paymentBtnClickedHandler}
               MembershipFee={membershipFee}
             />
           </div>
@@ -266,6 +268,14 @@ const Page = () => {
         onConfirm={handleConfirm}
         title="Confirm Action"
         message="Are you sure you want to remove member?"
+      />
+
+      <ConfirmDialog
+        isOpen={isPaymentConfirmOpen}
+        onClose={() => setPaymentConfirmOpen(false)}
+        onConfirm={processPayment}
+        title="Confirm Action"
+        message="Are you sure you want to process payment?"
       />
     </div>
   );
