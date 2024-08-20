@@ -8,4 +8,6 @@ export interface ICompact {
     eventAddress: string;
     isEventOpenedForRegistration: boolean;
     isEventFinished: boolean;
+    isEventRegistrationClosed: boolean;
+    eventRegistrationLink: string
 }

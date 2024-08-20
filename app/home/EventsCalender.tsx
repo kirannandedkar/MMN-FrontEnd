@@ -19,6 +19,8 @@ export interface EventResponseDto {
   eventAddress: string;
   isEventOpenedForRegistration: boolean;
   isEventFinished: boolean;
+  eventRegistrationLink: string;
+  isEventRegistrationClosed: boolean
 }
 
 export interface EventDateResponseDto {
@@ -72,21 +74,30 @@ function EventsCalendar() {
                   </div>
                 </div>
                 <Image
-                      src={event.eventImagePath}
-                      alt={event.name}
-                      width={140}
-                      height={140}
-                      className="mx-2"
-                  />
+                  src={event.eventImagePath}
+                  alt={event.name}
+                  width={140}
+                  height={140}
+                  className="mx-2"
+                />
                 <div className="flex-1 self-start">
                   <div className="text-lg font-semibold">{event.name}</div>
                   <div>
-                    <NavigationIcon/>
+                    <NavigationIcon />
                     <span className="ms-1">{event.eventAddress}</span>
                   </div>
                 </div>
                 <div className="flex-shrink-0 ms-2">
-                  {<EventButton isEventFinished={event.isEventFinished} isEventOpenedForRegistration={event.isEventOpenedForRegistration}/>}
+                  {
+                    <EventButton
+                      isEventRegistrationClosed={event.isEventRegistrationClosed}
+                      eventRegistrationLink={event.eventRegistrationLink}
+                      isEventFinished={event.isEventFinished}
+                      isEventOpenedForRegistration={
+                        event.isEventOpenedForRegistration
+                      }
+                    />
+                  }
                 </div>
               </div>
             ))

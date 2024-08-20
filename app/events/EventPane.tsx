@@ -25,7 +25,11 @@ const EventPane: React.FC<{ event: ICompact }> = ({ event }) => (
       <p className="mb-4">
         <CalendarIcon/> {event.eventDate}
       </p>
-      {<EventButton isEventFinished={event.isEventFinished} isEventOpenedForRegistration={event.isEventOpenedForRegistration}/>}
+      {<EventButton 
+       isEventRegistrationClosed={event.isEventRegistrationClosed}
+       eventRegistrationLink={event.eventRegistrationLink}
+      isEventFinished={event.isEventFinished} 
+      isEventOpenedForRegistration={event.isEventOpenedForRegistration}/>}
     </div>
   </div>
 );
