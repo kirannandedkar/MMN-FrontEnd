@@ -1,8 +1,9 @@
 'use client'
 
-import { APIGET, APIPOST, AUTHPOST } from "@/utils/fetch-api";
+import { AuthResult } from "@/app/types";
+import { APIGET, AUTHPOST } from "@/utils/fetch-api";
 import { POST } from "@/utils/fetch-factory";
-import {clearCookie, handleCookie} from "@/utils/funcs";
+import {clearCookie, handleCookie, getAuthResultFromCookie} from "@/utils/funcs";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { getSession, signIn, signOut } from "next-auth/react";
@@ -28,9 +29,7 @@ export const SignInManualy = createAsyncThunk(
 export const SignInMailVerification = createAsyncThunk(
     "user/SignInMailVerification",
     async ({ token }: { token: string }, { getState, rejectWithValue }) => {
-        console.log(token)
         const response = await POST("/proxy/userAccount/email-verify", { token: token });
-        console.log(response);
         if (!response.isSuccess) {
             return rejectWithValue('Error Occured.');
         } else {
@@ -39,6 +38,14 @@ export const SignInMailVerification = createAsyncThunk(
                 return response.result;
             }
         }
+    }
+);
+
+export const ReLogin = createAsyncThunk(
+    "user/ReLogin",
+    async (_, { getState, rejectWithValue }) => {
+        const authResult = getAuthResultFromCookie() as AuthResult;
+        return authResult;
     }
 );
 

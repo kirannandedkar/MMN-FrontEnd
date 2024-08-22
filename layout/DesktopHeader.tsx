@@ -74,6 +74,8 @@ export default function DesktopHeader() {
                     height="0"
                     sizes="100vw"
                     className="w-[135px] h-auto py-[15px] min-h-[83px]"
+                    style={{cursor: 'pointer'}}
+                    onClick={() =>  router.push('/')}
                 />
                 <div className="flex flex-grow px-[30px] gap-[1px] justify-end">
                     {RenderItems}
