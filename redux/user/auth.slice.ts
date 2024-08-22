@@ -1,7 +1,7 @@
 'use client'
 
 import { createSlice } from "@reduxjs/toolkit";
-import { GetSubscription, SignInGoogle, SignInMailVerification, SignInManualy, SignOut } from './auth.action';
+import { GetSubscription, ReLogin, SignInGoogle, SignInMailVerification, SignInManualy, SignOut } from './auth.action';
 import { toast } from "react-toastify";
 import { AuthResult } from "@/app/types";
 
@@ -35,7 +35,6 @@ const userSlice = createSlice({
             .addCase(SignInManualy.fulfilled, (state, { payload }) => {
                 state.loading = false;
                 state.authresult = payload;
-                // Assuming `profile` is part of the payload
                 state.profile = payload.profile;
                 toast.success('Sign-in successful!');
             })
@@ -52,6 +51,8 @@ const userSlice = createSlice({
                 state.loading = false;
                 state.authresult = null;
                 toast.error(`${payload}`);
+            }).addCase(ReLogin.fulfilled, (state, { payload }) => {
+                state.authresult = payload;
             })
             .addCase(SignInGoogle.pending, (state) => {
                 state.loading = true;

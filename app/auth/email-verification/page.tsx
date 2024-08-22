@@ -26,7 +26,6 @@ const ChangePasswordPage: React.FC = () => {
 
   useEffect(() => {
     const token = searchParams.get("token") || "";
-    console.log(token);
     dispatch(SignInMailVerification({token}));
   }, []);
 

@@ -11,12 +11,9 @@ import FooterBar from "@/layout/Footer";
 import Providers from "./providers";
 import { Provider as ReduxProvider } from 'react-redux'
 import store from "@/redux/store";
-import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect } from "react";
-import { initCookie } from "@/utils/funcs";
 
-//default font-14px, weight 500, family-poppin
 const inter = Poppins({
   weight: ['400', '500', '600', '700', '800'],
   subsets: ["latin"]
@@ -27,11 +24,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  useEffect(() => {
-    initCookie();
-  }, []);
-
   return (
     <SessionWrapper>
       <ReduxProvider store={store}>

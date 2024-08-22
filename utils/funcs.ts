@@ -1,11 +1,13 @@
 import { AuthResult } from "@/app/types";
 import Cookies from "js-cookie";
 
+
 const handleCookie = (res_body: AuthResult) => {
     // add cookies to the response
     const option: Cookies.CookieAttributes = {
+        httpOnly: false,
         path: "/",
-        expires: 60 * 60 * 24 * 7,
+        expires: 7,
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",
     };
@@ -15,11 +17,19 @@ const handleCookie = (res_body: AuthResult) => {
     Cookies.set("sub", res_body.sub, option);
 };
 
-
-const initCookie = () => {
-    Cookies.set("access_token", '');
-    Cookies.set("refresh_token", '');
-    Cookies.set("sub", '');
+const getAuthResultFromCookie = () => {
+    const sub = Cookies.get('sub') ?? '';
+    if(sub){
+        return {
+            sub: sub,
+            accessToken: Cookies.get('access_token') ?? '',
+            refreshToken: Cookies.get('refresh_token') ?? '',
+            expiredAt: '',
+            refreshTokenExpiredAt: ''
+        }
+    }
+   
+    return null;
 }
 
 const clearCookie = ()=>{
@@ -59,4 +69,4 @@ function groupBy<T extends Record<string, any>>(array: T[], key: keyof T): Group
     }, {} as Grouped<T>);
   }
 
-export { isOlder16 , handleCookie, initCookie, formatDate, clearCookie, groupBy }
+export { isOlder16 , handleCookie, formatDate, clearCookie, groupBy, getAuthResultFromCookie }

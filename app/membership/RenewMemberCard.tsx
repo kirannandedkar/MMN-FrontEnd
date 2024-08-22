@@ -14,6 +14,7 @@ interface Props {
 }
 
 const defUser: FamilyAccountInfo = {
+    id: '',
     firstName: "Alex",
     lastName: "Bilakh",
     dateOfBirth: "2001-3-14",
