@@ -21,9 +21,11 @@ import {useRouter} from "next/navigation";
 import {isOlder16} from "@/utils/funcs";
 import {toast} from "react-toastify";
 import {GET, POST} from "@/utils/fetch-factory";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {camelCaseToSentenceCase} from "@/utils/form";
 import ConfirmDialog from "@/components/ConfirmDialog";
+import { AppDispatch } from "@/redux/store";
+import { ReLogin } from "@/redux/user/auth.action";
 
 const NavData = [
     { title: "Home", link: "/home" },
@@ -56,7 +58,8 @@ const emptyFamilyMember = {
     lastName: '',
     email: '',
     gender: '',
-    dateOfBirth: ''
+    dateOfBirth: '',
+    relation: ''
 }
 
 export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
@@ -81,7 +84,7 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
     const [notPaid, setNotPaid] = useState(false);
     const [familyMemberFormState, setFamilyMemberFormState] = useState<(FamilyMember)[]>([]);
     const [isFamilyMemberLastFormValid, setFamilyMemberLastFormValid] = useState(false);
-
+    const dispatch = useDispatch<AppDispatch>();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     if (byGoogle) {
@@ -179,14 +182,17 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
         const flag = await handleSignupManually(account, data.password, familyAccounts);
         if(flag) 
             router.push('/home');
-        // setSigned(flag);
-        // setPrimaryAccount(account);
     }
 
     const onPrimaryAccountCallback = async (_member: any) => {
         account = _member;
         if (byGoogle) {
-            setSigned(await handleSignupByGoogle(_member, familyAccounts));
+            const flag = await handleSignupByGoogle(_member, familyAccounts);
+            if(flag) {
+                dispatch(ReLogin());
+                router.push('/home');
+            }
+               
         }
         else {
             submitButtonForCredentialRef.current?.click();
@@ -289,9 +295,11 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
             const state = {...states[familyAccounts.length - 1]};
             const lastFormData = {...familyAccounts[familyAccounts.length - 1]};
             for (let key in lastFormData){
-                if(lastFormData[key] == null || lastFormData[key] === ''){
-                    isValid = isValid && false;
-                    state[key] = `${camelCaseToSentenceCase(key)} field is required`
+                if(key !== 'id'){
+                    if(lastFormData[key] == null || lastFormData[key] === ''){
+                        isValid = isValid && false;
+                        state[key] = `${camelCaseToSentenceCase(key)} field is required`
+                    }
                 }
             }
             states[familyAccounts.length - 1] = state;

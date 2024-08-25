@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import {useRouter} from "next/navigation";
 import {GET} from "@/utils/fetch-factory";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 interface IProps{
     onClose: () => void
@@ -32,7 +33,11 @@ const  LoginCard = ({onClose}: IProps) => {
     }
 
     const signinGoogle = () => {
-        dispatch(SignInGoogle());
+        signIn("google", {
+            redirect: false,
+            callbackUrl:
+              process.env.NEXT_PUBLIC_SITE_ROOT + "login/google",
+          })
     }
 
     const handleMembership = () => {

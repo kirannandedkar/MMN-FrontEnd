@@ -9,6 +9,7 @@ import { PhoneCode } from "@/constants";
 import { toast } from "react-toastify";
 
 const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: (FamilyAccountInfo | null)[] = []) => {
+  debugger;
   const session: any = await getSession();
   if (!session || !member)
     return false;
@@ -28,6 +29,7 @@ const handleSignupByGoogle = async (member: AccountInfo | null, familyAccounts: 
     toast.error('Error Occurred.');
   } else {
     if (result.msg?.accessToken) {
+      handleCookie(result.msg);
       toast.success('Signup succeed.');
       return true;
     } else {
@@ -48,13 +50,6 @@ const handleSignupManually = async (member: AccountInfo | null, password: string
   } else {
     toast.success('Email verification link sent.');
     return true;
-    // if (result.msg?.accessToken) {
-    //   handleCookie(result.msg as AuthResult);
-    //   toast.success('Signup succeed.');
-    //   return true;
-    // } else {
-    //   if (result.msg?.Message) toast.error(result.msg?.Message);
-    // }
   }
   return false;
 };
