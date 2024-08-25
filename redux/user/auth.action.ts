@@ -52,6 +52,7 @@ export const ReLogin = createAsyncThunk(
 export const SignInGoogle = createAsyncThunk(
     "user/googlesignin",
     async (_, { getState, rejectWithValue }) => {
+        debugger;
         const session: any = await getSession();
         if (session) {
             const result = await AUTHPOST("UserAccount/login-with-google", null, { Authorization: `Bearer ${session?.id_token}`, });
@@ -69,7 +70,7 @@ export const SignInGoogle = createAsyncThunk(
             }
         } else {
             signIn('google');
-            return rejectWithValue('Please sign in your Google Account.')
+            //return rejectWithValue('Please sign in your Google Account.')
         }
     }
 );
