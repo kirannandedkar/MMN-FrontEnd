@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -32,12 +32,17 @@ const ImagePopup: React.FC<ModalProps> = ({
       <div className="relative bg-white rounded-lg overflow-hidden max-w-6xl w-full p-1">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-white bg-red-500 rounded-full p-1 focus:outline-none"
+          className="absolute top-4 right-4 text-gray-500 bg-white rounded-full w-9 p-2 shadow-lg hover:bg-gray-200 focus:outline-none z-50"
         >
           &times;
         </button>
         <div className="relative">
-          <img src={imageSrc} alt={imageAlt} className="w-full h-96 object-cover" />
+          <img
+            src={imageSrc}
+            alt={imageAlt}
+            className="w-full"
+            style={{ height: "45rem" }}
+          />
 
           <div className="absolute bottom-2 left-4 bg-red-600 text-white rounded p-2">
             {caption}
@@ -64,7 +69,9 @@ const ImagePopup: React.FC<ModalProps> = ({
               src={thumb.src}
               alt={thumb.alt}
               className={`h-20 cursor-pointer object-cover rounded-sm ${
-                index === currentImageIndex ? 'border-2 border-red-500' : 'border border-gray-300'
+                index === currentImageIndex
+                  ? "border-2 border-red-500 opacity-100"
+                  : "border border-gray-300 opacity-80"
               }`}
               onClick={() => onSelectThumbnail(index)}
             />
