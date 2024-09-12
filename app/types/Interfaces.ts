@@ -11,3 +11,10 @@ export interface ICompact {
     isEventRegistrationClosed: boolean;
     eventRegistrationLink: string
 }
+
+export interface IGallery{
+    year: string,
+    eventName: string,
+    fileType: string,
+    filePath: string
+}

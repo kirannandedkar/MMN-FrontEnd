@@ -1,8 +1,11 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dropdown from './Dropdown';
 import ImagePopup from './ImagePopup';
+import { IGallery } from '../types/Interfaces';
+import { GET } from '@/utils/fetch-factory';
+import Loader from '@/components/Loader';
 
 // Define the type for image objects
 interface Image {
@@ -34,17 +37,25 @@ const ImageGallery: React.FC = () => {
   const [selectedEvent, setSelectedEvent] = useState<string>('Select Event');
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [files, setFiles] = useState<IGallery[]>([])
+  const [loading, setLoading] = useState(true);
 
-  // Handler for year selection
+  useEffect(() => {
+   const loadData = async () => {
+      const result = await GET("/proxy/gallery");
+      setFiles(result);
+      setLoading(false);
+   }
+
+   loadData();
+}, []);
+
   const handleYearSelect = (year: string) => {
     setSelectedYear(year);
-    // Implement year selection logic here
   };
 
-  // Handler for event selection
   const handleEventSelect = (event: string) => {
     setSelectedEvent(event);
-    // Implement event selection logic here
   };
 
   const openModal = (index: number) => {
@@ -68,6 +79,9 @@ const ImageGallery: React.FC = () => {
     setCurrentImageIndex(index);
   };
 
+  if(loading)
+    return <Loader/>;
+  
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-end gap-2 mb-4">
@@ -75,23 +89,23 @@ const ImageGallery: React.FC = () => {
         <Dropdown label="Select Event" options={events} onSelect={handleEventSelect} />
       </div>
       <div className="grid grid-cols-8 gap-1">
-        {images.map((image, index) => (
+        {files.map((image, index) => (
           <img
             key={index}
-            src={image.src}
-            alt={image.alt}
+            src={image.filePath}
+            alt={image.eventName}
             style={{ height: '15rem' }}
-            className={`object-cover w-full ${image.className}`}
+            className={`object-cover w-full col-span-2`}
             onClick={() => openModal(index)}
           />
         ))}
       </div>
       <ImagePopup
           isOpen={isModalOpen}
-          imageSrc={images[currentImageIndex].src}
-          imageAlt={images[currentImageIndex].alt}
-          caption={images[currentImageIndex].caption}
-          thumbnails={images}
+          imageSrc={files[currentImageIndex].filePath}
+          imageAlt={files[currentImageIndex].eventName}
+          caption={files[currentImageIndex].eventName}
+          thumbnails={files}
           currentImageIndex={currentImageIndex}
           onClose={closeModal}
           onNext={showNextImage}

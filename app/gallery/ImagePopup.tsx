@@ -1,11 +1,12 @@
 import React from "react";
+import { IGallery } from "../types/Interfaces";
 
 interface ModalProps {
   isOpen: boolean;
   imageSrc: string;
   imageAlt: string;
   caption: string;
-  thumbnails: { src: string; alt: string }[];
+  thumbnails: IGallery[];
   currentImageIndex: number;
   onClose: () => void;
   onNext: () => void;
@@ -66,8 +67,8 @@ const ImagePopup: React.FC<ModalProps> = ({
           {thumbnails.map((thumb, index) => (
             <img
               key={index}
-              src={thumb.src}
-              alt={thumb.alt}
+              src={thumb.filePath}
+              alt={thumb.eventName}
               className={`h-20 cursor-pointer object-cover rounded-sm ${
                 index === currentImageIndex
                   ? "border-2 border-red-500 opacity-100"
