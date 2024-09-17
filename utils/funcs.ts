@@ -44,6 +44,22 @@ const isOlder16 = (birth: string | undefined, age: number = 16) => {
     return ((Date.now() - Date.parse(birth)) / 1000) > (age * 365 * 24 * 60 * 60);
 }
 
+const getYears = (startYear: number) => {
+    const currentYear = getCurrentYear();
+
+    // Generate an array of years from startYear to currentYear
+    const years = Array.from(
+      { length: currentYear - startYear + 1 },
+      (_, index) => (startYear + index).toString()
+    );
+
+    return years;
+}
+
+const getCurrentYear = () => {
+    return new Date().getFullYear();
+}
+
 const formatDate = (datetime: string | undefined): string => {
     if (datetime == null)
         return '';
@@ -69,4 +85,4 @@ function groupBy<T extends Record<string, any>>(array: T[], key: keyof T): Group
     }, {} as Grouped<T>);
   }
 
-export { isOlder16 , handleCookie, formatDate, clearCookie, groupBy, getAuthResultFromCookie }
+export { isOlder16 , handleCookie, formatDate, clearCookie, groupBy, getAuthResultFromCookie, getYears, getCurrentYear }

@@ -7,7 +7,7 @@ const BASE_API_ROOT =
 export async function middleware(request: NextRequest) {
   const url = new NextURL(request.url);
   const path = url.pathname.replace("/proxy/", "");
-  const api_url = `${BASE_API_ROOT}${path}`;
+  const api_url = `${BASE_API_ROOT}${path}${url.search}`;
   const cookies = request.cookies;
   const access_token = cookies.get("access_token")?.value;
   try {

@@ -1,61 +1,52 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import Dropdown from './Dropdown';
-import ImagePopup from './ImagePopup';
-import { IGallery } from '../types/Interfaces';
-import { GET } from '@/utils/fetch-factory';
-import Loader from '@/components/Loader';
+import React, { useEffect, useState } from "react";
+import Dropdown from "./Dropdown";
+import ImagePopup from "./ImagePopup";
+import { IGallery } from "../types/Interfaces";
+import { GET } from "@/utils/fetch-factory";
+import Loader from "@/components/Loader";
+import { getCurrentYear, getYears } from "@/utils/funcs";
+import { generateRandomNumbers } from "@/utils/gallery";
 
-// Define the type for image objects
-interface Image {
-  src: string;
-  alt: string;
-  className: string;
-  caption: string
-}
 
-// Array of images with defined types
-const images: Image[] = [
-  { src: '/image/gallery/1.png', alt: 'Event 1', className: 'col-span-2', caption: 'Event 1' },
-  { src: '/image/gallery/2.png', alt: 'Event 2', className: 'col-span-1', caption: 'Event 2' },
-  { src: '/image/gallery/3.png', alt: 'Event 3', className: 'col-span-3', caption: 'Event 3' },
-  { src: '/image/gallery/4.png', alt: 'Event 4', className: 'col-span-2', caption: 'Event 1' },
-  { src: '/image/gallery/5.png', alt: 'Event 5', className: 'col-span-1', caption: 'Event 4' },
-  { src: '/image/gallery/6.png', alt: 'Event 6', className: 'col-span-5', caption: 'Event 5' },
-  { src: '/image/gallery/7.png', alt: 'Event 7', className: 'col-span-2', caption: 'Event 6' },
-  { src: '/image/gallery/8.png', alt: 'Event 8', className: 'col-span-4', caption: 'Event 7' },
-  { src: '/image/gallery/9.png', alt: 'Event 9', className: 'col-span-4', caption: 'Event 8' },
-];
-
-// Define the options for years and events
-const years: string[] = ['2021', '2022', '2023', '2024'];
-const events: string[] = ['Event 1', 'Event 2', 'Event 3', 'Event 4'];
+const events: string[] = ["Event 1", "Event 2", "Event 3", "Event 4"];
 
 const ImageGallery: React.FC = () => {
-  const [selectedYear, setSelectedYear] = useState<string>('Select Year');
-  const [selectedEvent, setSelectedEvent] = useState<string>('Select Event');
+  const [selectedYear, setSelectedYear] = useState<number>(getCurrentYear());
+  const [selectedEvent, setSelectedEvent] = useState<string>("");
+  const [eventsName, setEventsName] = useState<string[]>([])
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
-  const [files, setFiles] = useState<IGallery[]>([])
+  const [randomNumbers, setRandomNumbers] = useState<number[]>([])
+  const [files, setFiles] = useState<IGallery[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-   const loadData = async () => {
-      const result = await GET("/proxy/gallery");
-      setFiles(result);
-      setLoading(false);
-   }
+    loadEventsName()
+    loadData(selectedYear, selectedEvent);
+  }, []);
 
-   loadData();
-}, []);
-
-  const handleYearSelect = (year: string) => {
+  const loadEventsName = async () => {
+    const result = await GET(`/proxy/gallery/events`);
+    setEventsName(result);
+  }
+  const loadData = async (year: number, event: string) => {
+    const result = await GET(`/proxy/gallery?year=${year}&eventName=${event}`);
+    setFiles(result);
+    setRandomNumbers(generateRandomNumbers(result.length))
+    setLoading(false);
+  };
+  const handleYearSelect = (year: number) => {
+    setLoading(true);
     setSelectedYear(year);
+    loadData(year, selectedEvent);
   };
 
   const handleEventSelect = (event: string) => {
+    setLoading(true);
     setSelectedEvent(event);
+    loadData(selectedYear, event);
   };
 
   const openModal = (index: number) => {
@@ -68,50 +59,77 @@ const ImageGallery: React.FC = () => {
   };
 
   const showNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % files.length);
   };
 
   const showPrevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+    setCurrentImageIndex(
+      (prevIndex) => (prevIndex - 1 + files.length) % files.length
+    );
   };
 
   const selectThumbnail = (index: number) => {
     setCurrentImageIndex(index);
   };
 
-  if(loading)
-    return <Loader/>;
-  
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-end gap-2 mb-4">
-        <Dropdown label="Select Year" options={years} onSelect={handleYearSelect} />
-        <Dropdown label="Select Event" options={events} onSelect={handleEventSelect} />
+        <Dropdown
+          label={getCurrentYear()}
+          options={getYears(2023)}
+          onSelect={handleYearSelect}
+        />
+        <Dropdown
+          label="Select Event"
+          options={eventsName}
+          onSelect={handleEventSelect}
+        />
       </div>
       <div className="grid grid-cols-8 gap-1">
-        {files.map((image, index) => (
-          <img
-            key={index}
-            src={image.filePath}
-            alt={image.eventName}
-            style={{ height: '15rem' }}
-            className={`object-cover w-full col-span-2`}
-            onClick={() => openModal(index)}
-          />
-        ))}
+        {loading ? (
+          <Loader />
+        ) : (
+          files.map((file, index) => (
+            <div
+              key={index}
+              className={`w-full col-span-${randomNumbers[index]}`}
+              style={{ height: "15rem" }}
+              onClick={() => openModal(index)}
+            >
+              {file.fileType === "Photos" ? (
+                <img
+                  src={file.filePath}
+                  alt={file.eventName}
+                  className="object-cover w-full h-full"
+                />
+              ) : (
+                <video controls={false} className="w-full h-full object-cover">
+                  <source src={file.filePath} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
+            </div>
+          ))
+        )}
       </div>
-      <ImagePopup
+      {!loading && files.length > 0 ? (
+        <ImagePopup
           isOpen={isModalOpen}
           imageSrc={files[currentImageIndex].filePath}
           imageAlt={files[currentImageIndex].eventName}
           caption={files[currentImageIndex].eventName}
           thumbnails={files}
+          fileType={files[currentImageIndex].fileType}
           currentImageIndex={currentImageIndex}
           onClose={closeModal}
           onNext={showNextImage}
           onPrev={showPrevImage}
           onSelectThumbnail={selectThumbnail}
-      />
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
