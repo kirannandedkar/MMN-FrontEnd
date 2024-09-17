@@ -6,17 +6,6 @@ import SliderItem, { Item } from "./SliderItem";
 
 const data: Item[] = [
 	{
-		title: "Ganesh Utsav",
-		year: "2024",
-		date: "14 Sep 2024",
-		address: "Storøya Skole,Oslo",
-		description:
-			'Ganeshotsav (Ganesh festival) is a key festival celebrated in Maharashtra. The festival begins on the "Ganesh Chaturthi" and ends after 10 days on "Anant Chaturdashi" during the month of "Bhadrapada" as per Hindu calendar.',
-		image: '/image/home/hero1.png',
-		imageClassName: "bg-custom-overlay-gradient-red",
-		className: "bg-[#CE2C23]",
-	},
-	{
 		title: "Diwali",
 		year: "2024",
 		date: "09 Nov 2024",
@@ -26,6 +15,18 @@ const data: Item[] = [
 		image: '/image/home/hero2.svg',
 		className: "bg-custom-radial-gradient-purple"
 	},
+	{
+		title: "Ganesh Chaturthi",
+		year: "2024",
+		date: "07 Sep 2024",
+		address: "Kirkegardsgt 9B, 0558 Oslo",
+		description:
+			'Ganeshotsav (Ganesh festival) is a key festival celebrated in Maharashtra. The festival begins on the "Ganesh Chaturthi" and ends after 10 days on "Anant Chaturdashi" during the month of "Bhadrapada" as per Hindu calendar. On the day 1,.',
+		image: '/image/home/hero1.png',
+		imageClassName: "bg-custom-overlay-gradient-red",
+		className: "bg-[#CE2C23]",
+	},
+	
 ];
 
 const setting = {
