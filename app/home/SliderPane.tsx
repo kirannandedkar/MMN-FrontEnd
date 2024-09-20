@@ -12,7 +12,7 @@ const data: Item[] = [
 		address: "Storøya Skole,Oslo",
 		description:
 			'Diwali is festival of light and is celebrated not just in Maharashtra but all over in India.',
-		image: '/image/home/hero2.svg',
+		image: '/image/home/Diwali2024.png',
 		className: "bg-custom-radial-gradient-purple"
 	},
 	{
