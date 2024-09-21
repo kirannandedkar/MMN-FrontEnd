@@ -44,8 +44,8 @@ const ImagePopup: React.FC<ModalProps> = ({
             <img
               src={imageSrc}
               alt={imageAlt}
-              className="w-full"
-              style={{ height: "45rem" }}
+              className="w-full h-full"
+              style={{ maxHeight: "35rem" }}
             />
           ) : (
             <video controls className="w-full h-full object-cover">
@@ -88,6 +88,7 @@ const ImagePopup: React.FC<ModalProps> = ({
             />
             ) : (
               <video
+              key={index}
               className={`h-20 cursor-pointer object-cover rounded-sm ${
                 index === currentImageIndex
                   ? "border-2 border-red-500 opacity-100"

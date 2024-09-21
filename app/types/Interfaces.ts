@@ -16,5 +16,7 @@ export interface IGallery{
     year: string,
     eventName: string,
     fileType: string,
-    filePath: string
+    filePath: string,
+    aspectRatio: number,
+    width: number
 }
