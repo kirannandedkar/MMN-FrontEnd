@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 interface DropdownProps {
-  label: string;              
+  label: any;              
   options: string[]; 
-  onSelect: (option: string) => void;
+  onSelect: (option: any) => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {

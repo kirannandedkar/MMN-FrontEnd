@@ -1,11 +1,13 @@
 import React from "react";
+import { IGallery } from "../types/Interfaces";
 
 interface ModalProps {
   isOpen: boolean;
   imageSrc: string;
   imageAlt: string;
+  fileType: string;
   caption: string;
-  thumbnails: { src: string; alt: string }[];
+  thumbnails: IGallery[];
   currentImageIndex: number;
   onClose: () => void;
   onNext: () => void;
@@ -18,6 +20,7 @@ const ImagePopup: React.FC<ModalProps> = ({
   imageSrc,
   imageAlt,
   caption,
+  fileType,
   thumbnails,
   currentImageIndex,
   onClose,
@@ -37,12 +40,19 @@ const ImagePopup: React.FC<ModalProps> = ({
           &times;
         </button>
         <div className="relative">
-          <img
-            src={imageSrc}
-            alt={imageAlt}
-            className="w-full"
-            style={{ height: "45rem" }}
-          />
+          {fileType === "Photos" ? (
+            <img
+              src={imageSrc}
+              alt={imageAlt}
+              className="w-full h-full"
+              style={{ maxHeight: "35rem" }}
+            />
+          ) : (
+            <video controls className="w-full h-full object-cover">
+              <source src={imageSrc} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          )}
 
           <div className="absolute bottom-2 left-4 bg-red-600 text-white rounded p-2">
             {caption}
@@ -63,11 +73,12 @@ const ImagePopup: React.FC<ModalProps> = ({
         </div>
 
         <div className="flex overflow-x-auto p-2 space-x-2 bg-gray-100">
-          {thumbnails.map((thumb, index) => (
-            <img
+          {thumbnails.map((thumb, index) => {
+            return thumb.fileType === 'Photos' ? (
+              <img
               key={index}
-              src={thumb.src}
-              alt={thumb.alt}
+              src={thumb.filePath}
+              alt={thumb.eventName}
               className={`h-20 cursor-pointer object-cover rounded-sm ${
                 index === currentImageIndex
                   ? "border-2 border-red-500 opacity-100"
@@ -75,7 +86,20 @@ const ImagePopup: React.FC<ModalProps> = ({
               }`}
               onClick={() => onSelectThumbnail(index)}
             />
-          ))}
+            ) : (
+              <video
+              key={index}
+              className={`h-20 cursor-pointer object-cover rounded-sm ${
+                index === currentImageIndex
+                  ? "border-2 border-red-500 opacity-100"
+                  : "border border-gray-300 opacity-80"
+              }`}
+              src={thumb.filePath}
+              controls={false}
+              onClick={() => onSelectThumbnail(index)}
+            ></video>
+            )
+          })}
         </div>
       </div>
     </div>
