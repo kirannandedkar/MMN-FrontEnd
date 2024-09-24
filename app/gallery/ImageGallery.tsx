@@ -6,11 +6,7 @@ import ImagePopup from "./ImagePopup";
 import { IGallery } from "../types/Interfaces";
 import { GET } from "@/utils/fetch-factory";
 import Loader from "@/components/Loader";
-import {
-  getCurrentYear,
-  getYears,
-  groupBy,
-} from "@/utils/funcs";
+import { getCurrentYear, getYears } from "@/utils/funcs";
 
 const events: string[] = ["Event 1", "Event 2", "Event 3", "Event 4"];
 
@@ -28,14 +24,12 @@ const ImageGallery: React.FC = () => {
     loadData(selectedYear, selectedEvent);
   }, []);
 
-
   const loadEventsName = async () => {
     const result = await GET(`/proxy/gallery/events`);
     setEventsName(result);
   };
   const loadData = async (year: number, event: string) => {
     const result = await GET(`/proxy/gallery?year=${year}&eventName=${event}`);
-    const yearBasedGroup = groupBy(result, 'year');
     setFiles(result);
     setLoading(false);
   };
@@ -76,7 +70,7 @@ const ImageGallery: React.FC = () => {
 
   return (
     <div>
-      <div className="flex justify-end gap-2 mb-4">
+      <div className="flex justify-end gap-2 mb-4 w-full min-w-full">
         <Dropdown
           label={getCurrentYear()}
           options={getYears(2023)}
@@ -93,49 +87,57 @@ const ImageGallery: React.FC = () => {
         <Loader />
       ) : files.length > 0 ? (
         <div className="relative">
-          <div className="absolute left-10 transform -translate-y-1/2 bg-[#FF5733] text-white py-4 px-4 rounded-r-lg" style={{top: '10%'}}>
+          <div
+            className="absolute left-10 transform -translate-y-1/2 bg-[#FF5733] text-white py-4 px-4 rounded-r-lg"
+            style={{ top: "10%" }}
+          >
             <span>Year {files[0].year}</span>
           </div>
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap justify-start gap-2">
             {files.map((file, index) => {
               return file.fileType === "Photos" ? (
                 <img
                   src={file.filePath}
                   alt={file.eventName}
-                  className="object-fit"
+                  className="object-cover"
                   onClick={() => openModal(index)}
-                  style={{ height: "200px", maxWidth: '20%' }}
+                  style={{ height: "230px" }}
                 />
               ) : (
-                <div className="relative" style={{ maxWidth: '25%' }} key={index}>
-          <video
-            controls={false}
-            className="object-fit"
-            style={{ height: "200px", width: "100%" }}
-            onClick={() => openModal(index)}
-          >
-            <source src={file.filePath} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          
-          {/* Play Button Overlay */}
-          <div
-            className="absolute inset-0 flex justify-center items-center cursor-pointer"
-            onClick={() => openModal(index)}
-          >
-            <div className="bg-black bg-opacity-50 rounded-full p-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-10 w-10 text-[#ffffff]"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-6.484-3.846A1 1 0 007 8.132v7.736a1 1 0 001.268.964l6.484-3.846a1 1 0 000-1.732z" />
-              </svg>
-            </div>
-          </div>
-        </div>
+                <div className="relative" key={index}>
+                  <video
+                    controls={false}
+                    className="object-cover"
+                    style={{ height: "230px" }}
+                    onClick={() => openModal(index)}
+                  >
+                    <source src={file.filePath} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+
+                  {/* Play Button Overlay */}
+                  <div
+                    className="absolute inset-0 flex justify-center items-center cursor-pointer"
+                    onClick={() => openModal(index)}
+                  >
+                    <div className="bg-black bg-opacity-50 rounded-full p-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-10 w-10 text-[#ffffff]"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M14.752 11.168l-6.484-3.846A1 1 0 007 8.132v7.736a1 1 0 001.268.964l6.484-3.846a1 1 0 000-1.732z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
               );
             })}
           </div>

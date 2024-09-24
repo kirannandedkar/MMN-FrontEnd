@@ -85,7 +85,6 @@ function groupBy<T extends Record<string, any>>(
   }, {} as Grouped<T>);
 }
 
-
 export {
   isOlder16,
   handleCookie,
@@ -94,5 +93,5 @@ export {
   groupBy,
   getAuthResultFromCookie,
   getYears,
-  getCurrentYear,
+  getCurrentYear
 };

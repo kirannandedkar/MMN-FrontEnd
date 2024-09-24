@@ -14,7 +14,7 @@ const nextConfig = {
     ]
   },
   serverRuntimeConfig: {
-    // Will only be available on the server side
+    // Will only be available on the server side 
     apiBodyParser: {
       // Support parsing of application/json request bodies
       bodyParser: {
@@ -24,6 +24,9 @@ const nextConfig = {
     api: {
       externalResolver: true,
     },
+  },
+  images: {
+    domains: ['mmngallery.blob.core.windows.net'],
   }
 };
 

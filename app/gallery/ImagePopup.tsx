@@ -44,8 +44,8 @@ const ImagePopup: React.FC<ModalProps> = ({
             <img
               src={imageSrc}
               alt={imageAlt}
-              className="w-full h-full"
-              style={{ maxHeight: "35rem" }}
+              className="w-full h-full object-cover"
+              style={{ maxHeight: "45rem" }}
             />
           ) : (
             <video controls className="w-full h-full object-cover">
