@@ -1,5 +1,6 @@
 import React from "react";
 import { IGallery } from "../types/Interfaces";
+import { BsArrowLeft, BsArrowRight, BsXLg } from "react-icons/bs";
 
 interface ModalProps {
   isOpen: boolean;
@@ -35,9 +36,9 @@ const ImagePopup: React.FC<ModalProps> = ({
       <div className="relative bg-white rounded-lg overflow-hidden max-w-6xl w-full p-1">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 bg-white rounded-full w-9 p-2 shadow-lg hover:bg-gray-200 focus:outline-none z-50"
+          className="absolute top-4 right-4 text-gray-500 bg-white rounded-full p-2 shadow-lg hover:bg-gray-200 focus:outline-none z-50"
         >
-          &times;
+         <BsXLg />
         </button>
         <div className="relative">
           {fileType === "Photos" ? (
@@ -62,13 +63,13 @@ const ImagePopup: React.FC<ModalProps> = ({
             onClick={onPrev}
             className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-70 rounded-full p-2 hover:bg-opacity-90 focus:outline-none"
           >
-            &lt;
+            <BsArrowLeft/>
           </button>
           <button
             onClick={onNext}
             className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-70 rounded-full p-2 hover:bg-opacity-90 focus:outline-none"
           >
-            &gt;
+           <BsArrowRight/>
           </button>
         </div>
 

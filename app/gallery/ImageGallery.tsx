@@ -8,11 +8,12 @@ import { GET } from "@/utils/fetch-factory";
 import Loader from "@/components/Loader";
 import { getCurrentYear, getYears } from "@/utils/funcs";
 
-const events: string[] = ["Event 1", "Event 2", "Event 3", "Event 4"];
+const types: string[] = ["All", "Photos", "Videos"];
 
 const ImageGallery: React.FC = () => {
   const [selectedYear, setSelectedYear] = useState<number>(getCurrentYear());
   const [selectedEvent, setSelectedEvent] = useState<string>("");
+  const [selectedType, setSelectedType] = useState<string>("All");
   const [eventsName, setEventsName] = useState<string[]>([]);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
@@ -28,21 +29,27 @@ const ImageGallery: React.FC = () => {
     const result = await GET(`/proxy/gallery/events`);
     setEventsName(result);
   };
-  const loadData = async (year: number, event: string) => {
-    const result = await GET(`/proxy/gallery?year=${year}&eventName=${event}`);
+  const loadData = async (year = selectedYear, event = selectedEvent, type = selectedType) => {
+    const result = await GET(`/proxy/gallery?year=${year}&eventName=${event}&type=${type}`);
     setFiles(result);
     setLoading(false);
   };
   const handleYearSelect = (year: number) => {
     setLoading(true);
     setSelectedYear(year);
-    loadData(year, selectedEvent);
+    loadData(year, selectedEvent, selectedType);
   };
 
   const handleEventSelect = (event: string) => {
     setLoading(true);
     setSelectedEvent(event);
-    loadData(selectedYear, event);
+    loadData(selectedYear, event, selectedType);
+  };
+
+  const handleTypeSelect = (type: string) => {
+    setLoading(true);
+    setSelectedType(type);
+    loadData(selectedYear, selectedEvent, type);
   };
 
   const openModal = (index: number) => {
@@ -69,46 +76,52 @@ const ImageGallery: React.FC = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-end gap-2 mb-4 w-full min-w-full">
-        <Dropdown
-          label={getCurrentYear()}
-          options={getYears(2023)}
-          onSelect={handleYearSelect}
-        />
-        <Dropdown
-          label="Select Event"
-          options={eventsName}
-          onSelect={handleEventSelect}
-        />
-      </div>
+      <div className="w-full min-w-full">
+        <div className="flex justify-end gap-2 mb-4 w-full min-w-full">
+          <Dropdown
+            label={getCurrentYear()}
+            options={getYears(2023)}
+            onSelect={handleYearSelect}
+          />
+          <Dropdown
+            label="Select Event"
+            options={eventsName}
+            onSelect={handleEventSelect}
+          />
+
+          <Dropdown
+            label="All"
+            options={types}
+            onSelect={handleTypeSelect}
+          />
+        </div>
 
       {loading ? (
         <Loader />
       ) : files.length > 0 ? (
         <div className="relative">
           <div
-            className="absolute left-10 transform -translate-y-1/2 bg-[#FF5733] text-white py-4 px-4 rounded-r-lg"
+            className="absolute left-2 transform -translate-y-1/2 bg-[#FF5733] text-white py-2 px-2 rounded-r-lg"
             style={{ top: "10%" }}
           >
             <span>Year {files[0].year}</span>
           </div>
-          <div className="flex flex-wrap justify-start gap-2">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
             {files.map((file, index) => {
               return file.fileType === "Photos" ? (
                 <img
                   src={file.filePath}
                   alt={file.eventName}
-                  className="object-cover"
+                  className="w-full object-cover"
+                  style={{cursor: 'pinter', height: '250px'}}
                   onClick={() => openModal(index)}
-                  style={{ height: "230px" }}
                 />
               ) : (
                 <div className="relative" key={index}>
                   <video
                     controls={false}
-                    className="object-cover"
-                    style={{ height: "230px" }}
+                    className="max-w-full rounded-lg object-cover"
+                    style={{cursor: 'pinter', height: '250px'}}
                     onClick={() => openModal(index)}
                   >
                     <source src={file.filePath} type="video/mp4" />

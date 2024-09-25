@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface DropdownProps {
   label: any;              
@@ -7,8 +7,9 @@ interface DropdownProps {
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false); 
-  const [selected, setSelected] = useState<string>(label); 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [selected, setSelected] = useState<string>(label);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleSelect = (option: string) => {
     setSelected(option);
@@ -16,8 +17,22 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
     onSelect(option);
   };
 
+  // This useEffect hook listens for clicks outside the dropdown to close it
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false); // Close the dropdown if clicked outside
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownRef]);
+
   return (
-    <div className="relative inline-block text-left">
+    <div ref={dropdownRef} className="relative inline-block text-left">
       <div>
         <button
           onClick={() => setIsOpen(!isOpen)}
