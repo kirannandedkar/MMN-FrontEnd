@@ -3,10 +3,11 @@ import React, { useState, useEffect, useRef } from 'react';
 interface DropdownProps {
   label: any;              
   options: string[]; 
+  dropdownClass: string,
   onSelect: (option: any) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
+const Dropdown: React.FC<DropdownProps> = ({ label,  options, onSelect, dropdownClass = 'w-56', }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>(label);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -55,7 +56,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
         </button>
       </div>
       {isOpen && (
-        <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg">
+        <div className={`absolute right-0 z-10 mt-2 ${dropdownClass} origin-top-right bg-white border border-gray-200 rounded-md shadow-lg`}>
           <div className="py-1">
             {options.map((option, index) => (
               <button

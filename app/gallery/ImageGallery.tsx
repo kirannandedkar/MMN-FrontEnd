@@ -76,20 +76,23 @@ const ImageGallery: React.FC = () => {
   };
 
   return (
-      <div className="w-full min-w-full">
+      <div className="w-full min-w-full mb-4">
         <div className="flex justify-end gap-2 mb-4 w-full min-w-full">
           <Dropdown
+          dropdownClass="w-32"
             label={getCurrentYear()}
             options={getYears(2023)}
             onSelect={handleYearSelect}
           />
           <Dropdown
+           dropdownClass="w-52"
             label="Select Event"
             options={eventsName}
             onSelect={handleEventSelect}
           />
 
           <Dropdown
+           dropdownClass="w-32"
             label="All"
             options={types}
             onSelect={handleTypeSelect}
@@ -112,7 +115,7 @@ const ImageGallery: React.FC = () => {
                 <img
                   src={file.filePath}
                   alt={file.eventName}
-                  className="w-full object-cover"
+                  className="w-full object-cover border-slate-200 border shadow-md"
                   style={{cursor: 'pinter', height: '250px'}}
                   onClick={() => openModal(index)}
                 />
@@ -120,7 +123,7 @@ const ImageGallery: React.FC = () => {
                 <div className="relative" key={index}>
                   <video
                     controls={false}
-                    className="max-w-full rounded-lg object-cover"
+                    className="max-w-full border-slate-200 border shadow-md object-cover"
                     style={{cursor: 'pinter', height: '250px'}}
                     onClick={() => openModal(index)}
                   >
