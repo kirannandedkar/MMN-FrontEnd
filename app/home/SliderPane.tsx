@@ -8,7 +8,7 @@ const data: Item[] = [
 	{
 		title: "Diwali",
 		year: "2024",
-		date: "09 Nov 2024",
+		date: "16 Nov 2024",
 		address: "Storøya Skole,Oslo",
 		description:
 			'Diwali is festival of light and is celebrated not just in Maharashtra but all over in India.',
