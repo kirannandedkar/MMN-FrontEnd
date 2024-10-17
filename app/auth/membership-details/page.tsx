@@ -71,7 +71,7 @@ const Page = () => {
   };
 
   const getFamilyMembers = async () => {
-    const {isSubscribed} = await GET("/proxy/user/subscription");
+    const { isSubscribed } = await GET("/proxy/user/subscription");
     let count = isSubscribed ? 0 : 1;
     const familyMembers = await GET("/proxy/family-members");
     for (let index = 0; index < familyMembers.length; index++) {
@@ -157,16 +157,16 @@ const Page = () => {
   };
 
   const paymentBtnClickedHandler = async () => {
-    if(addFamilyMemberForm){
+    if (addFamilyMemberForm) {
       toast.info("Please submit member form then payment");
       return;
     }
     setPaymentConfirmOpen(true);
-  }
+  };
 
   const processPayment = async () => {
-    router.push('/payment/checkout');
-  }
+    router.push("/payment/checkout");
+  };
 
   if (loading) return <Loader></Loader>;
   return (
@@ -253,11 +253,15 @@ const Page = () => {
         </div>
         <div>
           <div className="sticky top-[20px]">
-            <PaymentCard
-              memberCount={memberCount}
-              processClicked={paymentBtnClickedHandler}
-              MembershipFee={membershipFee}
-            />
+            {memberCount > 0 ? (
+              <PaymentCard
+                memberCount={memberCount}
+                processClicked={paymentBtnClickedHandler}
+                MembershipFee={membershipFee}
+              />
+            ) : (
+              <div className="flex flex-col w-80">	&nbsp;</div>
+            )}
           </div>
         </div>
       </MMNContainer>
