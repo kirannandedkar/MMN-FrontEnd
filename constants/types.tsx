@@ -24,9 +24,22 @@ export interface AccountInfo extends FamilyAccountInfo {
     id_token?: string | null
 }
 
+export interface ProfileInfo{
+    [key: string]: any;
+    id:string;
+    firstName: string,
+    lastName: string,
+    email: string,
+    dateOfBirth: string,
+    fomatedDateOfBirth: string,
+    gender: string,
+    muncipality: string,
+    phoneNumber: string
+}
+
 export const Genders = [
     { value: "male", label: "Male" },
-    { value: "female", label: "FeMale" },
+    { value: "female", label: "Female" },
 ];
 
 export const Relationships = [

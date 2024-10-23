@@ -4,7 +4,7 @@ import TopNav from "@/components/TopNav";
 import MMNContainer from "@/components/MMNContainer";
 import FamilyInfo from "@/app/auth/membership-details/FamilyInfo";
 import { GET, DELETE, POST } from "@/utils/fetch-factory";
-import { AccountInfo, FamilyMember } from "@/constants/types";
+import { FamilyMember, ProfileInfo } from "@/constants/types";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
@@ -16,6 +16,9 @@ import AddFamilyMemberForm from "./AddFamilyMemberForm";
 import { camelCaseToSentenceCase, validatedForm } from "@/utils/form";
 import PaymentCard from "./PaymentCard";
 import { isOlder16 } from "@/utils/funcs";
+import Modal from "@/components/Modal";
+import ProfileUpdateForm from "./ProfileUpdateForm";
+import MemberUpdateForm from "./MemberUpdateForm";
 
 const NavData = [
   { title: "Home", link: "/home" },
@@ -35,7 +38,7 @@ const initialFamilyMember = {
 
 const Page = () => {
   const router = useRouter();
-  const [userInfo, setUserInfo] = useState<AccountInfo | null>(null);
+  const [userInfo, setUserInfo] = useState<ProfileInfo | null>(null);
   const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>([]);
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -51,6 +54,8 @@ const Page = () => {
   const [errorState, setErrorState] =
     useState<FamilyMember>(initialFamilyMember);
 
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [isMemberUpdateModalOpen, setMemberUpdateModalOpen] = useState(false);
   useEffect(() => {
     if (!authresult) {
       router.push("/home");
@@ -62,14 +67,13 @@ const Page = () => {
   }, []);
 
   const fetchData = async () => {
-    const userInfo: AccountInfo = await GET("/proxy/user/me");
+    const userInfo: ProfileInfo = await GET("/proxy/user/me");
     const { price } = await GET("/proxy/subscription-plan");
     setMembershipFee(price / 100);
     setUserInfo(userInfo);
     getFamilyMembers();
     setLoading(false);
   };
-
   const getFamilyMembers = async () => {
     const { isSubscribed } = await GET("/proxy/user/subscription");
     let count = isSubscribed ? 0 : 1;
@@ -129,7 +133,6 @@ const Page = () => {
   };
 
   const onAddFamilyMemberHandler = async () => {
-    debugger;
     const validationResult = validatedForm<FamilyMember>(
       errorState,
       familyMember
@@ -168,6 +171,16 @@ const Page = () => {
     router.push("/payment/checkout");
   };
 
+  const successProfileUpdateHandler = (profileInfo: ProfileInfo) => {
+    setUserInfo(profileInfo);
+    setProfileModalOpen(false);
+  };
+
+  const editMember = (id: string) => {
+    setSelectedMemberId(id);
+    setMemberUpdateModalOpen(true);
+  };
+
   if (loading) return <Loader></Loader>;
   return (
     <div className="max-w-[1440px] m-auto">
@@ -175,11 +188,23 @@ const Page = () => {
       <MMNContainer className="gap-[40px] pb-[40px] lg:flex-row flex-col">
         <div className="flex flex-col gap-[20px] grow-[2]">
           <div className="flex flex-col gap-[10px] line-height-mmn-large">
-            <MMNTitle
-              title="Primary member information"
-              color="purple"
-              className={"mb-3"}
-            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
+              <MMNTitle
+                title="Primary member information"
+                color="purple"
+                className={"mb-3"}
+              />
+
+              <div className="text-end">
+                <button
+                  onClick={() => setProfileModalOpen(true)}
+                  className="px-4 py-2 text-sm font-semibold text-white bg-yellow-500 rounded-md hover:bg-yellow-600"
+                >
+                  Edit
+                </button>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px] ">
               <div>
                 <div className="pb-[5px]">First name</div>
@@ -204,6 +229,46 @@ const Page = () => {
               </div>
 
               <div>
+                <div className="pb-[5px]">Gender</div>
+                <input
+                  type="text"
+                  className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
+                  disabled={true}
+                  value={userInfo?.gender}
+                />
+              </div>
+
+              <div>
+                <div className="pb-[5px]">Date of Birth</div>
+                <input
+                  type="text"
+                  className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
+                  disabled={true}
+                  value={userInfo?.fomatedDateOfBirth}
+                />
+              </div>
+
+              <div>
+                <div className="pb-[5px]">Mobile no</div>
+                <input
+                  type="text"
+                  className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
+                  disabled={true}
+                  value={userInfo?.phoneNumber}
+                />
+              </div>
+
+              <div>
+                <div className="pb-[5px]">Kommune</div>
+                <input
+                  type="text"
+                  className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
+                  disabled={true}
+                  value={userInfo?.muncipality}
+                />
+              </div>
+
+              <div>
                 <div className="pb-[5px]">Email id</div>
                 <input
                   type="text"
@@ -222,6 +287,7 @@ const Page = () => {
                 key={index}
                 account={account}
                 removeMember={removeFamilyMember}
+                editMember={editMember}
               />
             );
           })}
@@ -260,7 +326,7 @@ const Page = () => {
                 MembershipFee={membershipFee}
               />
             ) : (
-              <div className="flex flex-col w-80">	&nbsp;</div>
+              <div className="flex flex-col w-80"> &nbsp;</div>
             )}
           </div>
         </div>
@@ -281,6 +347,39 @@ const Page = () => {
         title="Confirm Action"
         message="Are you sure you want to process payment?"
       />
+
+      {profileModalOpen ? (
+        <Modal
+          isOpen={profileModalOpen}
+          title="Profile Update"
+          onClose={() => setProfileModalOpen(false)}
+        >
+          <ProfileUpdateForm
+            userInfo={userInfo}
+            updatedSuccess={successProfileUpdateHandler}
+          ></ProfileUpdateForm>
+        </Modal>
+      ) : (
+        ""
+      )}
+
+      {isMemberUpdateModalOpen ? (
+        <Modal
+          isOpen={isMemberUpdateModalOpen}
+          title="Member Update"
+          onClose={() => setMemberUpdateModalOpen(false)}
+        >
+          <MemberUpdateForm
+            userInfo={familyMembers.find((item) => item.id === selectedMemberId)}
+            updatedSuccess={() => {
+              getFamilyMembers();
+              setMemberUpdateModalOpen(false);
+            }}
+          ></MemberUpdateForm>
+        </Modal>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

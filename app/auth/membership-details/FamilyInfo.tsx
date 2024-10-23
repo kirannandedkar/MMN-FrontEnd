@@ -7,9 +7,10 @@ import { Option } from "react-dropdown";
 interface IProps {
   account: FamilyAccountInfo;
   removeMember: (id: string) => void;
+  editMember: (id: string) => void;
 }
 
-const FamilyInfo: React.FC<IProps> = ({ account, removeMember }) => {
+const FamilyInfo: React.FC<IProps> = ({ account, removeMember, editMember }) => {
   const customStyles: StylesConfig<Option, false, GroupBase<Option>> = {
     control: (provided) => ({
       ...provided,
@@ -44,12 +45,21 @@ const FamilyInfo: React.FC<IProps> = ({ account, removeMember }) => {
           </span>
         </div>
 
+        <div>
+        <button
+          onClick={() => editMember(account.id)}
+          className="px-4 py-2 me-2 text-sm font-semibold text-white bg-yellow-500 rounded-md hover:bg-yellow-600"
+        >
+          Edit
+        </button>
         <button
           onClick={() => removeMember(account.id)}
           className="px-4 py-2 text-sm font-semibold text-white bg-red-500 rounded-md hover:bg-red-600"
         >
-          Remove Member
+          Remove
         </button>
+        </div>
+       
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
         <div>
