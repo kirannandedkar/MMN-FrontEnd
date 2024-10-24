@@ -4,7 +4,7 @@ import { PhoneCode } from "@/constants";
 import { CountryList, Genders, ProfileInfo } from "@/constants/types";
 import { POST } from "@/utils/fetch-factory";
 import { camelCaseToSentenceCase, validatedForm } from "@/utils/form";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { toast } from "react-toastify";
 

@@ -4,7 +4,7 @@ import TopNav from "@/components/TopNav";
 import MMNContainer from "@/components/MMNContainer";
 import FamilyInfo from "@/app/auth/membership-details/FamilyInfo";
 import { GET, DELETE, POST } from "@/utils/fetch-factory";
-import { FamilyMember, ProfileInfo } from "@/constants/types";
+import { FamilyMember, ProfileInfo, CountryList } from "@/constants/types";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
@@ -180,6 +180,17 @@ const Page = () => {
     setSelectedMemberId(id);
     setMemberUpdateModalOpen(true);
   };
+  const formatGender = (gender: string | undefined) => {
+    if(gender === 'male') return "Male";
+    if(gender === 'female') return "Female";
+    return gender;
+  }
+
+  const getCountry = (countryValue: string | undefined) => {
+    const country = CountryList.find((item) => item.value === countryValue);
+    if (!country) return "";
+    return country.label;
+  }
 
   if (loading) return <Loader></Loader>;
   return (
@@ -234,7 +245,7 @@ const Page = () => {
                   type="text"
                   className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
                   disabled={true}
-                  value={userInfo?.gender}
+                  value={formatGender(userInfo?.gender)}
                 />
               </div>
 
@@ -264,7 +275,7 @@ const Page = () => {
                   type="text"
                   className="px-[14px] py-[16px] border-[1px] border-color-mmn-grey rounded-[6px] line-height-mmn-medium w-full"
                   disabled={true}
-                  value={userInfo?.muncipality}
+                  value={getCountry(userInfo?.muncipality)}
                 />
               </div>
 
