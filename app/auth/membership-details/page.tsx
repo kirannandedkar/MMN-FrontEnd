@@ -19,6 +19,7 @@ import { isOlder16 } from "@/utils/funcs";
 import Modal from "@/components/Modal";
 import ProfileUpdateForm from "./ProfileUpdateForm";
 import MemberUpdateForm from "./MemberUpdateForm";
+import EditIcon from "@/components/icons/EditIcon";
 
 const NavData = [
   { title: "Home", link: "/home" },
@@ -211,7 +212,7 @@ const Page = () => {
                   onClick={() => setProfileModalOpen(true)}
                   className="px-4 py-2 text-sm font-semibold text-white bg-yellow-500 rounded-md hover:bg-yellow-600"
                 >
-                  Edit
+                   <EditIcon/>
                 </button>
               </div>
             </div>

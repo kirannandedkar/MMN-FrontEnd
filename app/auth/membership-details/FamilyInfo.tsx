@@ -3,6 +3,8 @@ import { formatDate } from "@/utils/funcs";
 import Select, { GroupBase, StylesConfig } from "react-select";
 import { FamilyAccountInfo, Genders, Relationships } from "@/constants/types";
 import { Option } from "react-dropdown";
+import TrashButton from "@/components/icons/trash";
+import EditIcon from "@/components/icons/EditIcon";
 
 interface IProps {
   account: FamilyAccountInfo;
@@ -10,7 +12,11 @@ interface IProps {
   editMember: (id: string) => void;
 }
 
-const FamilyInfo: React.FC<IProps> = ({ account, removeMember, editMember }) => {
+const FamilyInfo: React.FC<IProps> = ({
+  account,
+  removeMember,
+  editMember,
+}) => {
   const customStyles: StylesConfig<Option, false, GroupBase<Option>> = {
     control: (provided) => ({
       ...provided,
@@ -31,35 +37,36 @@ const FamilyInfo: React.FC<IProps> = ({ account, removeMember, editMember }) => 
   return (
     <div className="flex flex-col gap-[10px]">
       <div className="flex items-center justify-between p-4 bg-gray-100 rounded-md">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 min-w-[200px] w-[200px]">
           <div className="text-lg font-semibold text-gray-800">
             {`${account.firstName} ${account.lastName}`}
           </div>
 
           <span
-            className={`px-3 py-1 text-sm font-semibold text-white rounded-full ${
+            className={`px-2 py-1 text-sm font-semibold text-white rounded-full ${
               account.isPaid ? "bg-green-500" : "bg-red-500"
             }`}
           >
-            {account.isPaid ? "Paid" : "Unpaid"}
+            <small>{account.isPaid ? "Paid" : "Unpaid"}</small>
           </span>
         </div>
 
         <div>
-        <button
-          onClick={() => editMember(account.id)}
-          className="px-4 py-2 me-2 text-sm font-semibold text-white bg-yellow-500 rounded-md hover:bg-yellow-600"
-        >
-          Edit
-        </button>
-        <button
-          onClick={() => removeMember(account.id)}
-          className="px-4 py-2 text-sm font-semibold text-white bg-red-500 rounded-md hover:bg-red-600"
-        >
-          Remove
-        </button>
+          <button
+            title="Edit"
+            onClick={() => editMember(account.id)}
+            className="px-4 py-2 me-2 text-sm font-semibold text-white bg-yellow-500 rounded-md hover:bg-yellow-600"
+          >
+            <EditIcon />
+          </button>
+          <button
+            title="Delete"
+            onClick={() => removeMember(account.id)}
+            className="px-4 py-2 text-sm font-semibold text-white bg-red-500 rounded-md hover:bg-red-600"
+          >
+            <TrashButton />
+          </button>
         </div>
-       
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
         <div>
@@ -124,7 +131,7 @@ const FamilyInfo: React.FC<IProps> = ({ account, removeMember, editMember }) => 
           />
         </div>
       </div>
-      <hr className="mb-0 mt-6"/>
+      <hr className="mb-0 mt-6" />
     </div>
   );
 };
