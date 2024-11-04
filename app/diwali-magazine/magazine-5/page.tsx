@@ -17,7 +17,7 @@ const Magazine = () => {
         <div className="min-h-screen flex flex-col bg-white p-4 sm:p-6 lg:p-8">
           <MMNTitle title="Magazine 5" className="pb-2 mb-4" color="purple" />
 
-          <img src="image/magazine/5.jpg" alt="" />
+          <img src="/image/magazine/5.jpg" alt="" width={200}/>
           <p>
             सोशल मीडियाच्या युगात पुलंच्या भाषेतील <b>मी आणि माझा शत्रुपक्ष</b>
             <br />

@@ -16,8 +16,6 @@ const Magazine = () => {
       <MMNContainer className="gap-[40px] pb-[40px] lg:flex-row flex-col">
         <div className="min-h-screen flex flex-col bg-white p-4 sm:p-6 lg:p-8">
           <MMNTitle title="Magazine 6" className="pb-2 mb-4" color="purple" />
-
-          <img src="image/magazine/5.jpg" alt="" />
           <p>
           हितशत्रू…
             <br />
