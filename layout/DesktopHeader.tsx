@@ -103,7 +103,7 @@ export default function DesktopHeader() {
                     )}
                 </div>
             </div>
-            <Modal isOpen={isLoginModelOpen} onClose={() => setLoginModelOpen(false)}>
+            <Modal title="" isOpen={isLoginModelOpen} onClose={() => setLoginModelOpen(false)}>
                 <LoginCard onClose={() => setLoginModelOpen(false)}/>
             </Modal>
         </>
