@@ -1,22 +1,39 @@
-"use client"
-import React from 'react';
-import { Worker, Viewer } from '@react-pdf-viewer/core';
-import '@react-pdf-viewer/core/lib/styles/index.css';
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+import React, { useEffect, useState } from 'react';
+import { pdfToPages } from '@/utils/funcs'; // Assuming this is your helper file
+import HTMLFlipBook from 'react-pageflip'; // Ensure you are using the correct component import
 
-// Define the type for the component's props
-interface ViewPDFProps {
-  path: string;
+interface FlipbookProps {
+  pdfFile: string;
 }
 
-const ViewPDF: React.FC<ViewPDFProps> = ({ path }) => {
+const Flipbook: React.FC<FlipbookProps> = ({ pdfFile }) => {
+  const [pages, setPages] = useState<string[]>([]);
+
+  useEffect(() => {
+    const loadPdf = async () => {
+      try {
+        const pageImages = await pdfToPages(pdfFile);
+        const imageUrls = pageImages.map(page => page.url);
+        setPages(imageUrls);
+      } catch (error) {
+        console.error('Error loading PDF:', error);
+      }
+    };
+
+    loadPdf();
+  }, [pdfFile]);
+
   return (
-    <div style={{ height: '750px' }}>
-     <Worker workerUrl={`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.worker.min.js`}>
-        <Viewer fileUrl={path} />
-      </Worker>
-    </div>
+    <HTMLFlipBook
+      width={300}
+      height={500}>
+      {pages.map((url, index) => (
+        <div key={index} className="page">
+          <img src={url} alt={`Page ${index + 1}`} style={{ width: '100%' }} />
+        </div>
+      ))}
+    </HTMLFlipBook>
   );
 };
 
-export default ViewPDF;
+export default Flipbook;

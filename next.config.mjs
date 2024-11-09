@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (
+    config
+    
+  ) => {
+    config.externals.push({ canvas: 'commonjs canvas' })
+    return config
+  },
   reactStrictMode: false,
   output: 'standalone',
   // This is required to support PostHog trailing slash API requests

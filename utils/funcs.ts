@@ -1,5 +1,8 @@
 import { AuthResult } from "@/app/types";
 import Cookies from "js-cookie";
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.js`;
 
 const handleCookie = (res_body: AuthResult) => {
   // add cookies to the response
@@ -85,6 +88,42 @@ function groupBy<T extends Record<string, any>>(
   }, {} as Grouped<T>);
 }
 
+interface PdfPage {
+  url: string;
+}
+const pdfToPages = async (pdfUrl: string): Promise<PdfPage[]> => {
+  try {
+    const pdf = await pdfjsLib.getDocument({ url: pdfUrl }).promise;
+    const pages: PdfPage[] = [];
+    const scale = 2.0; // Adjust the scale factor as needed for higher resolution
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const viewport = page.getViewport({ scale }); // Scaling the viewport for higher resolution
+      const canvas = document.createElement('canvas');
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) {
+        console.error(`Failed to get canvas context for page ${i}`);
+        continue;
+      }
+
+      await page.render({ canvasContext: ctx, viewport }).promise;
+      const imageData = canvas.toDataURL();
+      pages.push({ url: imageData });
+    }
+
+    return pages;
+  } catch (error) {
+    console.error('Error converting PDF to pages:', error);
+    return [];
+  }
+};
+
+
+
 export {
   isOlder16,
   handleCookie,
@@ -93,5 +132,6 @@ export {
   groupBy,
   getAuthResultFromCookie,
   getYears,
-  getCurrentYear
+  getCurrentYear,
+  pdfToPages
 };

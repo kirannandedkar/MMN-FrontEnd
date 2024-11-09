@@ -1,7 +1,10 @@
+"use client"
+
 import React from "react";
 import MMNContainer from "@/components/MMNContainer";
 import TopNav from "@/components/TopNav";
 import MMNTitle from "@/components/MMNTItle";
+import Flipbook from "@/components/PdfViewer";
 
 const NavData = [
   { title: "Home", link: "/home" },
@@ -17,53 +20,10 @@ const Magazine = () => {
         <div className="min-h-screen flex flex-col bg-white p-4 sm:p-6 lg:p-8">
           <MMNTitle title="Magazine 5" className="pb-2 mb-4" color="purple" />
 
-          <img src="/image/magazine/5.jpg" alt="" width={200}/>
-          <p>
-            सोशल मीडियाच्या युगात पुलंच्या भाषेतील <b>मी आणि माझा शत्रुपक्ष</b>
-            <br />
-            <br />
-            मी आणि माझा शत्रुपक्ष
-            <br />
-            <br />
-            व्हॉट्सअँप वर नुसते हाय करून पुढे काहीच न लिहिणारे.. अशी लोकं महिनो
-            महिनो काहीच कॉन्टॅक्ट मध्ये नसतात पण अचानक त्यांना आपण फार
-            महत्त्वाचे वाटू लागतो.
-            <br />
-            स्टेटस वरील फक्त पहिला फोटो बघणारे.. बाकीचे फोटोज् जणू काही त्यांचे
-            अंतमन पहात असते.
-            <br />
-            <br />
-            आपले डीपी वर कायम लक्ष ठेवून असणारे.. खरेतर त्यांना आपण कुठे जातो,
-            काय करतो यात जरा इंटरेस्ट असतो पण सरळ कसं विचारणार.. म्हणून मग डीपी
-            किंवा स्टेटस वाचून माहिती मिळवायची..
-            <br />
-            <br />
-            व्हॉट्सअँप वर चांडाळ मोठी पोस्ट पाठवणारे आणि त्यांनी पाठवलेली (ती न
-            वाचता) ताबडतोब अंगठा दाखवणारे महाभागी..
-            <br />
-            <br />
-            एका बाबतीत स्वतःचे मोठेपण सतत सांगणारे.. खात्यात खोटं, एक ना धड
-            भाराभर चिंचं असं असूनही त्यांची महानता टिकवायला टेप करत राहतात..
-            <br />
-            <br />
-            व्हॉट्सअँप वर ब्लू टिक न ठेवणारे.. असे लोकं सगळे मेसेज वाचत असतात,
-            दुसऱ्याचे स्टेटस नियमितपणे बघत असतात पण त्यांना तसं दाखवण्यात कमीपणा
-            वाटत असावा..
-            <br />
-            <br />
-            दुसऱ्यांची पोस्ट मधील वाक्ये आपल्या पोस्ट मध्ये वापरून ती आपल्या
-            बायको किंवा नवऱ्याकडून अप्रूव्ह करून पाठवतात.. शंसा स्वतःची करून
-            घेयची असते पण पोस्ट मात्र दुसऱ्याला का करायला लावतात हे एक न
-            उलगडणारे कोडे आहे..
-            <br />
-            <br />
-            लाइन वर मेसेज नोटिफिकेशन होल्ड करून मेसेज वाचून ठेवायचे आणि मेसेज
-            वाचले नाहीत असं दाखवायचे. जसं पूर्वी शेजाऱ्याच्या नावाने पत्र काढ
-            आले की ते वाचून ठेवायचे आणि मग त्याला सुपूत करत असा आव आणायचा की मी
-            काही तुझे पत्र वाचलेच नाही..
-            <br />
-            <br />- निशिकांत नानिवडेकर
-          </p>
+          <Flipbook pdfFile="/document/magazine/5.pdf"/>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          
+         
         </div>
       </MMNContainer>
     </div>

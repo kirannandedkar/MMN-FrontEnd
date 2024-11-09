@@ -2,13 +2,11 @@
 
 import { GetPageTitle } from "../../constants";
 import MMNContainer from "@/components/MMNContainer";
-import AboutPane from "./AboutPane";
 import MemberCard from "./MemberCard";
 import SliderPane from "./SliderPane";
-import MMNTitle from "@/components/MMNTItle";
-import Image from "next/image";
+
 import { useSelector } from "react-redux";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {GET} from "@/utils/fetch-factory";
 import {useRouter} from "next/navigation";
 import EventsCalendar from './EventsCalender';
