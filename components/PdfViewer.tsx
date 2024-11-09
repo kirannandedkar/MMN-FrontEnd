@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { pdfToPages } from '@/utils/funcs'; // Assuming this is your helper file
 import HTMLFlipBook from 'react-pageflip'; // Ensure you are using the correct component import
+import Loader from './Loader';
 
 interface FlipbookProps {
   pdfFile: string;
@@ -8,6 +9,7 @@ interface FlipbookProps {
 
 const Flipbook: React.FC<FlipbookProps> = ({ pdfFile }) => {
   const [pages, setPages] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const loadPdf = async () => {
@@ -23,6 +25,9 @@ const Flipbook: React.FC<FlipbookProps> = ({ pdfFile }) => {
     loadPdf();
   }, [pdfFile]);
 
+  if(loading)
+    return <Loader/>
+    
   return (
     <HTMLFlipBook
       width={600}

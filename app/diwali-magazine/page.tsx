@@ -13,6 +13,7 @@ const NavData = [
 ];
 
 const Magazine = () => {
+
   return (
     <div className="max-w-[1440px] m-auto">
       <TopNav itemList={NavData} />
