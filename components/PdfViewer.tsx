@@ -25,8 +25,8 @@ const Flipbook: React.FC<FlipbookProps> = ({ pdfFile }) => {
 
   return (
     <HTMLFlipBook
-      width={300}
-      height={500}>
+      width={600}
+      height={800}>
       {pages.map((url, index) => (
         <div key={index} className="page">
           <img src={url} alt={`Page ${index + 1}`} style={{ width: '100%' }} />

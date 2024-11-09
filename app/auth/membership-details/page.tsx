@@ -332,11 +332,12 @@ const Page = () => {
         <div>
           <div className="sticky top-[20px]">
             {memberCount > 0 ? (
-              <PaymentCard
-                memberCount={memberCount}
-                processClicked={paymentBtnClickedHandler}
-                MembershipFee={membershipFee}
-              />
+              // <PaymentCard
+              //   memberCount={memberCount}
+              //   processClicked={paymentBtnClickedHandler}
+              //   MembershipFee={membershipFee}
+              // />
+              <div className="flex flex-col w-80"> &nbsp;</div>
             ) : (
               <div className="flex flex-col w-80"> &nbsp;</div>
             )}

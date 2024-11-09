@@ -404,7 +404,8 @@ export default function SignUpPage({ byGoogle }: { byGoogle: boolean }) {
                 </div>
                 <div>
                     <div className="sticky top-[20px]">
-                        <PaymentCard memberCount={memberCount} isSignedIn={signed} processClicked={() => onAddEmptyFamilyAccountClicked(true)} MembershipFee={MembershipFee}/>
+                    <div className="flex flex-col w-80"> &nbsp;</div>
+                        {/* <PaymentCard memberCount={memberCount} isSignedIn={signed} processClicked={() => onAddEmptyFamilyAccountClicked(true)} MembershipFee={MembershipFee}/> */}
                     </div>
                 </div>
             </MMNContainer>
