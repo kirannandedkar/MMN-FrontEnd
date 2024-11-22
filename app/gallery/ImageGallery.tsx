@@ -111,7 +111,7 @@ const ImageGallery: React.FC = () => {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
             {files.map((file, index) => {
-              return file.fileType === "Photos" ? (
+              return file.fileType.toLowerCase() === "photos" ? (
                 <img
                   src={file.filePath}
                   alt={file.eventName}

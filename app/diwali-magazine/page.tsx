@@ -2,9 +2,6 @@
 
 import React from "react";
 import MMNContainer from "@/components/MMNContainer";
-import TopNav from "@/components/TopNav";
-import MMNTitle from "@/components/MMNTItle";
-// import Flipbook from "@/components/PdfViewer";
 
 const NavData = [
   { title: "Home", link: "/home" },
