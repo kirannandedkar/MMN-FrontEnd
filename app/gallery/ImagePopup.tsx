@@ -41,7 +41,7 @@ const ImagePopup: React.FC<ModalProps> = ({
          <BsXLg />
         </button>
         <div className="relative">
-          {fileType === "Photos" ? (
+          {fileType.toLowerCase() === "photos" ? (
             <img
               src={imageSrc}
               alt={imageAlt}
