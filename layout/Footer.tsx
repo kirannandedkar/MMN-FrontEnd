@@ -13,7 +13,7 @@ const data = [
     },
     {
         title: "MMN Initiatives", items: [
-            { title: "Marathi Shaala", link: "/initiative/marathiboli-shaala" },
+            //{ title: "Marathi Shaala", link: "/initiative/marathiboli-shaala" },
         ]
     },
     // {

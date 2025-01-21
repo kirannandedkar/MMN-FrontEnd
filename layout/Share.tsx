@@ -28,7 +28,7 @@ export const menuItemData = [
         title: "MMN Initiatives", 
         link: "/initiative",
         subItems: [
-            { title: "MarathiBoli Shaala", link: "/marathiboli-shaala" },
+            //{ title: "MarathiBoli Shaala", link: "/marathiboli-shaala" },
             { title: "Grants", link: "/grants" }
         ]
     },
