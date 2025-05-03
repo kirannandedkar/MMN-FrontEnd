@@ -51,10 +51,10 @@ const MarathiBoliShaalaPage = () => {
           <p className="text-gray-700 font-semibold">
             More information contact –{" "}
             <a
-              href="mailto:mmnshala.marathiboli@gmail.com"
+              href="mailto:norwaymarathishala@gmail.com"
               className="text-color-mmn-purple underline"
             >
-              mmnshala.marathiboli@gmail.com
+              norwaymarathishala@gmail.com
             </a>
           </p>
         </div>

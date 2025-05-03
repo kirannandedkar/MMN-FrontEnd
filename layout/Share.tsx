@@ -16,7 +16,7 @@ export const menuItemData = [
             { title: "MMN History", link: "/history" },
             { title: "MMN Constitution", link: "", href: "/constitution.pdf"},
             { title: "Committee Members", link: "/committeemember" },
-            //{ title: "Become a MMN member", link: "" },
+            { title: "Grants", link: "/grants" }
         ]
     },
     { title: "Membership", link: "/membership" },
@@ -29,7 +29,7 @@ export const menuItemData = [
         link: "/initiative",
         subItems: [
             //{ title: "MarathiBoli Shaala", link: "/marathiboli-shaala" },
-            { title: "Grants", link: "/grants" }
+            //{ title: "Grants", link: "/grants" }
         ]
     },
     { title: "Contact us", link: "/contact-us" }
