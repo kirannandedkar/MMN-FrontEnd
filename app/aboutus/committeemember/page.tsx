@@ -35,6 +35,8 @@ const data = {
     { name: "Prashant Thorat", imageurl: "" },
     { name: "Charuta Ranade", imageurl: "" },
     { name: "Pramod Pawar", imageurl: "" },
+     { name: "Poonam Barve", imageurl: "" },
+    { name: "Tanvi Patil", imageurl: "" },
   ],
   working: [
     { name: "        Shrikant Prabhu              Styre Leder", imageurl: "/image/members/executive/Shrikant.jpeg", period: { begin: 2022, end: 2024 } },
