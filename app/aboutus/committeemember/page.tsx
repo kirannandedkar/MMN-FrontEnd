@@ -24,7 +24,7 @@ const yearList = [
 const data = {
   executive: [
     { name: "        Aruna Phatak              Styre Leder", imageurl: "/image/members/executive/Aruna.jpg" },
-    { name: "        Smita Aurangabadkar              Neste Styre Leder", imageurl: "/image/members/executive/Smita.jpg" },
+    { name: "Smita Aurangabadkar        Neste Styre Leder", imageurl: "/image/members/executive/Smita.jpg" },
     // { name: "Member name", imageurl: "/image/members/executive/member2.jpg" },
     { name: "Sachin Bhise ", imageurl: "" },
     { name: "Ankur Tade", imageurl: "" },
