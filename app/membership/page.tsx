@@ -83,7 +83,7 @@ export default function MemberShipPage() {
             </div>
           )}
         </div>
-        <RenewMemberCard className="w-full sm:max-w-[420px]" />
+        {/* <RenewMemberCard className="w-full sm:max-w-[420px]" /> */}
       </MMNContainer>
     </div>
   );
