@@ -15,6 +15,7 @@ const NavData = [
 ];
 
 const yearList = [
+  { value: '2022', label: "2022-2024" },
   { value: '2020', label: "2020-2022" },
   { value: '2018', label: "2018-2020" },
   { value: '2017', label: "2017-2018" },
@@ -22,19 +23,31 @@ const yearList = [
 
 const data = {
   executive: [
-    { name: "        Shrikant Prabhu              Styre Leder", imageurl: "/image/members/executive/Shrikant.jpeg" },
-    { name: "        Sujata Prabhu              Neste Styre Leder", imageurl: "/image/members/executive/Sujata.jpg" },
+    { name: "        Aruna Phatak              Styre Leder", imageurl: "/image/members/executive/Aruna.jpg" },
+    { name: "        Smita Aurangabadkar              Neste Styre Leder", imageurl: "/image/members/executive/Smita.jpg" },
     // { name: "Member name", imageurl: "/image/members/executive/member2.jpg" },
-    { name: "Deep Vaishampayan ", imageurl: "/image/members/executive/Deep.jpeg" },
-    { name: "Trupti Shriwardhankar", imageurl: "/image/members/executive/Trupti.jpg" },
-    { name: "Sunil Shenoy ", imageurl: "/image/members/executive/Sunil.jpg" },
-    { name: "Amol Pandav", imageurl: "/image/members/executive/AmolPandav.jpg" },
+    { name: "Sachin Bhise ", imageurl: "" },
+    { name: "Ankur Tade", imageurl: "" },
+    { name: "Sujay Talwalkar ", imageurl: "" },
+    { name: "Rajendra Danve", imageurl: "" },
     { name: "Pradnya Rane", imageurl: "/image/members/executive/Pradnya.jpg" },
-    { name: "Santosh Dalal", imageurl: "/image/members/executive/Santosh.jpg" },
-    { name: "Omkar Kulkarni", imageurl: "/image/members/executive/Omkar.jpeg" },
-    { name: "Kiran Nandedkar", imageurl: "/image/members/executive/Kiran.jpg" },
+    { name: "Shrikant Marathi", imageurl: "" },
+    { name: "Prashant Thorat", imageurl: "" },
+    { name: "Charuta Ranade", imageurl: "" },
+    { name: "Pramod Pawar", imageurl: "" },
   ],
   working: [
+    { name: "        Shrikant Prabhu              Styre Leder", imageurl: "/image/members/executive/Shrikant.jpeg", period: { begin: 2022, end: 2024 } },
+    { name: "        Sujata Prabhu              Neste Styre Leder", imageurl: "/image/members/executive/Sujata.jpg", period: { begin: 2022, end: 2024 } },    
+    { name: "Deep Vaishampayan ", imageurl: "/image/members/executive/Deep.jpeg", period: { begin: 2022, end: 2024 } },
+    { name: "Trupti Shriwardhankar", imageurl: "/image/members/executive/Trupti.jpg", period: { begin: 2022, end: 2024 } },
+    { name: "Sunil Shenoy ", imageurl: "/image/members/executive/Sunil.jpg", period: { begin: 2022, end: 2024 } },
+    { name: "Amol Pandav", imageurl: "/image/members/executive/AmolPandav.jpg" , period: { begin: 2022, end: 2024 }},
+    { name: "Pradnya Rane", imageurl: "/image/members/executive/Pradnya.jpg", period: { begin: 2022, end: 2024 } },
+    { name: "Santosh Dalal", imageurl: "/image/members/executive/Santosh.jpg" , period: { begin: 2022, end: 2024 }},
+    { name: "Omkar Kulkarni", imageurl: "/image/members/executive/Omkar.jpeg" , period: { begin: 2022, end: 2024 }},
+    { name: "Kiran Nandedkar", imageurl: "/image/members/executive/Kiran.jpg" , period: { begin: 2022, end: 2024 }},
+
     { name: "        Shrikant Prabhu              Styre Leder", imageurl: "/image/members/executive/Shrikant.jpeg", period: { begin: 2020, end: 2022 } },
     { name: "        Sujata Prabhu              Neste Styre Leder", imageurl: "/image/members/executive/Sujata.jpg", period: { begin: 2020, end: 2022 } },
     { name: "        Kiran Nandedkar", imageurl: "/image/members/executive/Kiran.jpg", period: { begin: 2020, end: 2022 } },
@@ -106,7 +119,7 @@ const memberList = (members: CommitteeMember[]) => {
 }
 
 const CommitteeMemberPage = () => {
-  const [beginYear, setBeginYear] = useState(2020);
+  const [beginYear, setBeginYear] = useState(2022);
 
   const currentWorkingMembers = data.working.filter((member) => {
     if (!member.period || isNaN(beginYear)) return false;
