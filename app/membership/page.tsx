@@ -67,19 +67,27 @@ export default function MemberShipPage() {
                   })
                 }
               >
-                <GoogleButton
+                {/* <GoogleButton
                   title={"Signup with Google"}
                   className="max-w-full"
-                />
+                /> */}
               </div>
 
-              <div onClick={() => router.push("/signup/manual")}>
-                <MMNButton
-                  title="Sign up manually"
-                  color="purple"
-                  className={"w-full"}
-                />
-              </div>
+              <div
+                  onClick={() =>
+                    window.open(
+                      "https://docs.google.com/forms/d/e/1FAIpQLSfWIaKeroUz8KEvr9ImpezojBq7DiEWx5GGZVMcBh0mjd-tMA/viewform?usp=sharing",
+                      "_blank"
+                    )
+                  }
+                >
+                  <MMNButton
+                    title="Become a member"
+                    color="purple"
+                    className="w-full"
+                  />
+                </div>
+
             </div>
           )}
         </div>
