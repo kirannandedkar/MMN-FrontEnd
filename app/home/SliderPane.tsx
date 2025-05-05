@@ -6,19 +6,19 @@ import SliderItem, { Item } from "./SliderItem";
 
 const data: Item[] = [
 	{
-		title: "Diwali",
-		year: "2024",
-		date: "10 Nov 2024",
-		address: "Storøya Skole,Oslo",
+		title: "Shravan Bhet",
+		year: "2025",
+		date: "16 August 2025",
+		address: "TBD",
 		description:
-			'Diwali is festival of light and is celebrated not just in Maharashtra but all over in India.',
-		image: '/image/home/Diwali2024.png',
-		className: "bg-custom-radial-gradient-purple"
+			'Shravan Bhet is ladies only program.',
+		image: '/image/home/ShravanBhet.png',
+		className: "bg-custom-radial-gradient-Green"
 	},
 	{
 		title: "Ganesh Chaturthi",
-		year: "2024",
-		date: "07 Sep 2024",
+		year: "2025",
+		date: "30 August 2025",
 		address: "Kirkegardsgt 9B, 0558 Oslo",
 		description:
 			'Ganeshotsav (Ganesh festival) is a key festival celebrated in Maharashtra. The festival begins on the "Ganesh Chaturthi" and ends after 10 days on "Anant Chaturdashi" during the month of "Bhadrapada" as per Hindu calendar. On the day 1,.',
