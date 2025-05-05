@@ -53,6 +53,10 @@ body {
   background: radial-gradient(76.01% 85.78% at 42.3% 31.63%, #59008B 0%, #210033 100%);
 }
 
+.bg-custom-radial-gradient-Green {
+  background: radial-gradient(76.01% 85.78% at 42.3% 31.63%, #179762 0%, #210033 100%);
+}
+
 .bg-custom-overlay-gradient-red{
   background: radial-gradient(100% 268.88% at 8.5% 0%, rgba(252, 84, 50, 0) 51%, #D73426 77%, #CE2C23 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
 }
